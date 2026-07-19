@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'telegram' => [
+        'bot_token' => env('TELEGRAM_BOT_TOKEN'),
+    ],
+    'groq' => [
+        'api_key' => env('GROQ_API_KEY'),
+    ],
 ];

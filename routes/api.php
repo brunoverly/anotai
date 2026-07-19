@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\WhatssapController;
+use App\Http\Controllers\TelegramController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/webhook', [WhatssapController::class, 'verify']);
-Route::post('/webhook', [WhatssapController::class, 'receive']);
+Route::post('/telegram/webhook', [TelegramController::class, 'receive']);
