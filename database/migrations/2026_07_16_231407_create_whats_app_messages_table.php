@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('whats_app_messages', function (Blueprint $table) {
+        Schema::create('telegram_messages', function (Blueprint $table) {
             $table->id();
 
         $table->string('from')->nullable();
