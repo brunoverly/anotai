@@ -11,8 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('food', function (Blueprint $table) {
+        Schema::create('foods', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name')->unique()->index();
+
+            $table->decimal('protein_g', 5, 2)->default(0.00);
+            $table->decimal('carbohydrate_g', 5, 2)->default(0.00);
+            $table->decimal('fat_g', 5, 2)->default(0.00);
+            $table->integer('calories_kcal')->default(0);
+
+            $table->string('source')->default('local');
+
             $table->timestamps();
         });
     }
@@ -22,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('food');
+        Schema::dropIfExists('foods');
     }
 };
