@@ -37,8 +37,10 @@ return [
 
     'telegram' => [
         'bot_token' => env('TELEGRAM_BOT_TOKEN'),
+        'webhook_secret' => env('TELEGRAM_WEBHOOK_SECRET'),
     ],
     'groq' => [
         'api_key' => env('GROQ_API_KEY'),
+        'model' => env('GROQ_MODEL'),
     ],
 ];

@@ -10,6 +10,22 @@ class MealParserService
     {
         $apiKey = config('services.groq.api_key');
 
+        $prompt = "Você é um assistente de nutrição estruturado. Sua única função é extrair alimentos de frases ditas pelo usuário.
+            Retorne ESTRITAMENTE um objeto JSON contendo uma chave 'items', que será um array de objetos. Cada objeto deve seguir este formato exato:
+            {
+            \"alimento\": \"nome do alimento normalizado em minúsculas\",
+            \"quantidade\": número ou float representando a quantidade consumida,
+            \"unidade\": \"a unidade de medida estrita mencionada ou deduzida\"
+            }
+
+            As únicas opções aceitáveis para o campo 'unidade' são: 'unidade', 'fatia', 'colher', 'dose', 'grama', 'ml'.
+            - Se o usuário não disser a quantidade ou unidade de alimentos comerciais comuns (ex: 'comi um snickers', 'mandei um whey'), deduza quantidade 1 e coloque a unidade correta ('unidade' ou 'dose').
+            - Se for um alimento de peso (ex: '100g de arroz'), defina a quantidade como 100 e a unidade como 'grama'.
+            - Se o usuário mencionar pratos compostos, receitas tradicionais ou combinações que formam uma única preparação (ex: 'escondidinho de carne seca com mandioca', 'frango com quiabo', 'pão com manteiga', 'arroz com feijão'), trate como um ÚNICO objeto dentro do array 'items'. Não separe os ingredientes que dão nome ao prato em múltiplos itens.
+            - Nunca adicione textos explicativos ou Markdown. Retorne apenas o objeto JSON puro.
+
+            Texto do usuário: \"{$text}\"";
+
         $response = Http::withToken($apiKey)
             ->post('https://api.groq.com/openai/v1/chat/completions', [
                 'model' => 'llama-3.1-8b-instant',
@@ -17,12 +33,8 @@ class MealParserService
                 'messages' => [
                     [
                         'role' => 'system',
-                        'content' => 'Você é um analisador de refeições. Extraia os alimentos e quantidades do texto. Responda APENAS um JSON no formato: {"alimentos": [{"alimento": "frango", "quantidade": 50, "unidade": "g"}]}'
+                        'content' => $prompt
                     ],
-                    [
-                        'role' => 'user',
-                        'content' => $text
-                    ]
                 ],
                 'temperature' => 0.1,
             ]);
