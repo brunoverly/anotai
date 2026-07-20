@@ -28,6 +28,19 @@ class TelegramService
         )->json();
     }
 
+    public function setMyCommands()
+    {
+        $payload = ['commands' => [
+            ['command' => 'hoje', 'description' => 'Resumo do dia (com meta, se cadastrada)'],
+            ['command' => 'semana', 'description' => 'Resumo da semana (com meta, se cadastrada)'],
+        ]];
+
+        return Http::post(
+            'https://api.telegram.org/bot' . config('services.telegram.bot_token') . '/setMyCommands',
+            $payload
+        )->json();
+    }
+
     public function getFilePath(string $fileId)
     {
         // Log::info('https://api.telegram.org/bot' . config('services.telegram.bot_token') . '/getFile', ['file_id' => $fileId]);

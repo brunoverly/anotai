@@ -25,9 +25,10 @@ class NutritionManagerService
             $nomeAlimento = $item['alimento'] ?? '';
             $quantidadeInput = (float) ($item['quantidade'] ?? 0);
             $unidadeInput = $item['unidade'] ?? 'grama';
+            $tipoAlimento = $item['tipo'] ?? null;
 
             // Chama a escada de busca para encontrar o alimento isolado
-            $food = $this->searchFood($nomeAlimento);
+            $food = $this->searchFood($nomeAlimento, $tipoAlimento, $unidadeInput);
 
             if ($food) {
                 // Regra de três com base nos dados encontrados
@@ -38,13 +39,9 @@ class NutritionManagerService
                     $pesoTotalGrams = $quantidadeInput * (float)$food['serving_size_g'];
                 }
 
-                // Fator de multiplicação (Geralmente baseado em 100g vindo das APIs/LLM)
+                // Fator de multiplicação: todo alimento (local, API ou LLM) guarda
+                // os macros por 100g/ml — $pesoTotalGrams já é o peso total em gramas.
                 $fator = $pesoTotalGrams / 100;
-
-                // Se o alimento local foi cadastrado usando peso da porção como base em vez de 100g:
-                if ($food['source'] === 'local' && (float)$food['serving_size_g'] > 1) {
-                    $fator = $pesoTotalGrams / (float)$food['serving_size_g'];
-                }
 
                 $prot = round($food['protein_g'] * $fator, 2);
                 $carb = round($food['carbohydrate_g'] * $fator, 2);
@@ -91,7 +88,7 @@ class NutritionManagerService
     /**
      * A ESCADA DE BUSCA ISOLADA (Retorna um Array com os dados do alimento)
      */
-    private function searchFood(string $nomeAlimento)
+    private function searchFood(string $nomeAlimento, ?string $tipoAlimento, string $unidadeInput)
     {
         $chaveCache = 'food:' . Str::slug($nomeAlimento);
 
@@ -115,13 +112,20 @@ class NutritionManagerService
         }
 
         // ── DEGRAU 3: API EXTERNA (Open Food Facts) ──
-        Log::info("Degrau 3: Buscando na API Externa -> {$nomeAlimento}");
-        $apiFood = $this->searchInExternalApi($nomeAlimento);
-        if ($apiFood) {
-            $newFood = Food::updateOrCreate(['name' => $apiFood['name']], $apiFood);
+        // A OFF é um catálogo de produtos de marca/código de barras: pra comida
+        // in natura ou preparação caseira ela tende a "achar" o produto errado
+        // (ver Degrau 3 do bug do "ovos"), então pulamos direto pro Degrau 4.
+        if ($tipoAlimento === 'in_natura') {
+            Log::info("Degrau 3: pulado (alimento in natura) -> {$nomeAlimento}");
+        } else {
+            Log::info("Degrau 3: Buscando na API Externa -> {$nomeAlimento}");
+            $apiFood = $this->searchInExternalApi($nomeAlimento, $unidadeInput);
+            if ($apiFood) {
+                $newFood = Food::updateOrCreate(['name' => $apiFood['name']], $apiFood);
 
-            Redis::setex($chaveCache, 86400, json_encode($newFood));
-            return $newFood->toArray();
+                Redis::setex($chaveCache, 86400, json_encode($newFood));
+                return $newFood->toArray();
+            }
         }
 
         // ── DEGRAU 4: ESTIMATIVA POR LLM (Groq) ──
@@ -147,67 +151,155 @@ class NutritionManagerService
         }
 
         // Sem match exato: prioriza o nome mais curto (mais próximo do termo buscado)
-        return Food::where('name', 'like', '%' . $nomeAlimento . '%')
+        $found = Food::where('name', 'like', '%' . $nomeAlimento . '%')
             ->orderByRaw('LENGTH(name) ASC')
             ->first();
+        if ($found) {
+            return $found;
+        }
+
+        // Plural em pt-BR geralmente é "+s" (ovos -> ovo, bananas -> banana):
+        // tenta a forma singular antes de cair pra API externa.
+        if (Str::endsWith($nomeAlimento, 's')) {
+            $singular = Str::substr($nomeAlimento, 0, -1);
+
+            return Food::where('name', $singular)
+                ->orWhere('name', 'like', '%' . $singular . '%')
+                ->orderByRaw('LENGTH(name) ASC')
+                ->first();
+        }
+
+        return null;
     }
 
-    private function searchInExternalApi(string $nomeAlimento)
+    private function searchInExternalApi(string $nomeAlimento, string $unidadeInput)
     {
-        Log::info("Log 1");
         try {
-            Log::info("Log 2");
-            $response = Http::timeout(30)
-                ->withoutVerifying() // 👈 Adicione isso aqui para testar
-                ->get("https://br.openfoodfacts.org/cgi/search.pl", [
-                    'search_terms'  => $nomeAlimento,
-                    'search_simple' => 1,
-                    'action'        => 'process',
-                    'json'          => 1,
-                    'page_size'     => 1
+            // 1) Search-a-licious: busca com relevância de verdade (Elasticsearch),
+            // ao contrário do endpoint legado cgi/search.pl que casa por palavra solta.
+            $searchResponse = Http::timeout(15)
+                ->get('https://search.openfoodfacts.org/search', [
+                    'q'         => $nomeAlimento,
+                    'page_size' => 1,
+                    'langs'     => 'pt',
                 ]);
-            Log::info("Log 3");
-            Log::info("Resposta da API Externa", ['status' => $response->status(), 'body' => $response->body()]);
 
-            if ($response->successful() && isset($response->json()['products'][0])) {
-                Log::info("Log 4");
-                Log::info("Alimento encontrado na API Externa -> {$nomeAlimento}");
+            $hit = $searchResponse->successful() ? $searchResponse->json('hits.0') : null;
 
-                $product = $response->json()['products'][0];
-                $nutriments = $product['nutriments'] ?? [];
+            if (!$hit || empty($hit['code'])) {
+                Log::info("Degrau 3: nenhum resultado na busca -> {$nomeAlimento}");
+                return null;
+            }
 
-                Log::info("Alimento encontrado na API Externa -> {$product['product_name']}", ['nutriments' => $nutriments]);
-                // Open Food Facts usa chaves no PLURAL ('proteins_100g', 'carbohydrates_100g')
-                $proteina = $nutriments['proteins_100g'] ?? $nutriments['protein_100g'] ?? null;
-                $carbo    = $nutriments['carbohydrates_100g'] ?? $nutriments['carbohydrate_100g'] ?? null;
-                $gordura  = $nutriments['fat_100g'] ?? $nutriments['fats_100g'] ?? 0;
-                $caloria  = $nutriments['energy-kcal_100g'] ?? $nutriments['energy_kcal_100g'] ?? null;
-                $caloria_backup = round(($proteina * 4) + ($carbo * 4) + ($gordura * 9), 0);
+            $nomeProduto = Str::lower($hit['product_name'] ?? '');
+            $termoBusca = Str::lower($nomeAlimento);
 
-                // Se não achou caloria direta em kcal, calcula a partir dos KJs se existirem
-                if (($caloria === null && isset($nutriments['energy_100g'])) or ($caloria < $proteina + $carbo + $gordura)) {
-                    $caloria = $caloria_backup;
-                }
+            // Mesmo com relevância melhor, mantemos a checagem de sanidade:
+            // se o nome do produto não tem nenhuma relação com o termo buscado, descarta.
+            if (!Str::contains($nomeProduto, $termoBusca) && !Str::contains($termoBusca, $nomeProduto)) {
+                Log::warning("Degrau 3: produto retornado não corresponde ao termo buscado, ignorando", [
+                    'termo_buscado' => $nomeAlimento,
+                    'produto_encontrado' => $hit['product_name'] ?? null,
+                ]);
 
-                // Validação de segurança obrigatória
-                if ($proteina !== null && $carbo !== null) {
-                    return [
-                        'name'            => strtolower($product['product_name'] ?? $nomeAlimento),
-                        'protein_g'       => round((float)$proteina, 2),
-                        'carbohydrate_g'  => round((float)$carbo, 2),
-                        'fat_g'           => round((float)$gordura, 2),
-                        'calories_kcal'   => round((float)($caloria ?? 0), 0),
-                        'serving_name'    => 'grama',
-                        'serving_size_g'  => 1,
-                        'source'          => 'llm'
-                    ];
+                return null;
+            }
+
+            // 2) A busca não devolve os nutrientes, só metadados de ranking — busca
+            // os macros de verdade pelo código de barras no endpoint de produto.
+            // Sem filtro de "fields": a API da OFF descarta product_quantity/
+            // product_quantity_unit da resposta quando "nutriments" é pedido junto.
+            $productResponse = Http::timeout(15)
+                ->get("https://world.openfoodfacts.org/api/v2/product/{$hit['code']}.json");
+
+            if (!$productResponse->successful() || $productResponse->json('status') !== 1) {
+                Log::warning("Degrau 3: produto {$hit['code']} não encontrado na consulta detalhada");
+                return null;
+            }
+
+            $product = $productResponse->json('product');
+            $nutriments = $product['nutriments'] ?? [];
+
+            // Se o usuário pediu em unidade/fatia/colher/dose, precisamos saber o peso
+            // real disso (embalagem inteira ou porção declarada pelo fabricante) sem
+            // perguntar nada pro usuário. Sem essa informação, deixamos cair pro
+            // Degrau 4 (LLM), em vez de assumir "1 unidade = 1 grama" (bug antigo).
+            $servingSizeG = 1;
+            if (!in_array($unidadeInput, ['grama', 'ml'])) {
+                $servingSizeG = $this->resolveServingSizeG($product, $unidadeInput);
+                if ($servingSizeG === null) {
+                    Log::info("Degrau 3: produto sem peso de embalagem/porção pra converter '{$unidadeInput}', deixando cair pro Degrau 4", [
+                        'produto' => $product['product_name'] ?? null,
+                    ]);
+                    return null;
                 }
             }
-        } catch (\Exception $e) {
+
+            Log::info("Alimento encontrado na API Externa -> {$product['product_name']}", ['nutriments' => $nutriments]);
+
+            // Open Food Facts usa chaves no PLURAL ('proteins_100g', 'carbohydrates_100g')
+            $proteina = $nutriments['proteins_100g'] ?? $nutriments['protein_100g'] ?? null;
+            $carbo    = $nutriments['carbohydrates_100g'] ?? $nutriments['carbohydrate_100g'] ?? null;
+            $gordura  = $nutriments['fat_100g'] ?? $nutriments['fats_100g'] ?? 0;
+            $caloria  = $nutriments['energy-kcal_100g'] ?? $nutriments['energy_kcal_100g'] ?? null;
+            $caloria_backup = round(((float)($proteina ?? 0) * 4) + ((float)($carbo ?? 0) * 4) + ((float)$gordura * 9), 0);
+
+            // Se não achou caloria direta ou ela for menor que a soma dos macros, usa o cálculo de backup
+            if ($caloria === null || $caloria < ($proteina + $carbo + $gordura)) {
+                $caloria = $caloria_backup;
+            }
+
+            // Validação de segurança obrigatória
+            if ($proteina !== null && $carbo !== null) {
+                return [
+                    'name'            => strtolower($product['product_name'] ?? $nomeAlimento),
+                    'protein_g'       => round((float)$proteina, 2),
+                    'carbohydrate_g'  => round((float)$carbo, 2),
+                    'fat_g'           => round((float)$gordura, 2),
+                    'calories_kcal'   => round((float)($caloria ?? 0), 0),
+                    'serving_name'    => $unidadeInput,
+                    'serving_size_g'  => $servingSizeG,
+                    'source'          => 'openfoodfacts'
+                ];
+            }
+        } catch (\Throwable $e) {
             Log::error("Erro na busca da API Externa: " . $e->getMessage());
         }
 
         return null;
+    }
+
+    /**
+     * Resolve o peso em gramas de "1 unidade/porção" do produto usando os dados
+     * que a própria Open Food Facts já declara, sem precisar perguntar ao usuário.
+     */
+    private function resolveServingSizeG(array $product, string $unidadeInput): ?float
+    {
+        $pesoEmbalagem = $this->parseQuantityToGrams($product['product_quantity'] ?? null, $product['product_quantity_unit'] ?? null);
+        $pesoPorcao = $this->parseQuantityToGrams($product['serving_quantity'] ?? null, $product['serving_quantity_unit'] ?? null);
+
+        // "unidade" normalmente significa "a embalagem inteira" (ex: 1 danix, 1 iogurte)
+        if ($unidadeInput === 'unidade') {
+            return $pesoEmbalagem ?? $pesoPorcao;
+        }
+
+        // "fatia", "colher", "dose" se aproximam mais da porção declarada pelo fabricante
+        return $pesoPorcao ?? $pesoEmbalagem;
+    }
+
+    private function parseQuantityToGrams($quantidade, ?string $unidade): ?float
+    {
+        if ($quantidade === null || $quantidade === '') {
+            return null;
+        }
+
+        $valor = (float) $quantidade;
+
+        return match (Str::lower($unidade ?? 'g')) {
+            'kg', 'l' => $valor * 1000,
+            'cl' => $valor * 10,
+            default => $valor, // g, ml e unidades não reconhecidas tratamos como já-em-gramas
+        };
     }
 
     private function estimateWithLLM(string $nomeAlimento)
@@ -228,7 +320,7 @@ class NutritionManagerService
                     'messages' => [
                         [
                             'role' => 'system',
-                            'content' => 'Você é um assistente especialista em nutrição. Responda APENAS com um objeto JSON válido, contendo a estimativa para 100g do alimento informado. Não use markdown blockcode (```json) na resposta. Chaves obrigatórias no JSON: name, protein_g, carbohydrate_g, fat_g, calories_kcal. Exemplo: {"name": "biscoito danix", "protein_g": 6.5, "carbohydrate_g": 68.0, "fat_g": 18.0, "calories_kcal": 460}'
+                            'content' => 'Você é um assistente especialista em nutrição. Responda APENAS com um objeto JSON válido, contendo a estimativa para 100g do alimento informado. Não use markdown blockcode (```json) na resposta. Chaves obrigatórias no JSON: name, protein_g, carbohydrate_g, fat_g, calories_kcal, peso_unidade_g. O campo peso_unidade_g é o peso estimado em gramas de UMA unidade/porção comum desse alimento no mundo real (ex: 1 ovo cozido ~50g, 1 fatia de pizza ~120g, 1 lata de refrigerante ~350g, 1 banana ~90g). Se o alimento normalmente só é medido em peso (ex: arroz, carne moída), estime o peso de uma porção média de refeição (ex: 150g). Exemplo: {"name": "biscoito danix", "protein_g": 6.5, "carbohydrate_g": 68.0, "fat_g": 18.0, "calories_kcal": 460, "peso_unidade_g": 40}'
                         ],
                         [
                             'role' => 'user',
@@ -250,6 +342,7 @@ class NutritionManagerService
                     $carbo    = (float)($llmData['carbohydrate_g'] ?? 0);
                     $gordura  = (float)($llmData['fat_g'] ?? 0);
                     $caloria  = (float)($llmData['calories_kcal'] ?? 0);
+                    $pesoUnidade = (float)($llmData['peso_unidade_g'] ?? 100);
 
                     // Cálculo matemático exato de backup por segurança
                     $caloria_backup = round(($proteina * 4) + ($carbo * 4) + ($gordura * 9), 0);
@@ -265,8 +358,8 @@ class NutritionManagerService
                         'carbohydrate_g'  => round($carbo, 2),
                         'fat_g'           => round($gordura, 2),
                         'calories_kcal'   => round($caloria, 0),
-                        'serving_name'    => 'grama',
-                        'serving_size_g'  => 100, // 👈 Injetado para o seu motor de cálculo de porção
+                        'serving_name'    => 'unidade',
+                        'serving_size_g'  => round($pesoUnidade, 2) > 0 ? round($pesoUnidade, 2) : 100,
                         'source'          => 'llm_groq_estimate' // 👈 Injetado para identificar a origem do dado
                     ];
                 }
