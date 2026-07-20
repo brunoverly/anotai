@@ -10,9 +10,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Usamos SQL bruto porque ->change() exigiria doctrine/dbal só pra isso.
-        DB::statement('ALTER TABLE users MODIFY email VARCHAR(255) NULL');
-        DB::statement('ALTER TABLE users MODIFY password VARCHAR(255) NULL');
+        // Sintaxe Postgres: ALTER COLUMN ... DROP NOT NULL (não existe MODIFY COLUMN aqui).
+        DB::statement('ALTER TABLE users ALTER COLUMN email DROP NOT NULL');
+        DB::statement('ALTER TABLE users ALTER COLUMN password DROP NOT NULL');
     }
 
     /**
@@ -20,7 +20,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::statement('ALTER TABLE users MODIFY email VARCHAR(255) NOT NULL');
-        DB::statement('ALTER TABLE users MODIFY password VARCHAR(255) NOT NULL');
+        DB::statement('ALTER TABLE users ALTER COLUMN email SET NOT NULL');
+        DB::statement('ALTER TABLE users ALTER COLUMN password SET NOT NULL');
     }
 };

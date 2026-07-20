@@ -6,7 +6,6 @@ use App\Models\Food;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 
 class NutritionManagerService
 {
@@ -90,51 +89,39 @@ class NutritionManagerService
      */
     private function searchFood(string $nomeAlimento, ?string $tipoAlimento, string $unidadeInput)
     {
-        $chaveCache = 'food:' . Str::slug($nomeAlimento);
-
-        // ── DEGRAU 1: REDIS CACHE ──
-        $cachedFood = Redis::get($chaveCache);
-        if ($cachedFood) {
-            Log::info("Degrau 1: Alimento encontrado no Redis -> {$nomeAlimento}");
-            return json_decode($cachedFood, true);
-        }
-
-        // ── DEGRAU 2: MYSQL (BANCO LOCAL) ──
+        // ── DEGRAU 1: BANCO LOCAL (Postgres/Supabase) ──
         $localFood = $this->searchInLocalDatabase($nomeAlimento);
         if ($localFood) {
-            Log::info("Degrau 2: Alimento encontrado no MySQL -> {$localFood->name}");
+            Log::info("Degrau 1: Alimento encontrado no banco local -> {$localFood->name}");
 
             $foodArray = $localFood->toArray();
             $foodArray['source'] = 'local'; // Tag para identificação no cálculo
 
-            Redis::setex($chaveCache, 86400, json_encode($foodArray));
             return $foodArray;
         }
 
-        // ── DEGRAU 3: API EXTERNA (Open Food Facts) ──
+        // ── DEGRAU 2: API EXTERNA (Open Food Facts) ──
         // A OFF é um catálogo de produtos de marca/código de barras: pra comida
         // in natura ou preparação caseira ela tende a "achar" o produto errado
-        // (ver Degrau 3 do bug do "ovos"), então pulamos direto pro Degrau 4.
+        // (ver bug do "ovos"), então pulamos direto pro Degrau 3.
         if ($tipoAlimento === 'in_natura') {
-            Log::info("Degrau 3: pulado (alimento in natura) -> {$nomeAlimento}");
+            Log::info("Degrau 2: pulado (alimento in natura) -> {$nomeAlimento}");
         } else {
-            Log::info("Degrau 3: Buscando na API Externa -> {$nomeAlimento}");
+            Log::info("Degrau 2: Buscando na API Externa -> {$nomeAlimento}");
             $apiFood = $this->searchInExternalApi($nomeAlimento, $unidadeInput);
             if ($apiFood) {
                 $newFood = Food::updateOrCreate(['name' => $apiFood['name']], $apiFood);
 
-                Redis::setex($chaveCache, 86400, json_encode($newFood));
                 return $newFood->toArray();
             }
         }
 
-        // ── DEGRAU 4: ESTIMATIVA POR LLM (Groq) ──
-        Log::info("Degrau 4: API falhou. Solicitando estimativa da LLM -> {$nomeAlimento}");
+        // ── DEGRAU 3: ESTIMATIVA POR LLM (Groq) ──
+        Log::info("Degrau 3: API falhou. Solicitando estimativa da LLM -> {$nomeAlimento}");
         $llmFood = $this->estimateWithLLM($nomeAlimento);
         if ($llmFood) {
             $newFood = Food::updateOrCreate(['name' => $llmFood['name']], $llmFood);
 
-            Redis::setex($chaveCache, 86400, json_encode($newFood));
             return $newFood->toArray();
         }
 
@@ -187,7 +174,7 @@ class NutritionManagerService
             $hit = $searchResponse->successful() ? $searchResponse->json('hits.0') : null;
 
             if (!$hit || empty($hit['code'])) {
-                Log::info("Degrau 3: nenhum resultado na busca -> {$nomeAlimento}");
+                Log::info("Degrau 2: nenhum resultado na busca -> {$nomeAlimento}");
                 return null;
             }
 
@@ -197,7 +184,7 @@ class NutritionManagerService
             // Mesmo com relevância melhor, mantemos a checagem de sanidade:
             // se o nome do produto não tem nenhuma relação com o termo buscado, descarta.
             if (!Str::contains($nomeProduto, $termoBusca) && !Str::contains($termoBusca, $nomeProduto)) {
-                Log::warning("Degrau 3: produto retornado não corresponde ao termo buscado, ignorando", [
+                Log::warning("Degrau 2: produto retornado não corresponde ao termo buscado, ignorando", [
                     'termo_buscado' => $nomeAlimento,
                     'produto_encontrado' => $hit['product_name'] ?? null,
                 ]);
@@ -213,7 +200,7 @@ class NutritionManagerService
                 ->get("https://world.openfoodfacts.org/api/v2/product/{$hit['code']}.json");
 
             if (!$productResponse->successful() || $productResponse->json('status') !== 1) {
-                Log::warning("Degrau 3: produto {$hit['code']} não encontrado na consulta detalhada");
+                Log::warning("Degrau 2: produto {$hit['code']} não encontrado na consulta detalhada");
                 return null;
             }
 
@@ -223,12 +210,12 @@ class NutritionManagerService
             // Se o usuário pediu em unidade/fatia/colher/dose, precisamos saber o peso
             // real disso (embalagem inteira ou porção declarada pelo fabricante) sem
             // perguntar nada pro usuário. Sem essa informação, deixamos cair pro
-            // Degrau 4 (LLM), em vez de assumir "1 unidade = 1 grama" (bug antigo).
+            // Degrau 3 (LLM), em vez de assumir "1 unidade = 1 grama" (bug antigo).
             $servingSizeG = 1;
             if (!in_array($unidadeInput, ['grama', 'ml'])) {
                 $servingSizeG = $this->resolveServingSizeG($product, $unidadeInput);
                 if ($servingSizeG === null) {
-                    Log::info("Degrau 3: produto sem peso de embalagem/porção pra converter '{$unidadeInput}', deixando cair pro Degrau 4", [
+                    Log::info("Degrau 2: produto sem peso de embalagem/porção pra converter '{$unidadeInput}', deixando cair pro Degrau 3", [
                         'produto' => $product['product_name'] ?? null,
                     ]);
                     return null;
