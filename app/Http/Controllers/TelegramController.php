@@ -432,7 +432,7 @@ class TelegramController extends Controller
         $situacao = [];
 
         $msg .= $this->blocoMacro('🔥', 'Calorias', (float)$resumo['total_calories_kcal'], (float)$resumo['user_calories_goal_kcal'], 'kcal', true, $situacao);
-        $msg .= $this->blocoMacro('🍗', 'Proteínas', (float)$resumo['total_protein_g'], (float)$resumo['user_protein_goal_g'], 'g', false, $situacao);
+        $msg .= $this->blocoMacro('🥩', 'Proteínas', (float)$resumo['total_protein_g'], (float)$resumo['user_protein_goal_g'], 'g', false, $situacao);
         $msg .= $this->blocoMacro('🍞', 'Carboidratos', (float)$resumo['total_carbohydrate_g'], (float)$resumo['user_carbohydrate_goal_g'], 'g', true, $situacao);
         $msg .= $this->blocoMacro('🥑', 'Gorduras', (float)$resumo['total_fat_g'], (float)$resumo['user_fat_goal_g'], 'g', true, $situacao);
 
@@ -512,7 +512,7 @@ class TelegramController extends Controller
 
         $msg .= "\n───────────────────\n";
         $msg .= "🔥 *Total:* " . $resultado['total_calories_kcal'] . " kcal\n";
-        $msg .= "🍗 Proteína: " . $resultado['total_protein_g'] . "g \n";
+        $msg .= "🥩 Proteína: " . $resultado['total_protein_g'] . "g \n";
         $msg .= "🍞 Carbo: " . $resultado['total_carbohydrate_g'] . "g \n";
         $msg .= "🥑 Gordura: " . $resultado['total_fat_g'] . "g";
 

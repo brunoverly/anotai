@@ -18,6 +18,7 @@ class MealReportService
         return $this->resumo($chatId, now()->startOfWeek(), now()->endOfWeek(), 'semana');
     }
 
+
     private function resumo(int $chatId, Carbon $inicio, Carbon $fim, string $periodo): ?array
     {
         $user = User::where('telegram_chat_id', $chatId)->first();
@@ -63,12 +64,12 @@ class MealReportService
             'periodo_formatado'     => $periodoFormatado,
             'quantidade_refeicoes'  => $meals->count(),
             'total_protein_g'       => round($meals->sum('total_protein_g'), 2),
-            'user_protein_goal_g'     => $userMacroGoals['protein_g'] * $multiplicador,
-            'total_carbohydrate_g'  => round($meals->sum('total_carbohydrate_g'), 2),
-            'user_carbohydrate_goal_g' => $userMacroGoals['carbohydrate_g'] * $multiplicador,
             'total_fat_g'           => round($meals->sum('total_fat_g'), 2),
-            'user_fat_goal_g'         => $userMacroGoals['fat_g'] * $multiplicador,
+            'total_carbohydrate_g'  => round($meals->sum('total_carbohydrate_g'), 2),
             'total_calories_kcal'   => round($meals->sum('total_calories_kcal'), 0),
+            'user_protein_goal_g'     => $userMacroGoals['protein_g'] * $multiplicador,
+            'user_carbohydrate_goal_g' => $userMacroGoals['carbohydrate_g'] * $multiplicador,
+            'user_fat_goal_g'         => $userMacroGoals['fat_g'] * $multiplicador,
             'user_calories_goal_kcal' => $userMacroGoals['calories_kcal'] * $multiplicador,
         ];
         }
@@ -114,5 +115,38 @@ class MealReportService
             'fat_g' => $macros['fat_g'],
         ]);
 
+    }
+
+
+    public function last7days($chatId): ?array
+    {
+        $user = User::where('telegram_chat_id', $chatId)->first();
+        if (!$user) {
+            return null;
+        }
+
+        $inicio = now()->subDays(6)->startOfDay();
+        $fim = now()->endOfDay();
+
+        $meals = Meal::where('user_id', $user->id)
+            ->whereBetween('consumed_at', [$inicio, $fim])
+            ->where('deleted_at', '=', null)
+            ->orderBy('consumed_at', 'desc')
+            ->get();
+
+        $last7Days = [];
+
+        for ($dia = $inicio->copy(); $dia->lte($fim); $dia->addDay()) {
+            $refeicoesDoDia = $meals->filter(fn ($meal) => $meal->consumed_at->isSameDay($dia));
+
+            $last7Days[$dia->format('d/m')] = [
+                'total_calories_kcal' => round($refeicoesDoDia->sum('total_calories_kcal'), 0),
+                'total_protein_g' => round($refeicoesDoDia->sum('total_protein_g'), 2),
+                'total_carbohydrate_g' => round($refeicoesDoDia->sum('total_carbohydrate_g'), 2),
+                'total_fat_g' => round($refeicoesDoDia->sum('total_fat_g'), 2),
+            ];
+        }
+
+        return $last7Days;
     }
 }
