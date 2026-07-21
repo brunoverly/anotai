@@ -13,13 +13,14 @@ class MealParserService
         $prompt = "Você é um assistente de nutrição estruturado. Sua única função é extrair alimentos de frases ditas pelo usuário.
             Retorne ESTRITAMENTE um objeto JSON contendo uma chave 'items', que será um array de objetos. Cada objeto deve seguir este formato exato:
             {
-            \"alimento\": \"nome do alimento normalizado em minúsculas\",
+            \"alimento\": \"nome do alimento em minúsculas\",
             \"quantidade\": número ou float representando a quantidade consumida,
             \"unidade\": \"a unidade de medida estrita mencionada ou deduzida\",
             \"tipo\": \"'in_natura' ou 'industrializado'\"
             }
 
             As únicas opções aceitáveis para o campo 'unidade' são: 'unidade', 'fatia', 'colher', 'dose', 'grama', 'ml'.
+            - O campo 'alimento' deve manter TODOS os qualificadores que o usuário mencionou (tipo, variedade, marca, preparo). NUNCA simplifique ou generalize o nome: se o usuário disse 'queijo prato', mantenha 'queijo prato' (não vire 'queijo'); se disse 'pão de forma integral', mantenha 'pão de forma integral' (não vire 'pão'). O único ajuste permitido é deixar em minúsculas.
             - Se o usuário não disser a quantidade ou unidade de alimentos comerciais comuns (ex: 'comi um snickers', 'mandei um whey'), deduza quantidade 1 e coloque a unidade correta ('unidade' ou 'dose').
             - Se for um alimento de peso (ex: '100g de arroz'), defina a quantidade como 100 e a unidade como 'grama'.
             - Se o usuário mencionar pratos compostos, receitas tradicionais ou combinações que formam uma única preparação (ex: 'escondidinho de carne seca com mandioca', 'frango com quiabo', 'pão com manteiga', 'arroz com feijão'), trate como um ÚNICO objeto dentro do array 'items'. Não separe os ingredientes que dão nome ao prato em múltiplos itens.

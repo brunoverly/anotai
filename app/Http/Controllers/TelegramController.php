@@ -269,12 +269,12 @@ class TelegramController extends Controller
                         $chat_msg_id,
                         "🎯  *Metas de Macros*\n" .
                         "──────────────────\n" .
-                        "Copie esta mensagem e preencha dentro das [ ] os valores das suas metas:\n" .
+                        "Copie esta mensagem e preencha dentro das \\[ \\] os valores das suas metas:\n" .
                         "*somente os valores numéricos, sem virgulas ou pontos.*\n" .
-                        "🔥 Calorias: [   ] kcal\n" .
-                        "🍞 Carboidratos: [   ] g\n" .
-                        "🥩 Proteínas: [   ] g\n" .
-                        "🥑 Gorduras: [   ] g"
+                        "🔥 Calorias: \\[   \\] kcal\n" .
+                        "🍞 Carboidratos: \\[   \\] g\n" .
+                        "🥩 Proteínas: \\[   \\] g\n" .
+                        "🥑 Gorduras: \\[   \\] g"
                     );
                 }else {
                     $telegramService->editMessage(
@@ -411,65 +411,49 @@ class TelegramController extends Controller
 
         $msg = "{$titulo} ({$resumo['periodo_formatado']})\n\n";
 
-        $msg .= "🔥 Calorias: {$resumo['total_calories_kcal']} / " . round((float)$resumo['user_calories_goal_kcal']) . " kcal\n";
-        $msg .= $this->barraDeProgresso((float)$resumo['total_calories_kcal'], (float)$resumo['user_calories_goal_kcal']) . "\n\n";
+        // Situação acumula os avisos de "acima da meta" — proteína a mais não é
+        // problema, então ela nunca entra na lista, mesmo passando de 100%.
+        $situacao = [];
 
-        $msg .= "🥩 Proteína: {$resumo['total_protein_g']}g / " . round((float)$resumo['user_protein_goal_g']) . "g\n";
-        $msg .= $this->barraDeProgresso((float)$resumo['total_protein_g'], (float)$resumo['user_protein_goal_g'], eProteina: true) . "\n\n";
+        $msg .= $this->blocoMacro('🔥', 'Calorias', (float)$resumo['total_calories_kcal'], (float)$resumo['user_calories_goal_kcal'], 'kcal', true, $situacao);
+        $msg .= $this->blocoMacro('🥩', 'Proteínas', (float)$resumo['total_protein_g'], (float)$resumo['user_protein_goal_g'], 'g', false, $situacao);
+        $msg .= $this->blocoMacro('🍞', 'Carboidratos', (float)$resumo['total_carbohydrate_g'], (float)$resumo['user_carbohydrate_goal_g'], 'g', true, $situacao);
+        $msg .= $this->blocoMacro('🥑', 'Gorduras', (float)$resumo['total_fat_g'], (float)$resumo['user_fat_goal_g'], 'g', true, $situacao);
 
-        $msg .= "🍞 Carbo: {$resumo['total_carbohydrate_g']}g / " . round((float)$resumo['user_carbohydrate_goal_g']) . "g\n";
-        $msg .= $this->barraDeProgresso((float)$resumo['total_carbohydrate_g'], (float)$resumo['user_carbohydrate_goal_g']) . "\n\n";
+        $msg .= "📝 Refeições no período: {$resumo['quantidade_refeicoes']}\n\n";
 
-        $msg .= "🥑 Gordura: {$resumo['total_fat_g']}g / " . round((float)$resumo['user_fat_goal_g']) . "g\n";
-        $msg .= $this->barraDeProgresso((float)$resumo['total_fat_g'], (float)$resumo['user_fat_goal_g']) . "\n\n";
-
-        $msg .= "📝 Refeições no período: {$resumo['quantidade_refeicoes']}\n";
-
-        $dica = $this->gerarDicaProteina((float)$resumo['total_protein_g'], (float)$resumo['user_protein_goal_g'], $resumo['periodo']);
-        if ($dica) {
-            $msg .= "💡 {$dica}";
+        if (!empty($situacao)) {
+            $msg .= "📌 *Situação*\n" . implode("\n", $situacao);
         }
 
         return rtrim($msg);
     }
 
     /**
-     * Monta uma barra de 10 blocos representando o % da meta já consumido.
-     * O número de blocos cheios é travado em 10 com min() — sem isso, passar
-     * de 100% da meta faria "10 - blocosCheios" ficar negativo e o
-     * str_repeat() dos blocos vazios quebraria com erro.
+     * Monta o bloco de uma macro: rótulo, "consumido / meta unidade" e a barra
+     * de 10 blocos (▰/▱). O número de blocos cheios é travado em 10 com min()
+     * — sem isso, passar de 100% da meta faria "10 - blocosCheios" ficar
+     * negativo e o str_repeat() dos blocos vazios quebraria com erro.
+     *
+     * $alertaSeAcima controla se passar de 100% deve acender o 🔴 e entrar na
+     * lista de "Situação" — proteína a mais não é um problema, então ela usa
+     * false e nunca gera alerta, mesmo estourando a meta.
      */
-    private function barraDeProgresso(float $consumido, float $meta, bool $eProteina = false): string
+    private function blocoMacro(string $emoji, string $label, float $consumido, float $meta, string $unidade, bool $alertaSeAcima, array &$situacao): string
     {
         $percentual = $meta > 0 ? ($consumido / $meta) * 100 : 0;
         $blocosCheios = min(10, (int) round($percentual / 10));
+        $barra = str_repeat('▰', $blocosCheios) . str_repeat('▱', 10 - $blocosCheios);
 
-        // Dentro da meta: barra neutra em blocos de texto (▓/░), sem cor —
-        // o Telegram não suporta cor de fonte, só emoji tem cor de verdade.
-        // Passou da meta: troca os blocos cheios por emoji colorido como alerta
-        // (proteína a mais não é problema, por isso amarelo; os outros macros
-        // a mais tendem a ser indesejados, por isso vermelho).
-        if ($percentual > 100) {
-            $blocoCheio = $eProteina ? '🟨' : '🟥';
-            $barra = str_repeat($blocoCheio, $blocosCheios) . str_repeat('░', 10 - $blocosCheios);
-        } else {
-            $barra = str_repeat('▓', $blocosCheios) . str_repeat('░', 10 - $blocosCheios);
+        $marcador = '';
+        if ($percentual > 100 && $alertaSeAcima) {
+            $marcador = ' 🔴';
+            $situacao[] = "• 🔴 {$label} acima da meta.";
         }
 
-        return "{$barra} " . round($percentual) . "%";
-    }
-
-    private function gerarDicaProteina(float $consumido, float $meta, string $periodo): ?string
-    {
-        $falta = $meta - $consumido;
-
-        if ($falta <= 0) {
-            return null;
-        }
-
-        $rotuloMeta = $periodo === 'semana' ? 'meta semanal' : 'meta diária';
-
-        return "Faltam " . round($falta) . "g de proteína para bater a {$rotuloMeta}!";
+        return "{$emoji} *{$label}*\n" .
+            " {$consumido} / " . round($meta) . " {$unidade}\n" .
+            " {$barra} " . round($percentual) . "%{$marcador}\n\n";
     }
 
     /**
