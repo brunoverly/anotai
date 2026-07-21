@@ -31,8 +31,11 @@ class TelegramService
     public function setMyCommands()
     {
         $payload = ['commands' => [
-            ['command' => 'hoje', 'description' => 'Resumo do dia (com meta, se cadastrada)'],
-            ['command' => 'semana', 'description' => 'Resumo da semana (com meta, se cadastrada)'],
+            ['command' => 'dia', 'description' => 'Resumo do dia'],
+            ['command' => 'semana', 'description' => 'Resumo da semana'],
+            ['command' => 'excluir', 'description' => 'Exclui a última refeição do dia'],
+            ['command' => 'macros', 'description' => 'Define suas metas de macros (calorias, carboidratos, proteínas)'],
+            ['command' => 'app', 'description' => 'Link para o app web (em breve)'],
         ]];
 
         return Http::post(
@@ -84,6 +87,28 @@ class TelegramService
                 'https://api.telegram.org/bot' . config('services.telegram.bot_token') . '/sendMessage',
                 [
                     'chat_id' => $chatId,
+                    'text' => $text,
+                    'parse_mode' => 'Markdown',
+                ]
+            )->json();
+    }
+
+    public function editMessage(string $chatId, ?int $messageId, string $text)
+    {
+        // Sem message_id (ex: falha ao enviar a mensagem de "processando" original),
+        // não tem o que editar — cai pra mandar uma mensagem nova em vez de quebrar.
+        if (!$messageId) {
+            return $this->sendMessage($chatId, $text);
+        }
+
+        return Http::withHeaders([
+                'Connection' => 'close' // 👈 Evita o cURL error 35 / Connection reset
+            ])
+            ->post(
+                'https://api.telegram.org/bot' . config('services.telegram.bot_token') . '/editMessageText',
+                [
+                    'chat_id' => $chatId,
+                    'message_id' => $messageId,
                     'text' => $text,
                     'parse_mode' => 'Markdown',
                 ]

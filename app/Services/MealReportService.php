@@ -27,6 +27,7 @@ class MealReportService
 
         $meals = Meal::where('user_id', $user->id)
             ->whereBetween('consumed_at', [$inicio, $fim])
+            ->where('deleted_at', '=', null)
             ->orderBy('consumed_at')
             ->get();
 

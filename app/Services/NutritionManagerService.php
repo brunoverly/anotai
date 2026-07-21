@@ -19,6 +19,7 @@ class NutritionManagerService
         $totalGorduras = 0;
         $totalCalorias = 0;
         $itemsProcessados = [];
+        $itemsNaoIdentificados = [];
 
         foreach ($items as $item) {
             $nomeAlimento = $item['alimento'] ?? '';
@@ -62,21 +63,18 @@ class NutritionManagerService
                     'calories_kcal' => $kcal
                 ];
             } else {
-                // Alimento totalmente não encontrado em nenhum degrau
-                $itemsProcessados[] = [
-                    'alimento' => $nomeAlimento,
-                    'quantidade' => $quantidadeInput,
-                    'unidade' => $unidadeInput,
-                    'protein_g' => 0,
-                    'carbohydrate_g' => 0,
-                    'fat_g' => 0,
-                    'calories_kcal' => 0
-                ];
+                // Alimento totalmente não encontrado em nenhum degrau: não dá pra
+                // afirmar com certeza o que é nem o peso, então NÃO inventamos um
+                // valor zerado (isso já causou o incidente do "arroz com 1 kcal").
+                // Fica de fora dos totais/itens processados e é reportado à parte.
+                Log::warning("Alimento não identificado em nenhum degrau -> {$nomeAlimento}");
+                $itemsNaoIdentificados[] = $nomeAlimento;
             }
         }
 
         return [
             'items' => $itemsProcessados,
+            'items_nao_identificados' => $itemsNaoIdentificados,
             'total_protein_g' => round($totalProteinas, 2),
             'total_carbohydrate_g' => round($totalCarbos, 2),
             'total_fat_g' => round($totalGorduras, 2),
@@ -89,6 +87,11 @@ class NutritionManagerService
      */
     private function searchFood(string $nomeAlimento, ?string $tipoAlimento, string $unidadeInput)
     {
+        // Sanitiza uma única vez aqui: todo o resto da escada (busca local,
+        // nome salvo no cache do Degrau 2/3) usa essa mesma versão normalizada,
+        // pra nunca ficar comparando/gravando "pão" e "pao" como coisas diferentes.
+        $nomeAlimento = $this->sanitizeFoodName($nomeAlimento);
+
         // ── DEGRAU 1: BANCO LOCAL (Postgres/Supabase) ──
         $localFood = $this->searchInLocalDatabase($nomeAlimento);
         if ($localFood) {
@@ -118,7 +121,7 @@ class NutritionManagerService
 
         // ── DEGRAU 3: ESTIMATIVA POR LLM (Groq) ──
         Log::info("Degrau 3: API falhou. Solicitando estimativa da LLM -> {$nomeAlimento}");
-        $llmFood = $this->estimateWithLLM($nomeAlimento);
+        $llmFood = $this->estimateWithLLM($nomeAlimento, $unidadeInput);
         if ($llmFood) {
             $newFood = Food::updateOrCreate(['name' => $llmFood['name']], $llmFood);
 
@@ -126,6 +129,28 @@ class NutritionManagerService
         }
 
         return null;
+    }
+
+    /**
+     * Normaliza um nome de alimento pra comparação/gravação consistente:
+     * minúsculas, sem acento (transliterado pra ASCII) e sem espaços
+     * duplicados/nas pontas. Sem isso, "Pão", "pão" e "pao" (vindos de
+     * chamadas diferentes de LLM/API) seriam tratados como alimentos
+     * distintos tanto na busca quanto no cache salvo em `foods`.
+     */
+    private function sanitizeFoodName(string $nome): string
+    {
+        return (string) Str::of($nome)->lower()->ascii()->squish();
+    }
+
+    /**
+     * Escapa os curingas do LIKE (% e _) pra que um nome de alimento que
+     * contenha esses caracteres literalmente não seja interpretado como
+     * padrão de busca.
+     */
+    private function escapeLike(string $valor): string
+    {
+        return str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $valor);
     }
 
     private function searchInLocalDatabase(string $nomeAlimento)
@@ -138,7 +163,7 @@ class NutritionManagerService
         }
 
         // Sem match exato: prioriza o nome mais curto (mais próximo do termo buscado)
-        $found = Food::where('name', 'like', '%' . $nomeAlimento . '%')
+        $found = Food::where('name', 'like', '%' . $this->escapeLike($nomeAlimento) . '%')
             ->orderByRaw('LENGTH(name) ASC')
             ->first();
         if ($found) {
@@ -151,7 +176,7 @@ class NutritionManagerService
             $singular = Str::substr($nomeAlimento, 0, -1);
 
             return Food::where('name', $singular)
-                ->orWhere('name', 'like', '%' . $singular . '%')
+                ->orWhere('name', 'like', '%' . $this->escapeLike($singular) . '%')
                 ->orderByRaw('LENGTH(name) ASC')
                 ->first();
         }
@@ -239,7 +264,7 @@ class NutritionManagerService
             // Validação de segurança obrigatória
             if ($proteina !== null && $carbo !== null) {
                 return [
-                    'name'            => strtolower($product['product_name'] ?? $nomeAlimento),
+                    'name'            => $this->sanitizeFoodName($product['product_name'] ?? $nomeAlimento),
                     'protein_g'       => round((float)$proteina, 2),
                     'carbohydrate_g'  => round((float)$carbo, 2),
                     'fat_g'           => round((float)$gordura, 2),
@@ -289,7 +314,7 @@ class NutritionManagerService
         };
     }
 
-    private function estimateWithLLM(string $nomeAlimento)
+    private function estimateWithLLM(string $nomeAlimento, string $unidadeInput)
     {
         try {
             $apiKey = config('services.groq.api_key');
@@ -307,11 +332,11 @@ class NutritionManagerService
                     'messages' => [
                         [
                             'role' => 'system',
-                            'content' => 'Você é um assistente especialista em nutrição. Responda APENAS com um objeto JSON válido, contendo a estimativa para 100g do alimento informado. Não use markdown blockcode (```json) na resposta. Chaves obrigatórias no JSON: name, protein_g, carbohydrate_g, fat_g, calories_kcal, peso_unidade_g. O campo peso_unidade_g é o peso estimado em gramas de UMA unidade/porção comum desse alimento no mundo real (ex: 1 ovo cozido ~50g, 1 fatia de pizza ~120g, 1 lata de refrigerante ~350g, 1 banana ~90g). Se o alimento normalmente só é medido em peso (ex: arroz, carne moída), estime o peso de uma porção média de refeição (ex: 150g). Exemplo: {"name": "biscoito danix", "protein_g": 6.5, "carbohydrate_g": 68.0, "fat_g": 18.0, "calories_kcal": 460, "peso_unidade_g": 40}'
+                            'content' => 'Você é um assistente especialista em nutrição. Responda APENAS com um objeto JSON válido, contendo a estimativa para 100g do alimento informado. Não use markdown blockcode (```json) na resposta. Chaves obrigatórias no JSON: name, protein_g, carbohydrate_g, fat_g, calories_kcal, peso_unidade_g. O campo peso_unidade_g é o peso estimado em gramas de EXATAMENTE 1 unidade de medida informada pelo usuário (ex: se a unidade for "fatia" de pão de forma, estime o peso de UMA fatia fina, ~25g — não o pão inteiro; se for "unidade" de ovo cozido, ~50g; se for "colher" de aveia, ~15g; se for "dose" de whey protein, ~30g). Se a unidade informada for "grama" ou "ml", esse campo não será usado no cálculo — pode estimar o peso de uma porção média de refeição (ex: 150g). Exemplo, para a unidade "fatia" de biscoito danix: {"name": "biscoito danix", "protein_g": 6.5, "carbohydrate_g": 68.0, "fat_g": 18.0, "calories_kcal": 460, "peso_unidade_g": 40}'
                         ],
                         [
                             'role' => 'user',
-                            'content' => "Estime os macronutrientes para 100g de: {$nomeAlimento}"
+                            'content' => "Estime os macronutrientes para 100g de: {$nomeAlimento}. A unidade de medida informada pelo usuário foi: \"{$unidadeInput}\"."
                         ]
                     ],
                     'response_format' => ['type' => 'json_object'], // Garante que a LLM cuspa JSON puro
@@ -340,12 +365,12 @@ class NutritionManagerService
                     }
 
                     return [
-                        'name'            => strtolower($llmData['name'] ?? $nomeAlimento),
+                        'name'            => $this->sanitizeFoodName($llmData['name'] ?? $nomeAlimento),
                         'protein_g'       => round($proteina, 2),
                         'carbohydrate_g'  => round($carbo, 2),
                         'fat_g'           => round($gordura, 2),
                         'calories_kcal'   => round($caloria, 0),
-                        'serving_name'    => 'unidade',
+                        'serving_name'    => $unidadeInput,
                         'serving_size_g'  => round($pesoUnidade, 2) > 0 ? round($pesoUnidade, 2) : 100,
                         'source'          => 'llm_groq_estimate' // 👈 Injetado para identificar a origem do dado
                     ];
