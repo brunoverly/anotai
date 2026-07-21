@@ -467,10 +467,12 @@ class TelegramController extends Controller
         if ($percentual > 100) {
             $statusEmoji = $alertaSeAcima ? '🔴' : '🟢';
             $marcador = " {$statusEmoji}";
-            $diferenca = ' (+' . round($consumido - $meta) . " {$unidade})";
+            $diferenca = ' _(+' . round($consumido - $meta) . " {$unidade})_";
 
             if ($alertaSeAcima) {
                 $situacao[] = "• 🔴 {$label} acima da meta.";
+            } else {
+                $situacao[] = "• 🟢 Meta de {$label} atingida!";
             }
         }
 
