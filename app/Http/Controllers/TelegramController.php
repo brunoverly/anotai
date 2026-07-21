@@ -31,6 +31,22 @@ class TelegramController extends Controller
             return response()->json(['status' => 'forbidden'], 403);
         }
 
+        // Garante que o usuário já exista no banco a partir da PRIMEIRA interação,
+        // seja ela uma refeição ou um comando (ex: /macros) — antes disso, o
+        // usuário só era criado ao salvar uma refeição, então comandos como
+        // /macros falhavam silenciosamente pra quem nunca tinha registrado nada.
+        if ($request->has('message.chat.id')) {
+            $telegramUsername = $request->input('message.from.username');
+
+            User::firstOrCreate(
+                ['telegram_chat_id' => (int) $request->input('message.chat.id')],
+                [
+                    'name' => $telegramUsername ?? 'telegram_' . $request->input('message.chat.id'),
+                    'telegram_username' => $telegramUsername,
+                ]
+            );
+        }
+
         $msg_start = "👋 *Oi! Eu sou o Anotai.*\n" .
                     "──────────────────\n" .
                     "Me manda um áudio ou um texto contando o que você comeu que eu calculo os macros e mantenho o controle pra você.\n\n" .
@@ -416,7 +432,7 @@ class TelegramController extends Controller
         $situacao = [];
 
         $msg .= $this->blocoMacro('🔥', 'Calorias', (float)$resumo['total_calories_kcal'], (float)$resumo['user_calories_goal_kcal'], 'kcal', true, $situacao);
-        $msg .= $this->blocoMacro('🥩', 'Proteínas', (float)$resumo['total_protein_g'], (float)$resumo['user_protein_goal_g'], 'g', false, $situacao);
+        $msg .= $this->blocoMacro('🍗', 'Proteínas', (float)$resumo['total_protein_g'], (float)$resumo['user_protein_goal_g'], 'g', false, $situacao);
         $msg .= $this->blocoMacro('🍞', 'Carboidratos', (float)$resumo['total_carbohydrate_g'], (float)$resumo['user_carbohydrate_goal_g'], 'g', true, $situacao);
         $msg .= $this->blocoMacro('🥑', 'Gorduras', (float)$resumo['total_fat_g'], (float)$resumo['user_fat_goal_g'], 'g', true, $situacao);
 
@@ -435,9 +451,10 @@ class TelegramController extends Controller
      * — sem isso, passar de 100% da meta faria "10 - blocosCheios" ficar
      * negativo e o str_repeat() dos blocos vazios quebraria com erro.
      *
-     * $alertaSeAcima controla se passar de 100% deve acender o 🔴 e entrar na
-     * lista de "Situação" — proteína a mais não é um problema, então ela usa
-     * false e nunca gera alerta, mesmo estourando a meta.
+     * $alertaSeAcima controla a cor do marcador quando passa de 100%: 🔴 pra
+     * quem é ruim passar (calorias, carbo, gordura) e 🟢 pra quem tanto faz
+     * ou é até bom (proteína) — só calorias/carbo/gordura entram na lista de
+     * "Situação", proteína nunca vira alerta mesmo passando da meta.
      */
     private function blocoMacro(string $emoji, string $label, float $consumido, float $meta, string $unidade, bool $alertaSeAcima, array &$situacao): string
     {
@@ -446,14 +463,20 @@ class TelegramController extends Controller
         $barra = str_repeat('▰', $blocosCheios) . str_repeat('▱', 10 - $blocosCheios);
 
         $marcador = '';
-        if ($percentual > 100 && $alertaSeAcima) {
-            $marcador = ' 🔴';
-            $situacao[] = "• 🔴 {$label} acima da meta.";
+        $diferenca = '';
+        if ($percentual > 100) {
+            $statusEmoji = $alertaSeAcima ? '🔴' : '🟢';
+            $marcador = " {$statusEmoji}";
+            $diferenca = ' (+' . round($consumido - $meta) . " {$unidade})";
+
+            if ($alertaSeAcima) {
+                $situacao[] = "• 🔴 {$label} acima da meta.";
+            }
         }
 
         return "{$emoji} *{$label}*\n" .
-            " {$consumido} / " . round($meta) . " {$unidade}\n" .
-            " {$barra} " . round($percentual) . "%{$marcador}\n\n";
+            " {$consumido} / " . round($meta) . " {$unidade}{$marcador}{$diferenca}\n" .
+            " {$barra} " . round($percentual) . "%\n\n";
     }
 
     /**

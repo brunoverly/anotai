@@ -314,6 +314,23 @@ class NutritionManagerService
         };
     }
 
+    /**
+     * Pesos de referência (em gramas) por unidade de medida, pros alimentos mais
+     * comuns de serem pedidos. Sem isso, a LLM tende a variar demais o peso que
+     * considera "uma fatia"/"uma unidade" entre chamadas diferentes — já vimos
+     * ela chutar 80g e 120g pra uma fatia de pão que na real pesa ~25g.
+     */
+    private function referenciaPesosPorUnidade(): string
+    {
+        return 'Use esta referência de pesos comuns como base, ajustando pelo alimento específico mencionado: '
+            . 'FATIA: pão de forma (comum, integral, light ou multigrãos) 20-30g; pão francês 50g; queijo (mussarela, prato, minas) 15-25g; '
+            . 'presunto, mortadela ou peito de peru 10-15g; pizza 100-150g; bolo 60-100g; melancia, melão ou abacaxi 100-150g. '
+            . 'UNIDADE: ovo cozido/frito/mexido 45-55g; pão francês 50g; banana 90-120g; maçã, laranja ou pera 120-150g; batata média 130-150g; '
+            . 'biscoito ou bolacha 5-10g; salsicha 50g; bombom ou chocolate pequeno 20-30g. '
+            . 'COLHER (de sopa): arroz, feijão ou macarrão cozido 20-25g; açúcar, farinha ou aveia 12-15g; azeite, óleo ou manteiga 13g; maionese ou requeijão 15g. '
+            . 'DOSE: whey protein ou suplemento em pó 30g; creatina 5g.';
+    }
+
     private function estimateWithLLM(string $nomeAlimento, string $unidadeInput)
     {
         try {
@@ -332,7 +349,7 @@ class NutritionManagerService
                     'messages' => [
                         [
                             'role' => 'system',
-                            'content' => 'Você é um assistente especialista em nutrição. Responda APENAS com um objeto JSON válido, contendo a estimativa para 100g do alimento informado. Não use markdown blockcode (```json) na resposta. Chaves obrigatórias no JSON: name, protein_g, carbohydrate_g, fat_g, calories_kcal, peso_unidade_g. O campo peso_unidade_g é o peso estimado em gramas de EXATAMENTE 1 unidade de medida informada pelo usuário (ex: se a unidade for "fatia" de pão de forma, estime o peso de UMA fatia fina, ~25g — não o pão inteiro; se for "unidade" de ovo cozido, ~50g; se for "colher" de aveia, ~15g; se for "dose" de whey protein, ~30g). Se a unidade informada for "grama" ou "ml", esse campo não será usado no cálculo — pode estimar o peso de uma porção média de refeição (ex: 150g). Exemplo, para a unidade "fatia" de biscoito danix: {"name": "biscoito danix", "protein_g": 6.5, "carbohydrate_g": 68.0, "fat_g": 18.0, "calories_kcal": 460, "peso_unidade_g": 40}'
+                            'content' => 'Você é um assistente especialista em nutrição. Responda APENAS com um objeto JSON válido, contendo a estimativa para 100g do alimento informado. Não use markdown blockcode (```json) na resposta. Chaves obrigatórias no JSON: name, protein_g, carbohydrate_g, fat_g, calories_kcal, peso_unidade_g. O campo peso_unidade_g é o peso estimado em gramas de EXATAMENTE 1 unidade de medida informada pelo usuário. ' . $this->referenciaPesosPorUnidade() . ' Se o alimento pedido não estiver na lista de referência, estime pelo tamanho físico típico de UMA porção daquela unidade — nunca chute o peso do alimento inteiro/embalagem quando a unidade pedida for uma fração menor (fatia/colher/dose). Se a unidade informada for "grama" ou "ml", o campo peso_unidade_g não será usado no cálculo — pode estimar o peso de uma porção média de refeição (ex: 150g). Exemplo, para a unidade "fatia" de biscoito danix: {"name": "biscoito danix", "protein_g": 6.5, "carbohydrate_g": 68.0, "fat_g": 18.0, "calories_kcal": 460, "peso_unidade_g": 40}'
                         ],
                         [
                             'role' => 'user',
