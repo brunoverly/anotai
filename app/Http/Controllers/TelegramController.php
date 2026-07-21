@@ -33,6 +33,11 @@ class TelegramController extends Controller
 
         if ($request->has('message.voice')) {
             log::info('Mensagem de voz recebida');
+            $telegramService->sendMessage(
+                        $request->input('message.chat.id'),
+                        "📥 *Áudio Recebido!*\n" .
+                        "⏳ _Processando sua mensagem de voz..._\n" .
+                        "🤖 _Aguarde um momento enquanto a mágica acontece._");
 
             try{
                 $fileId = $request->input('message.voice.file_id');
@@ -49,12 +54,6 @@ class TelegramController extends Controller
 
                     Storage::put('audios/' . $userName . '_' . $fileId . '.ogg', $fileContent);
 
-                    $telegramService->sendMessage(
-                        $request->input('message.chat.id'),
-                        "📥 *Áudio Recebido!*\n" .
-                        "──────────────────\n" .
-                        "⏳ _Processando sua mensagem de voz..._\n" .
-                        "🤖 _Aguarde um momento enquanto o Anotai faz a mágica acontecer._");
 
                     $transcribedText = $transcriptionService->transcribe('audios/' . $userName . '_' . $fileId . '.ogg');
 
@@ -131,7 +130,41 @@ class TelegramController extends Controller
         if ($request->has('message.text')) {
             log::info('Mensagem de texto recebida', ['text' => $request->input('message.text')]);
 
+            $telegramService->sendMessage(
+                    $request->input('message.chat.id'),
+                    "📥 *Texto Recebido!*\n" .
+                    "⏳ _Processando sua mensagem de texto..._\n" .
+                    "🤖 _Aguarde um momento enquanto a mágica acontece._");
+
             $text = $request->input('message.text');
+            $macros = $this->checkUserMacroRegex($text);
+
+            if ($macros) {
+                    $response =$mealReportService->saveUserMacros((int) $request->input('message.chat.id'), $macros);
+
+                    if ($response) {
+                        $telegramService->sendMessage(
+                            $request->input('message.chat.id'),
+                            "✅ *Metas de Macros Atualizadas!*\n" .
+                            "──────────────────\n" .
+                            "Suas metas foram atualizadas com sucesso:\n" .
+                            "🔥 Calorias: {$macros['calories_kcal']} kcal\n" .
+                            "🍞 Carboidratos: {$macros['carbohydrate_g']} g\n" .
+                            "🥩 Proteínas: {$macros['protein_g']} g\n" .
+                            "🥑 Gorduras: {$macros['fat_g']} g \n\n".
+                            "Agora os comandos /hoje e /semana mostrarão seu progresso."
+                        );
+                    } else {
+                        $telegramService->sendMessage(
+                            $request->input('message.chat.id'),
+                            "⚠️ *Erro ao Atualizar Metas!*\n" .
+                            "──────────────────\n" .
+                            "❌ _O Anotai não conseguiu atualizar suas metas de macros. Por favor, verifique suas informações e tente novamente._"
+                        );
+                    }
+
+                return response()->json(['status' => 'success']);
+            }
 
             if (str_starts_with(trim($text), '/')) {
                 // Remove o "@nomedobot" que o Telegram às vezes anexa e pega só o comando
@@ -140,6 +173,7 @@ class TelegramController extends Controller
 
                 if (in_array($comando, ['/hoje'])) {
                     $resumo = $mealReportService->resumoDia($chatId);
+
                     if(isset($resumo['user_calories_goal_kcal']))
                         $telegramService->sendMessage(
                             $request->input('message.chat.id'),
@@ -164,7 +198,38 @@ class TelegramController extends Controller
                             $this->formatarMensagemResumo($resumo, '🗓️ Resumo da Semana')
                         );
                     }
-                } else {
+                } elseif ($comando === '/excluir') {
+                    $deletedMeal = $mealReportService->excluirUltimaRefeicao($chatId);
+                    if($deletedMeal) {
+                        $msg = $this->formatarMensagemResposta($deletedMeal);
+                        $telegramService->sendMessage(
+                            $request->input('message.chat.id'),
+                            "🗑️ *Última Refeição Excluída!*\n" .
+                            "──────────────────\n" .
+                            $msg
+                        );
+                    } else {
+                        $telegramService->sendMessage(
+                            $request->input('message.chat.id'),
+                            "⚠️ *Nenhuma Refeição Encontrada!*\n" .
+                            "──────────────────\n" .
+                            "Não foi encontrada uma refeição registrada hoje para excluir."
+                        );
+                    }
+
+                } elseif ($comando === '/macros'){
+                    $telegramService->sendMessage(
+                        $request->input('message.chat.id'),
+                        "🎯  *Metas de Macros*\n" .
+                        "──────────────────\n" .
+                        "Copie esta mensagem e preencha dentro das [ ] os valores das suas metas:\n" .
+                        "*somente os valores numéricos, sem virgulas ou pontos.*\n" .
+                        "🔥 Calorias: [   ] kcal\n" .
+                        "🍞 Carboidratos: [   ] g\n" .
+                        "🥩 Proteínas: [   ] g\n" .
+                        "🥑 Gorduras: [   ] g"
+                    );
+                }else {
                     $telegramService->sendMessage(
                         $request->input('message.chat.id'),
                         "👋 *Oi! Eu sou o Anotai.*\n" .
@@ -180,14 +245,6 @@ class TelegramController extends Controller
             }
 
             try{
-                $telegramService->sendMessage(
-                    $request->input('message.chat.id'),
-                    "📥 *Texto Recebido!*\n" .
-                    "──────────────────\n" .
-                    "⏳ _Processando sua mensagem de texto..._\n" .
-                    "🤖 _Aguarde um momento enquanto o Anotai faz a mágica acontecer._");
-
-
                     $response = $mealParserService->parseMealText($text);
 
                     if ($response) {
@@ -365,5 +422,31 @@ class TelegramController extends Controller
         $msg .= "🥑 Gordura: " . $resultado['total_fat_g'] . "g";
 
         return $msg;
+    }
+
+    /**
+     * Verifica se a mensagem recebida é uma resposta preenchida do template de /macros.
+     * Retorna null se algum dos 4 valores não for encontrado (ou seja, não é uma resposta válida).
+     */
+    private function checkUserMacroRegex($msg)
+    {
+        $padroes = [
+            'calories_kcal'    => '/Calorias:\s*\[?\s*(\d+)\s*\]?\s*kcal/iu',
+            'carbohydrate_g'   => '/Carboidratos:\s*\[?\s*(\d+)\s*\]?\s*g/iu',
+            'protein_g'        => '/Prote[íi]nas:\s*\[?\s*(\d+)\s*\]?\s*g/iu',
+            'fat_g'            => '/Gorduras:\s*\[?\s*(\d+)\s*\]?\s*g/iu',
+        ];
+
+        $macros = [];
+
+        foreach ($padroes as $chave => $padrao) {
+            if (!preg_match($padrao, $msg, $matches)) {
+                return false;
+            }
+
+            $macros[$chave] = (int) $matches[1];
+        }
+
+        return $macros;
     }
 }

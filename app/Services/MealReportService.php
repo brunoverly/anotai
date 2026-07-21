@@ -73,4 +73,45 @@ class MealReportService
         }
 
     }
+
+    public function excluirUltimaRefeicao(int $chatId)
+    {
+        $user = User::where('telegram_chat_id', $chatId)->first();
+        if (!$user) {
+            return false;
+        }
+
+        $ultimaRefeicao = Meal::where('user_id', $user->id)->whereDate('consumed_at',today())->where('deleted_at', '=', null)
+            ->orderByDesc('consumed_at')
+            ->first();
+
+        if ($ultimaRefeicao) {
+            $ultimaRefeicao->delete();
+            return [
+                'items' => $ultimaRefeicao->items,
+                'total_calories_kcal' => $ultimaRefeicao->total_calories_kcal,
+                'total_protein_g' => $ultimaRefeicao->total_protein_g,
+                'total_carbohydrate_g' => $ultimaRefeicao->total_carbohydrate_g,
+                'total_fat_g' => $ultimaRefeicao->total_fat_g,
+            ];
+        }
+
+        return false;
+    }
+
+    public function saveUserMacros(int $chatId, $macros)
+    {
+        $user = User::where('telegram_chat_id', $chatId)->first();
+        if (!$user) {
+            return false;
+        }
+
+        return $user->update([
+            'calories_kcal' => $macros['calories_kcal'],
+            'carbohydrate_g' => $macros['carbohydrate_g'],
+            'protein_g' => $macros['protein_g'],
+            'fat_g' => $macros['fat_g'],
+        ]);
+
+    }
 }
