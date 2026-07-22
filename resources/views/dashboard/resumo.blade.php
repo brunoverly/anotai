@@ -183,6 +183,7 @@
             scroll-snap-align: start;
             border: 1px solid var(--card-border);
             border-radius: 12px;
+            margin-bottom: 5px;
             padding: 1rem;
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02);
         }
