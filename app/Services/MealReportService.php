@@ -139,7 +139,17 @@ class MealReportService
         for ($dia = $inicio->copy(); $dia->lte($fim); $dia->addDay()) {
             $refeicoesDoDia = $meals->filter(fn ($meal) => $meal->consumed_at->isSameDay($dia));
 
-            $last7Days[$dia->format('d/m')] = [
+            $daysOfTheWeek = [
+                0 => 'Dom',
+                1 => 'Seg',
+                2 => 'Ter',
+                3 => 'Qua',
+                4 => 'Qui',
+                5 => 'Sex',
+                6 => 'Sáb',
+            ];
+
+            $last7Days[$daysOfTheWeek[$dia->dayOfWeek]] = [
                 'total_calories_kcal' => round($refeicoesDoDia->sum('total_calories_kcal'), 0),
                 'total_protein_g' => round($refeicoesDoDia->sum('total_protein_g'), 2),
                 'total_carbohydrate_g' => round($refeicoesDoDia->sum('total_carbohydrate_g'), 2),

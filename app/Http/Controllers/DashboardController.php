@@ -36,16 +36,17 @@ class DashboardController extends Controller
             $resumo['%_carbohydrate'] = round(($resumo['total_carbohydrate_g'] / $resumo['user_carbohydrate_goal_g']) * 100) . '%';
             $resumo['%_protein'] = round(($resumo['total_protein_g'] / $resumo['user_protein_goal_g']) * 100) . '%';
             $resumo['%_fat'] = round(($resumo['total_fat_g'] / $resumo['user_fat_goal_g']) * 100) . '%';
-        }   
+        }
 
         $dayMeals = Meal::where('user_id', $user->id)
             ->whereBetween('consumed_at', [now()->startOfDay(), now()->endOfDay()])
             ->where('deleted_at', '=', null)
-            ->orderBy('consumed_at')
+            ->orderBy('consumed_at', 'desc')
             ->get(['consumed_at', 'total_protein_g', 'total_carbohydrate_g', 'total_fat_g', 'total_calories_kcal']);
 
         $last7DaysMeals = $mealReportService->last7days($chatId);
-        return response()->json([
+
+        return view('dashboard.resumo', [
             'userName' => $userName,
             'resumo' => $resumo,
             'last7DaysMeals' => $last7DaysMeals,
