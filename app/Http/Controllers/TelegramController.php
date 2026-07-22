@@ -12,6 +12,7 @@ use App\Services\TelegramService;
 use App\Services\UserMealService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Storage;
 
 class TelegramController extends Controller
@@ -293,11 +294,11 @@ class TelegramController extends Controller
                         "🥑 Gorduras: \\[   \\] g"
                     );
                 } elseif ($comando === '/app') {
-                    $dashboardUrl = config('app.url') . '/dashboard/' . $chatId;
+                    $dashboardUrl = URL::temporarySignedRoute('dashboard.login', now()->addMinutes(10), ['chatId' => $chatId]);
                     $telegramService->editMessage(
                         $request->input('message.chat.id'),
                         $chat_msg_id,
-                        "📊 *Dashboard Anotai*\n" .
+                        "📈 *Dashboard Anotai*\n" .
                         "──────────────────\n" .
                         "Acompanhe seus macros, refeições e metas pelo painel web:\n" .
                         "[Abrir Dashboard]({$dashboardUrl})"
@@ -432,10 +433,10 @@ class TelegramController extends Controller
     private function formatarMensagemResumoComMacros(array $resumo, string $titulo): string
     {
         if ($resumo['quantidade_refeicoes'] === 0) {
-            return "{$titulo} ({$resumo['periodo_formatado']})\n──────────────────\nNenhuma refeição registrada ainda nesse período.";
+            return "```\n{$titulo} {$resumo['periodo_formatado']}\n```\nNenhuma refeição registrada ainda nesse período.";
         }
 
-        $msg = "{$titulo} ({$resumo['periodo_formatado']})\n\n";
+        $msg = "```\n{$titulo} {$resumo['periodo_formatado']}\n```\n\n";
 
         // Situação acumula os avisos de "acima da meta" — proteína a mais não é
         // problema, então ela nunca entra na lista, mesmo passando de 100%.
@@ -446,8 +447,6 @@ class TelegramController extends Controller
         $msg .= $this->blocoMacro('🍞', 'Carboidratos', (float)$resumo['total_carbohydrate_g'], (float)$resumo['user_carbohydrate_goal_g'], 'g', true, $situacao);
         $msg .= $this->blocoMacro('🥑', 'Gorduras', (float)$resumo['total_fat_g'], (float)$resumo['user_fat_goal_g'], 'g', true, $situacao);
 
-        $msg .= "📝 Refeições no período: {$resumo['quantidade_refeicoes']}\n\n";
-
         if (!empty($situacao)) {
             $msg .= "📌 *Situação*\n" . implode("\n", $situacao);
         }
@@ -457,9 +456,9 @@ class TelegramController extends Controller
 
     /**
      * Monta o bloco de uma macro: rótulo, "consumido / meta unidade" e a barra
-     * de 10 blocos (▰/▱). O número de blocos cheios é travado em 10 com min()
-     * — sem isso, passar de 100% da meta faria "10 - blocosCheios" ficar
-     * negativo e o str_repeat() dos blocos vazios quebraria com erro.
+     * de 10 marcadores (●/○). O número de marcadores cheios é travado em 10
+     * com min() — sem isso, passar de 100% da meta faria "10 - blocosCheios"
+     * ficar negativo e o str_repeat() dos marcadores vazios quebraria com erro.
      *
      * $alertaSeAcima controla a cor do marcador quando passa de 100%: 🔴 pra
      * quem é ruim passar (calorias, carbo, gordura) e 🟢 pra quem tanto faz
@@ -470,7 +469,7 @@ class TelegramController extends Controller
     {
         $percentual = $meta > 0 ? ($consumido / $meta) * 100 : 0;
         $blocosCheios = min(10, (int) round($percentual / 10));
-        $barra = str_repeat('▰', $blocosCheios) . str_repeat('▱', 10 - $blocosCheios);
+        $barra = str_repeat('●', $blocosCheios) . str_repeat('○', 10 - $blocosCheios);
 
         $marcador = '';
         $diferenca = '';

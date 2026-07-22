@@ -280,4 +280,16 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.showMeal', ['chatId' => $chatId, 'mealId' => $mealId])->with('success', 'Refeição atualizada com sucesso!');
 
     }
+
+    public function login(int $chatId)
+    {
+        $user = User::where('telegram_chat_id', $chatId)->first();
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        session(['chatId' => $chatId]);
+
+        return redirect()->route('dashboard.index', ['chatId' => $chatId])->with('success', 'Login realizado com sucesso!');
+    }
 }

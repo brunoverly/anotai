@@ -330,9 +330,9 @@
                     </div>
                     <div class="input-wrapper input-kcal">
                         @if(isset($meal))
-                            <input type="number" name="total_calories_kcal" value="{{ $meal->total_calories_kcal }}" />
+                            <input type="number" step="0.01" name="total_calories_kcal" value="{{ $meal->total_calories_kcal }}" />
                         @else
-                            <input type="number" name="calories_kcal" value="{{ $user->calories_kcal }}" />
+                            <input type="number" step="0.01" name="calories_kcal" value="{{ $user->calories_kcal }}" />
                         @endif
                         <span class="unit">kcal</span>
                     </div>
@@ -350,9 +350,9 @@
                     </div>
                     <div class="input-wrapper">
                         @if(isset($meal))
-                            <input type="number" name="total_protein_g" value="{{ $meal->total_protein_g }}" />
+                            <input type="number" step="0.01" name="total_protein_g" value="{{ $meal->total_protein_g }}" />
                         @else
-                            <input type="number" name="protein_g" value="{{ $user->protein_g }}" />
+                            <input type="number" step="0.01" name="protein_g" value="{{ $user->protein_g }}" />
                         @endif
                         <span class="unit">g</span>
                     </div>
@@ -370,9 +370,9 @@
                     </div>
                     <div class="input-wrapper">
                         @if(isset($meal))
-                            <input type="number" name="total_fat_g" value="{{ $meal->total_fat_g }}" />
+                            <input type="number" step="0.01" name="total_fat_g" value="{{ $meal->total_fat_g }}" />
                         @else
-                            <input type="number" name="fat_g" value="{{ $user->fat_g }}" />
+                            <input type="number" step="0.01" name="fat_g" value="{{ $user->fat_g }}" />
                         @endif
                         <span class="unit">g</span>
                     </div>
@@ -390,9 +390,9 @@
                     </div>
                     <div class="input-wrapper">
                         @if(isset($meal))
-                            <input type="number" name="total_carbohydrate_g" value="{{ $meal->total_carbohydrate_g }}" />
+                            <input type="number" step="0.01" name="total_carbohydrate_g" value="{{ $meal->total_carbohydrate_g }}" />
                         @else
-                            <input type="number" name="carbohydrate_g" value="{{ $user->carbohydrate_g }}" />
+                            <input type="number" step="0.01" name="carbohydrate_g" value="{{ $user->carbohydrate_g }}" />
                         @endif
                         <span class="unit">g</span>
                     </div>
