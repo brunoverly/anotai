@@ -183,6 +183,11 @@
             margin-top: 4px;
         }
 
+        .meal-macros .macro-letter {
+            font-weight: 700;
+            color: #4b5563;
+        }
+
         .status-icon {
             width: 16px;
             height: 16px;
@@ -432,7 +437,7 @@
                 </div>
                 <div class="meal-stats">
                     <div class="meal-kcal">{{ round($meal->total_calories_kcal) }} <span>kcal</span></div>
-                    <div class="meal-macros">P {{ round($meal->total_protein_g) }}g &nbsp; G {{ round($meal->total_fat_g) }}g &nbsp; C {{ round($meal->total_carbohydrate_g) }}g</div>
+                    <div class="meal-macros"><span class="macro-letter">P</span> {{ round($meal->total_protein_g) }}g &nbsp; <span class="macro-letter">G</span> {{ round($meal->total_fat_g) }}g &nbsp; <span class="macro-letter">C</span> {{ round($meal->total_carbohydrate_g) }}g</div>
                 </div>
             </div>
 

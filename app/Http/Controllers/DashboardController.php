@@ -53,6 +53,7 @@ class DashboardController extends Controller
             'resumo' => $resumo,
             'last7DaysMeals' => $last7DaysMeals,
             'dayMeals' => $dayMeals,
+            'current' => 'resumo',
         ]);
     }
 

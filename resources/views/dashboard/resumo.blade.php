@@ -320,6 +320,11 @@
             margin-top: 4px;
         }
 
+        .meal-macros .macro-letter {
+            font-weight: 700;
+            color: #4b5563;
+        }
+
     </style>
 </head>
 <body>
@@ -327,7 +332,7 @@
 <div class="mobile-container">
     <!-- Cabeçalho -->
     <header>
-        @include('dashboard.partials.menu', ['current' => 'resumo'])
+        @include('dashboard.partials.menu', ['current' => $current ?? null])
         @if (isset($last7DaysMeals) && !empty($last7DaysMeals))
         <h1>
             <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -354,10 +359,10 @@
             <div class="macro-values">
                 <span class="macro-current">{{ $resumo['total_calories_kcal'] }}</span>
                 @if($resumo['user_calories_goal_kcal'] > 0)
-                    <span class="macro-target">/ {{ $resumo['user_calories_goal_kcal'] }}</span>
+                    <span class="macro-target">/ {{ $resumo['user_calories_goal_kcal'] }}kcal</span>
                 @endif
             </div>
-            <span class="macro-name">kcal</span>
+            <span class="macro-name">Calorias</span>
             <div class="progress-container">
                 <div class="progress-track"><div class="progress-fill" style="width: {{ $resumo['%_calories'] ?: '100%' }}"></div></div>
                 @if($resumo['%_calories'])
@@ -494,7 +499,7 @@
                 </div>
                 <div class="meal-stats">
                     <div class="meal-kcal">{{ round($meal->total_calories_kcal) }} <span>kcal</span></div>
-                    <div class="meal-macros">P {{ round($meal->total_protein_g) }}g &nbsp; G {{ round($meal->total_fat_g) }}g &nbsp; C {{ round($meal->total_carbohydrate_g) }}g</div>
+                    <div class="meal-macros"><span class="macro-letter">P</span> {{ round($meal->total_protein_g) }}g &nbsp; <span class="macro-letter">G</span> {{ round($meal->total_fat_g) }}g &nbsp; <span class="macro-letter">C</span> {{ round($meal->total_carbohydrate_g) }}g</div>
                 </div>
             </div>
         @empty
