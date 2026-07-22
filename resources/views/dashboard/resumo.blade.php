@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dashboard Nutricional</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -298,15 +301,18 @@
 <div class="mobile-container">
     <!-- Cabeçalho -->
     <header>
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        @include('dashboard.partials.menu', ['current' => 'resumo'])
+        @if (isset($last7DaysMeals) && !empty($last7DaysMeals))
         <h1>Olá, {{ $userName }}</h1>
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        @else
+         <h2 class="section-title">Resumo {{ $resumo['periodo_formatado'] }}</h2>
+        @endif
     </header>
 
     <!-- Resumo de Hoje -->
-    <h2 class="section-title">Resumo de hoje</h2>
-
-
+    @if (isset($last7DaysMeals) && !empty($last7DaysMeals))
+        <h2 class="section-title">Resumo de hoje</h2>
+    @endif
     <div class="macros-grid">
         <!-- Calorias -->
         <div class="macro-card card-kcal @if((int) $resumo['%_calories'] > 100) over-goal @endif">
@@ -377,6 +383,8 @@
         </div>
     </div>
 
+    @if (isset($last7DaysMeals) && !empty($last7DaysMeals))
+
     <!-- Evolução da Semana -->
     <h2 class="section-title">Evolução da semana</h2>
     <div class="chart-carousel">
@@ -397,15 +405,20 @@
             <div class="chart-wrapper"><canvas id="chartCarbs"></canvas></div>
         </div>
     </div>
+
     <div class="carousel-dots">
         <span class="dot active"></span>
         <span class="dot"></span>
         <span class="dot"></span>
         <span class="dot"></span>
     </div>
-
+    @endif
     <!-- Últimas Refeições -->
-    <h2 class="section-title">Últimas refeições</h2>
+    @if (!isset($last7DaysMeals) && empty($last7DaysMeals))
+        <h2 class="section-title">Refeições do dia</h2>
+    @else
+        <h2 class="section-title">Últimas refeições</h2>
+    @endif
     <div class="meal-list">
         @forelse($dayMeals as $meal)
             @php
@@ -446,6 +459,7 @@
     </div>
 </div>
 
+@if (isset($last7DaysMeals) && !empty($last7DaysMeals))
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Configuração de estilo global do Chart.js
@@ -519,6 +533,6 @@
         });
     });
 </script>
-
+@endif
 </body>
 </html>

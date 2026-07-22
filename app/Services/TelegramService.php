@@ -35,7 +35,7 @@ class TelegramService
             ['command' => 'semana', 'description' => 'Resumo da semana'],
             ['command' => 'excluir', 'description' => 'Exclui a última refeição do dia'],
             ['command' => 'macros', 'description' => 'Define suas metas de macros (calorias, carboidratos, proteínas)'],
-            ['command' => 'app', 'description' => 'Link para o app web (em breve)'],
+            ['command' => 'app', 'description' => 'Link para o app web (dashboard)'],
         ]];
 
         return Http::post(

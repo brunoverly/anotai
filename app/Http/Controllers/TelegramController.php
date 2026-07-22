@@ -55,7 +55,7 @@ class TelegramController extends Controller
                     "/semana — resumo da semana\n" .
                     "/excluir — exclui a última refeição do dia\n" .
                     "/macros — define suas metas de macros (calorias, carboidratos, proteínas)\n" .
-                    '/app — link para o app web (em breve)';
+                    '/app — link para o app web (dashboard)';
 
         if ($request->has('message.voice')) {
             log::info('Mensagem de voz recebida');
@@ -291,6 +291,16 @@ class TelegramController extends Controller
                         "🍞 Carboidratos: \\[   \\] g\n" .
                         "🥩 Proteínas: \\[   \\] g\n" .
                         "🥑 Gorduras: \\[   \\] g"
+                    );
+                } elseif ($comando === '/app') {
+                    $dashboardUrl = config('app.url') . '/dashboard/' . $chatId;
+                    $telegramService->editMessage(
+                        $request->input('message.chat.id'),
+                        $chat_msg_id,
+                        "📊 *Dashboard Anotai*\n" .
+                        "──────────────────\n" .
+                        "Acompanhe seus macros, refeições e metas pelo painel web:\n" .
+                        "[Abrir Dashboard]({$dashboardUrl})"
                     );
                 }else {
                     $telegramService->editMessage(
