@@ -55,6 +55,12 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
+            animation: dashboardFadeIn 0.35s ease-out;
+        }
+
+        @keyframes dashboardFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Fixed Header */
@@ -73,6 +79,16 @@
         header h1 {
             font-size: 1.1rem;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            color: var(--text-muted, #6b7280);
         }
 
         .icon {
@@ -237,7 +253,10 @@
     <!-- Header Fixo -->
     <header>
         @include('dashboard.partials.menu', ['current' => 'week'])
-        <h1>Últimos 7 dias</h1>
+        <h1>
+            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            Últimos 7 dias
+        </h1>
     </header>
 
     <!-- Área de Scroll com os cards renderizados no servidor -->

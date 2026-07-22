@@ -47,6 +47,18 @@
             padding: 1.5rem;
         }
 
+        @keyframes dashboardFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Aplicado só nos blocos sem gráfico — o carrossel de gráficos usa
+           a própria animação de entrada do Chart.js, que já é suave sozinha;
+           somar um fade do container por cima dela ficava estranho. */
+        header, .section-title, .macros-grid, .meal-list {
+            animation: dashboardFadeIn 0.35s ease-out;
+        }
+
         /* Header */
         header {
             display: flex;
@@ -58,6 +70,9 @@
         header h1 {
             font-size: 1.2rem;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .icon {
@@ -66,12 +81,22 @@
             cursor: pointer;
         }
 
+        .title-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            color: var(--text-muted);
+        }
+
         /* Títulos de Seção */
         .section-title {
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 1rem;
             margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         /* Grid de Resumo */
@@ -304,15 +329,24 @@
     <header>
         @include('dashboard.partials.menu', ['current' => 'resumo'])
         @if (isset($last7DaysMeals) && !empty($last7DaysMeals))
-        <h1>Olá, {{ $userName }}</h1>
+        <h1>
+            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Olá, {{ $userName }}
+        </h1>
         @else
-         <h2 class="section-title">Resumo {{ $resumo['periodo_formatado'] }}</h2>
+         <h2 class="section-title">
+            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Resumo {{ $resumo['periodo_formatado'] }}
+        </h2>
         @endif
     </header>
 
     <!-- Resumo de Hoje -->
     @if (isset($last7DaysMeals) && !empty($last7DaysMeals))
-        <h2 class="section-title">Resumo de hoje</h2>
+        <h2 class="section-title">
+            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Resumo de hoje
+        </h2>
     @endif
     <div class="macros-grid">
         <!-- Calorias -->
@@ -387,7 +421,10 @@
     @if (isset($last7DaysMeals) && !empty($last7DaysMeals))
 
     <!-- Evolução da Semana -->
-    <h2 class="section-title">Evolução da semana</h2>
+    <h2 class="section-title">
+        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+        Evolução da semana
+    </h2>
     <div class="chart-carousel">
         <div class="chart-slide">
             <div class="chart-slide-title" style="color: var(--color-kcal)">Calorias</div>
@@ -416,9 +453,15 @@
     @endif
     <!-- Últimas Refeições -->
     @if (!isset($last7DaysMeals) && empty($last7DaysMeals))
-        <h2 class="section-title">Refeições do dia</h2>
+        <h2 class="section-title">
+            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path><path d="M7 2v20"></path><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path></svg>
+            Refeições do dia
+        </h2>
     @else
-        <h2 class="section-title">Últimas refeições</h2>
+        <h2 class="section-title">
+            <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path><path d="M7 2v20"></path><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path></svg>
+            Últimas refeições
+        </h2>
     @endif
     <div class="meal-list">
         @forelse($dayMeals as $meal)

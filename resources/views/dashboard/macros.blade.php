@@ -58,6 +58,12 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
+            animation: dashboardFadeIn 0.35s ease-out;
+        }
+
+        @keyframes dashboardFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Fixed Header */
@@ -76,6 +82,16 @@
         header h1 {
             font-size: 1.1rem;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            color: var(--text-muted, #6b7280);
         }
 
         .icon {
@@ -268,7 +284,14 @@
         @else
             @include('dashboard.partials.menu', ['current' => 'macros'])
         @endif
-        <h1>{{ isset($meal) ? 'Editar Refeição' : 'Metas Pessoais' }}</h1>
+        <h1>
+            @if(isset($meal))
+                <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            @else
+                <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+            @endif
+            {{ isset($meal) ? 'Editar Refeição' : 'Metas Pessoais' }}
+        </h1>
         <div style="width: 24px;"></div>
     </header>
 

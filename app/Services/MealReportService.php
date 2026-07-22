@@ -130,8 +130,9 @@ class MealReportService
             return null;
         }
 
-        $inicio = now()->subDays(6)->startOfDay();
-        $fim = now()->endOfDay();
+        // "Últimos 7 dias" não inclui hoje — vai de ontem pra trás.
+        $inicio = now()->subDays(7)->startOfDay();
+        $fim = now()->subDay()->endOfDay();
 
         $meals = Meal::where('user_id', $user->id)
             ->whereBetween('consumed_at', [$inicio, $fim])
