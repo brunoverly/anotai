@@ -207,26 +207,40 @@ class NutritionManagerService
             return $exact;
         }
 
-        // Sem match exato: prioriza o nome mais curto (mais próximo do termo buscado)
-        $found = Food::where('name', 'like', '%' . $this->escapeLike($nomeAlimento) . '%')
-            ->orderByRaw('LENGTH(name) ASC')
-            ->first();
-        if ($found) {
-            return $found;
-        }
-
-        // Plural em pt-BR geralmente é "+s" (ovos -> ovo, bananas -> banana):
-        // tenta a forma singular antes de cair pra API externa.
+        // Plural em pt-BR geralmente é "+s" (ovos -> ovo, bananas -> banana) —
+        // busca as duas formas (plural e singular) juntas em ambas as fases
+        // abaixo, competindo entre si. Testar o plural sozinho primeiro (como
+        // era antes) podia bater sem querer num nome maior que só *contém* a
+        // palavra plural por acaso (ex: "ovos" casava com "naturovos"), quando
+        // a forma singular ("ovo") era o match certo — só que nunca chegava a
+        // ser tentada, porque a busca já tinha retornado.
+        $termos = [$nomeAlimento];
         if (Str::endsWith($nomeAlimento, 's')) {
-            $singular = Str::substr($nomeAlimento, 0, -1);
-
-            return Food::where('name', $singular)
-                ->orWhere('name', 'like', '%' . $this->escapeLike($singular) . '%')
-                ->orderByRaw('LENGTH(name) ASC')
-                ->first();
+            $termos[] = Str::substr($nomeAlimento, 0, -1);
         }
 
-        return null;
+        // Fase 1: o termo buscado é MAIS ESPECÍFICO que o catálogo (ex: "banana
+        // prata" -> "banana", "pão integral light" -> "pão integral"). Prioriza
+        // o nome de catálogo MAIS LONGO que ainda cabe dentro do termo buscado
+        // — entre "pão" e "pão integral" cabendo em "pão integral light", o mais
+        // longo captura mais da especificidade que o usuário realmente disse.
+        $queryEspecifico = Food::query();
+        foreach ($termos as $termo) {
+            $queryEspecifico->orWhereRaw('? LIKE \'%\' || name || \'%\'', [$termo]);
+        }
+        $maisEspecifico = $queryEspecifico->orderByRaw('LENGTH(name) DESC')->first();
+        if ($maisEspecifico) {
+            return $maisEspecifico;
+        }
+
+        // Fase 2: o termo buscado é MAIS GENÉRICO que o catálogo (ex: "arroz"
+        // -> "arroz branco"). Prioriza o nome de catálogo mais curto.
+        $queryGenerico = Food::query();
+        foreach ($termos as $termo) {
+            $queryGenerico->orWhere('name', 'like', '%' . $this->escapeLike($termo) . '%');
+        }
+
+        return $queryGenerico->orderByRaw('LENGTH(name) ASC')->first();
     }
 
     private function searchInExternalApi(string $nomeAlimento, string $unidadeInput)
@@ -257,7 +271,10 @@ class NutritionManagerService
                 ?? $hit['product_name_en']
                 ?? $hit['generic_name_pt']
                 ?? '';
-            $nomeProduto = Str::lower($nomeProdutoOriginal);
+            // ->ascii() remove acento (ex: "água" -> "agua"), igual o sanitizeFoodName()
+            // já faz com o termo buscado — sem isso, "biscoito agua e sal" nunca batia
+            // contra "Biscoito água e sal" só por causa do acento.
+            $nomeProduto = (string) Str::of($nomeProdutoOriginal)->lower()->ascii();
             $termoBusca = Str::lower($nomeAlimento);
 
             // Mesmo com relevância melhor, mantemos a checagem de sanidade:
