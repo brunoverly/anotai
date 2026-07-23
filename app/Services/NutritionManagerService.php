@@ -28,7 +28,7 @@ class NutritionManagerService
             $tipoAlimento = $item['tipo'] ?? null;
 
             // Chama a escada de busca para encontrar o alimento isolado
-            $food = $this->searchFood($nomeAlimento, $tipoAlimento, $unidadeInput , $items);
+            $food = $this->searchFood($nomeAlimento, $tipoAlimento, $unidadeInput);
 
             if ($food) {
                 // Regra de três com base nos dados encontrados
@@ -85,7 +85,7 @@ class NutritionManagerService
     /**
      * A ESCADA DE BUSCA ISOLADA (Retorna um Array com os dados do alimento)
      */
-    private function searchFood(string $nomeAlimento, ?string $tipoAlimento, string $unidadeInput, $item)
+    private function searchFood(string $nomeAlimento, ?string $tipoAlimento, string $unidadeInput)
     {
         // Sanitiza uma única vez aqui: todo o resto da escada (busca local,
         // nome salvo no cache do Degrau 2/3) usa essa mesma versão normalizada,
@@ -121,7 +121,7 @@ class NutritionManagerService
 
         // ── DEGRAU 3: ESTIMATIVA POR LLM (Groq) ──
         Log::info("Degrau 3: API falhou. Solicitando estimativa da LLM -> {$nomeAlimento}");
-        $llmFood = $this->estimateWithLLM($nomeAlimento, $unidadeInput, $item);
+        $llmFood = $this->estimateWithLLM($nomeAlimento, $unidadeInput);
         if ($llmFood) {
             $newFood = Food::updateOrCreate(['name' => $llmFood['name']], $llmFood);
 
@@ -257,10 +257,7 @@ class NutritionManagerService
                 ?? $hit['product_name_en']
                 ?? $hit['generic_name_pt']
                 ?? '';
-            // ->ascii() remove acento (ex: "água" -> "agua"), igual o sanitizeFoodName()
-            // já faz com o termo buscado — sem isso, "biscoito agua e sal" nunca batia
-            // contra "Biscoito água e sal" só por causa do acento.
-            $nomeProduto = (string) Str::of($nomeProdutoOriginal)->lower()->ascii();
+            $nomeProduto = Str::lower($nomeProdutoOriginal);
             $termoBusca = Str::lower($nomeAlimento);
 
             // Mesmo com relevância melhor, mantemos a checagem de sanidade:
@@ -380,18 +377,16 @@ class NutritionManagerService
      * considera "uma fatia"/"uma unidade" entre chamadas diferentes — já vimos
      * ela chutar 80g e 120g pra uma fatia de pão que na real pesa ~25g.
      */
-    // private function referenciaPesosPorUnidade(): string
-    // {
-    //     return 'Use esta referência de pesos comuns como base, ajustando pelo alimento específico mencionado: '
-    //         . 'FATIA: pão de forma (comum, integral, light ou multigrãos) 20-30g; pão francês 50g; queijo (mussarela, prato, minas) 15-25g; '
-    //         . 'presunto, mortadela ou peito de peru 10-15g; pizza 100-150g; bolo 60-100g; melancia, melão ou abacaxi 100-150g. '
-    //         . 'UNIDADE: ovo cozido/frito/mexido 45-55g; pão francês 50g; banana 90-120g; maçã, laranja ou pera 120-150g; batata média 130-150g; '
-    //         . 'biscoito ou bolacha 5-10g; salsicha 50g; bombom ou chocolate pequeno 20-30g. '
-    //         . 'COLHER (de sopa): arroz, feijão ou macarrão cozido 20-25g; açúcar, farinha ou aveia 12-15g; azeite, óleo ou manteiga 13g; maionese ou requeijão 15g. '
-    //         . 'DOSE: whey protein ou suplemento em pó 30g; creatina 5g.';
-    // }
+    private function referenciaPesosPorUnidade(): string
+    {
+        return 'Use esta lista como GUIA DE ORDEM DE GRANDEZA para a unidade informada, adaptando o peso real ao alimento solicitado: '
+            . 'FATIA: pão de forma/integral 25-30g; queijo/frio 15-20g; pizza/torta 100-150g; bolo 60-80g; frutas (melancia/abacaxi) 100-150g. '
+            . 'UNIDADE: pão francês 50g; ovo 50g; banana 90-110g; maçã/laranja 130-150g; batata média 140g; biscoito 8-10g; salgado de lanchonete (coxinha/empada) 80-120g; hambúrguer (disco) 90-120g; chocolate pequeno 25g. '
+            . 'COLHER (sopa): arroz/feijão/massa 25g; farinha/aveia/açúcar 12-15g; azeite/óleo/manteiga 12g; requeijão/maionese 15g; pasta de amendoim 15g. '
+            . 'DOSE/CONCHA: whey protein 30g; creatina 5g; concha de feijão/sopa 100-130g.';
+    }
 
-    private function estimateWithLLM(string $nomeAlimento, string $unidadeInput, $item)
+    private function estimateWithLLM(string $nomeAlimento, string $unidadeInput)
     {
         try {
             $apiKey = config('services.groq.api_key');
@@ -401,18 +396,6 @@ class NutritionManagerService
                 return null;
             }
 
-            $system = 'Você é um especialista em nutrição.
-                        Sempre responda apenas com JSON válido.
-                        Nunca utilize markdown.
-                        Considere os valores nutricionais para 100 g do alimento.
-                        Retorne obrigatoriamente:
-                        - name
-                        - protein_g
-                        - carbohydrate_g
-                        - fat_g
-                        - calories_kcal
-                        - peso_unidade_g';
-
             // Forçando a URL absoluta direta para evitar o erro de scheme/host
             $response = Http::withToken($apiKey)
                 ->timeout(10)
@@ -421,11 +404,11 @@ class NutritionManagerService
                     'messages' => [
                         [
                             'role' => 'system',
-                            'content' => $system
+                            'content' => 'Você é um assistente especialista em nutrição e bioquímica de alimentos. Sua principal regra é a precisão matemática rigorosa: as calories_kcal devem ser exatamente a soma de (protein_g x 4) + (carbohydrate_g x 4) + (fat_g x 9). Responda APENAS com um objeto JSON válido, contendo a estimativa para 100g do alimento informado. Não use markdown blockcode ou qualquer outro texto na resposta. Chaves obrigatórias no JSON: name, protein_g, carbohydrate_g, fat_g, calories_kcal, peso_unidade_g. O campo peso_unidade_g é o peso estimado em gramas de EXATAMENTE 1 unidade média padrão de consumo do item. ' . $this->referenciaPesosPorUnidade() . ' Se o alimento pedido não estiver na lista de referência, estime pelo tamanho físico típico de UMA porção comercial padrão daquela unidade (ex: salgados de lanchonete devem ter peso unitário realista, nunca de festa, a menos que especificado). Se a unidade informada for "grama" ou "ml", o campo peso_unidade_g não será usado no cálculo — pode estimar o peso de uma porção média de refeição (ex: 150g). Exemplo correto com proporções e calorias matematicamente alinhadas para 100g: {"name": "pao de queijo tradicional", "protein_g": 6.0, "carbohydrate_g": 32.0, "fat_g": 16.0, "calories_kcal": 300, "peso_unidade_g": 30}'
                         ],
                         [
                             'role' => 'user',
-                            'content' => $item
+                            'content' => "Estime os macronutrientes para 100g de: {$nomeAlimento}. A unidade de medida informada pelo usuário foi: \"{$unidadeInput}\"."
                         ]
                     ],
                     'response_format' => ['type' => 'json_object'], // Garante que a LLM cuspa JSON puro
