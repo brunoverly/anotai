@@ -1,0 +1,2002 @@
+[
+    {
+        "codigo": "C0113T",
+        "descricao": "Orelha-de-padre, semente, seca, remolho em água, cozida, drenada, s\/ óleo, s\/ sal, Lablab purpureus (L) Sweet"
+    },
+    {
+        "codigo": "C0682B",
+        "descricao": "Lasanha, berinjela, c\/ frios, caseira, c\/ sal, (berinjela grelhada, c\/ muçarela, presunto, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho) c\/ sal)"
+    },
+    {
+        "codigo": "C0429N",
+        "descricao": "Papa de batata doce e banana, s\/ açúcar"
+    },
+    {
+        "codigo": "C0058A",
+        "descricao": "Biscoito, salgado, água e sal, Tostines"
+    },
+    {
+        "codigo": "C0100A",
+        "descricao": "Cereal matinal, milho"
+    },
+    {
+        "codigo": "C1014B",
+        "descricao": "Salada, repolho branco, c\/ maionese, c\/ uva passa, s\/ sal"
+    },
+    {
+        "codigo": "C0529A",
+        "descricao": "Arroz com lentilha, c\/ arroz polido, s\/ sal, (arroz polido, c\/ lentilha, tomate, linguiça, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0592A",
+        "descricao": "Canelone, c\/ muçarela, c\/ molho branco, caseiro, c\/ sal, (massa com farinha de trigo, c\/ muçarela, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ sal)"
+    },
+    {
+        "codigo": "C0006A",
+        "descricao": "Milho, verde, grão, cru (média de diferentes amostras), Zea may"
+    },
+    {
+        "codigo": "C0416B",
+        "descricao": "Salada, abóbora cabotian (japonesa) cozida, cebola, salsa, c\/ azeite de oliva, s\/ sal"
+    },
+    {
+        "codigo": "C0480E",
+        "descricao": "Peixe, água doce, Tucunaré, filé, congelado, frito (c\/ óleo de soja), c\/ sal, Cichla ocellaris spp."
+    },
+    {
+        "codigo": "C0516F",
+        "descricao": "Carne, boi, acém, s\/ gordura, cozida, c\/ pequi, pimentão, c\/ óleo, cebola e alho, c\/ noz moscada, c\/ pimenta do reino, c\/ sal"
+    },
+    {
+        "codigo": "C0334E",
+        "descricao": "Mariscada, c\/ sal, (mexilhão sururu, camarão, lula, polvo e ostra, tomate, pimentão, coentro, leite de coco, c\/ azeite de dendê, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0732F",
+        "descricao": "Carne, boi, de segunda (acém, capa de contrafilé, costela, músculo, paleta, peito), cozida\/grelhada\/assada, s\/ óleo, c\/ sal, Bos taurus"
+    },
+    {
+        "codigo": "C0102G",
+        "descricao": "Bebida, leite integral, c\/ chocolate em pó (10%), c\/ açúcar"
+    },
+    {
+        "codigo": "C0628A",
+        "descricao": "Ravioli, c\/ carne moída refogada, s\/ molho, caseiro, c\/ sal, (massa com farinha de trigo, carne bovina, patinho moído, refogada, c\/ óleo, cebolha e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0346N",
+        "descricao": "Papa de carne bovina moída (acém), arroz e brócolis, c\/ caldo de frango, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0236A",
+        "descricao": "Macarrão, trigo, integral, c\/ molho branco (leite, manteiga e farinha de trigo), s\/ sal"
+    },
+    {
+        "codigo": "C0582B",
+        "descricao": "Salada, alface crespa, c\/ molho de salada - salsa, vinagre de maçã, azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0540N",
+        "descricao": "Papa de carne bovina moída (patinho), cará e brócolis, c\/ caldo de carne, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0035E",
+        "descricao": "Peixe, água salgada, abadejo, filé, congelado, cru"
+    },
+    {
+        "codigo": "C0624N",
+        "descricao": "Papa de carne bovina moída (patinho), arroz branco e brócolis, c\/ caldo de carne, c\/ cebola e óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0150T",
+        "descricao": "Quibe vegetariano com cenoura, s\/ sal, (trigo para quibe e proteína de soja texturizada (hidratados com caldo de legumes), alho, cebola, cenoura, hortelã, c\/ pimenta-do-reino, s\/ sal)"
+    },
+    {
+        "codigo": "C0455N",
+        "descricao": "Papa de carne bovina moída (acém), cará e brócolis, c\/ caldo de carne, c\/ cebola e óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0270B",
+        "descricao": "Abóbora, moranga, s\/ casca, cozida, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), c\/ salsa, c\/ pimenta-do-reino, c\/ sal, Curcubita spp."
+    },
+    {
+        "codigo": "C1159A",
+        "descricao": "Panqueca, c\/ recheio de creme de avelã, s\/ cobertura, (massa - leite, farinha de trigo e ovo, creme de avelã)"
+    },
+    {
+        "codigo": "C0076K",
+        "descricao": "Sagu, morango, mistura p\/, preparada"
+    },
+    {
+        "codigo": "C0091K",
+        "descricao": "Sagu, mandioca, preparado c\/ vinho tinto, c\/ açúcar"
+    },
+    {
+        "codigo": "C0381N",
+        "descricao": "Creme de morango, c\/ banana, c\/ iogurte natural, s\/ açúcar"
+    },
+    {
+        "codigo": "C1150A",
+        "descricao": "Risoto de carne bovina, c\/ arroz polido, c\/ sal, (arroz polido, carne bovina filé mignon, tomate, vinho branco, queijo parmesão, c\/ azeite de oliva, manteiga, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0028A",
+        "descricao": "Biscoito, doce, Maria, Marilan"
+    },
+    {
+        "codigo": "C0152B",
+        "descricao": "Abobrinha, italiana, c\/ casca, cozida, drenada, s\/ óleo, c\/ sal"
+    },
+    {
+        "codigo": "C0722A",
+        "descricao": "Arroz com frango e pequi, c\/ arroz polido, c\/ sal, (arroz polido, frango, pequi, salsa, c\/ óleo, cebola e alho, c\/ pimenta-do-reino, c\/ sal)"
+    },
+    {
+        "codigo": "C0022J",
+        "descricao": "Ovo, galinha, gema, cozida\/10 min., c\/ sal"
+    },
+    {
+        "codigo": "C0581B",
+        "descricao": "Salada, alface crespa, c\/ molho de salada - salsa, suco de limão, azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C1094A",
+        "descricao": "Macarrão, trigo integral, c\/ carne bovina músculo, gratinado, c\/ molho branco (manteiga, farinha de trigo e leite) e queijo parmesão, salsa, pimenta-do-reino, c\/ sal"
+    },
+    {
+        "codigo": "C0222F",
+        "descricao": "Bife à cavalo, s\/ sal, (carne bovina contra-filé, ovo, c\/ óleo, s\/ sal)"
+    },
+    {
+        "codigo": "C0063A",
+        "descricao": "Bolo, mistura p\/, preparado (média de diferentes sabores)"
+    },
+    {
+        "codigo": "C0606A",
+        "descricao": "Macarrão, trigo, integral, c\/ frango e cogumelos, c\/ sal, (massa com trigo integral, peito de frango, cogumelo paris e shiitake, salsa, cebolinha, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0511F",
+        "descricao": "Carne, frango, peito, c\/ batata, c\/ óleo, cebola e alho, c\/ sal"
+    },
+    {
+        "codigo": "C0208F",
+        "descricao": "Salame, porco, lanche (média de vários tipos)"
+    },
+    {
+        "codigo": "C0039F",
+        "descricao": "Carne, boi, lagarto, cozida, s\/ óleo, s\/ sal, Bos taurus"
+    },
+    {
+        "codigo": "C1022B",
+        "descricao": "Couve-flor, c\/ molho branco (farinha de trigo, manteiga e leite), queijo parmesão, c\/ sal"
+    },
+    {
+        "codigo": "C0254E",
+        "descricao": "Moqueca de camarão, s\/ sal, (camarão, tomate, pimentão, coentro, leite de coco, azeite de dendê, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C1145B",
+        "descricao": "Cogumelo, refogado (c\/ óleo de soja), cebola e alho, c\/ sal (média de diferentes tipos)"
+    },
+    {
+        "codigo": "C1145A",
+        "descricao": "Bolo, trigo, branco, simples, (farinha de trigo, leite, margarina, ovo, açúcar e fermento químico)"
+    },
+    {
+        "codigo": "C0169T",
+        "descricao": "Soja, proteína, texturizada, hidratada (c\/ caldo de legumes), refogada, c\/ óleo, cebola e alho, c\/ sal"
+    },
+    {
+        "codigo": "C0477E",
+        "descricao": "Peixe, água doce, Pirarucu, cultivado em Rondonia, cozido (a partir do peixe fresco), c\/ cebolinha, alho, cúrcuma, pimenta-do-reino, c\/ sal (média de peixes com diferentes pesos e cortes), Arapaima gigas"
+    },
+    {
+        "codigo": "C1071B",
+        "descricao": "Farofa, farinha de milho e cenoura, c\/ sal, (farinha de milho, cenoura, salsinha e cebolinha, c\/ pimenta do reino, c\/ óleo de soja e cebola, c\/ sal)"
+    },
+    {
+        "codigo": "C0944A",
+        "descricao": "Macarrão de arroz, com legumes e carne suína, c\/ molho shoyu, (macarrão de arroz, carne suína (lombo), acelga, broto de feijão, pimentão, cenoura, brócolis, cogumelo Paris, cebola, cebolinha, c\/ óleo de gergelim, c\/ molho shoyu)"
+    },
+    {
+        "codigo": "C0415N",
+        "descricao": "Papa de batata, cenoura e carne bovina moída (acém), c\/ caldo de carne, c\/ cebola, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0233E",
+        "descricao": "Peixe, água salgada, pescada, branca, assado\/grelhado, c\/ manteiga e cogumelos (paris, shiitake), c\/ sal"
+    },
+    {
+        "codigo": "C0650B",
+        "descricao": "Salada, vegetais cozidos, c\/ azeite de oliva, c\/ sal, (brócolis, cenoura e couve-flor cozidos, c\/ azeite de oliva, c\/ sal)"
+    },
+    {
+        "codigo": "C0262A",
+        "descricao": "Sanduíche, misto quente, pão forma tradicional, c\/ presunto, queijo muçarela, c\/ manteiga"
+    },
+    {
+        "codigo": "C0282A",
+        "descricao": "Sanduíche, queijo quente, pão francês, c\/ queijo prato, c\/ margarina"
+    },
+    {
+        "codigo": "C0031B",
+        "descricao": "Pimentão, vários tipos, cru (média de diferentes amostras), Capsicum annuum L."
+    },
+    {
+        "codigo": "C0719A",
+        "descricao": "Arroz com jambu, c\/ arroz polido, s\/ sal, (arroz polido, jambu, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0193B",
+        "descricao": "Salada, chuchu, s\/ casca, cozido, c\/ molho vinagrete (tomate, cebola, salsinha, vinagre e óleo), s\/ sal, Sechium edule"
+    },
+    {
+        "codigo": "C0216C",
+        "descricao": "Suco natural, abacaxi e morango, s\/ açúcar"
+    },
+    {
+        "codigo": "C0433B",
+        "descricao": "Salada, c\/ arroz integral, c\/ azeite de oliva, s\/ sal, (arroz integral, aipo (salsão), pimentão verde e vermelho, salsa, azeitona preta, vinagre de maçã, c\/ azeite de oliva, s\/ sal)"
+    },
+    {
+        "codigo": "C1111B",
+        "descricao": "Salpicão de legumes, c\/ sal, (batata, maçã, pimentão verde e vermelho, cenoura, noz, uva passa, cebola, aipo (salsão), maionese, creme de leite, molho de mostarda, pimenta do reino, c\/ sal)"
+    },
+    {
+        "codigo": "C0767A",
+        "descricao": "Sanduíche, pão forma integral, c\/ alface, tomate, cenoura e pepino"
+    },
+    {
+        "codigo": "C0176N",
+        "descricao": "Papa de carne bovina moída (patinho), fubá e couve, c\/ caldo de frango, c\/ cebola e óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0987A",
+        "descricao": "Risole, recheado c\/ brócolis e queijo muçarela, caseiro, frito, (farinha de trigo, leite, margarina, brócolis, queijo muçarela, farinha de rosca, ovo, c\/ sal, frito (c\/ óleo de soja))"
+    },
+    {
+        "codigo": "C0967B",
+        "descricao": "Tomate, maduro, cozido, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0080F",
+        "descricao": "Croquete, carne, boi, industrializada, frita, c \/ sal, Bos taurus"
+    },
+    {
+        "codigo": "C0538A",
+        "descricao": "Arroz com salsicha, c\/ arroz polido, c\/ sal, (arroz polido, c\/ salsicha, tomate, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0250T",
+        "descricao": "Falafel, c\/ grão de bico, frito, s\/ sal, (grão de bico, cebola, amido de milho, alho, azeite de oliva, cheiro verde, pimenta do reino, óleo para fritura, s\/ sal)"
+    },
+    {
+        "codigo": "C0726F",
+        "descricao": "Hambúrguer, bovino, grelhado, c\/ molho de tomate (tomate, c\/ óleo de soja, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0019D",
+        "descricao": "Óleo, abacate, Persea americana"
+    },
+    {
+        "codigo": "C0072R",
+        "descricao": "Sopa, creme de ervilha, c\/ bacon, desidratada, Maggi"
+    },
+    {
+        "codigo": "C1029B",
+        "descricao": "Salada, repolho roxo, cru, c\/ azeite de oliva, s\/ sal"
+    },
+    {
+        "codigo": "C0027H",
+        "descricao": "Bebida, infusão, mentrasto, planta, folha, s\/ açúcar, Ageratum conyzoides L."
+    },
+    {
+        "codigo": "C0758F",
+        "descricao": "Carne, boi, fígado, grelhada, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), s\/ sal, Bos taurus"
+    },
+    {
+        "codigo": "C0951B",
+        "descricao": "Cogumelo, Paris, cozido, c\/ salsa, pimenta-do-reino, c\/ manteiga, c\/ sal"
+    },
+    {
+        "codigo": "C0277C",
+        "descricao": "Banana, cozida, s\/ manteiga, c\/ açúcar (média de 5 tipos - Nanica (caturra ou dágua), da Terra, Maçã, Ouro e Prata)"
+    },
+    {
+        "codigo": "C0239B",
+        "descricao": "Taioba, folha, refogada (c\/ óleo, cebola e alho), s\/ sal, Xanthosoma sagittifolium Schott"
+    },
+    {
+        "codigo": "C0761A",
+        "descricao": "Sanduíche, pão sírio, c\/ ricota e temperos, alface e tomate"
+    },
+    {
+        "codigo": "C0766B",
+        "descricao": "Escondidinho de camarão, c\/ sal, (mandioca (aipim, macaxeira), camarão refogado, tomate, salsa e queijo parmesão, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0025H",
+        "descricao": "Bebida, infusão, malva-santa, planta, folha, s\/ açúcar, Plectranthus barbatus Andr."
+    },
+    {
+        "codigo": "C0274E",
+        "descricao": "Casquinha de caranguejo, s\/ sal, (caranguejo, tomate, leite de coco, farinha de rosca, queijo parmesão, cebolinha, c\/ azeite de dendê, c\/ óleo, cebola e alho, c\/ pimenta-do-reino, s\/ sal)"
+    },
+    {
+        "codigo": "C0597F",
+        "descricao": "Carne, boi, filé mignon, s\/ gordura, frita (c\/ óleo de soja), c\/ sal, Bos taurus"
+    },
+    {
+        "codigo": "C1153A",
+        "descricao": "Quiche, quatro queijos, assado (massa brise (farinha de trigo, manteiga, gema, leite, c\/ açúcar, c\/ sal), creme de leite, ovo, queijos - parmesão, gorgonzola, provolone e muçarela, c\/ sal)"
+    },
+    {
+        "codigo": "C0118K",
+        "descricao": "Pastel, frito, c\/ recheio, brigadeiro"
+    },
+    {
+        "codigo": "C0378A",
+        "descricao": "Sanduíche, pão forma integral, c\/ presunto, queijo muçarela, c\/ requeijão"
+    },
+    {
+        "codigo": "C0960F",
+        "descricao": "Sopa, carne bovina, c\/ macarrão, c\/ vegetais, s\/ sal, (carne bovina (músculo), c\/ macarrão, c\/ batata, abobrinha, espinafre, cenoura e purê de tomate, c\/ caldo de carne, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0985B",
+        "descricao": "Salada, alface lisa, c\/ molho vinagrete (tomate, cebola, salsa, vinagre, azeite de oliva), c\/ sal"
+    },
+    {
+        "codigo": "C0284N",
+        "descricao": "Papa de peixe (pescada branca) e cará, c\/ caldo de frango, c\/ cebola e azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0979B",
+        "descricao": "Salada, pepino, cebola, c\/ molho vinagrete (tomate, cebola, salsa, vinagre, azeite de oliva), c\/ sal"
+    },
+    {
+        "codigo": "C0040C",
+        "descricao": "Suco, laranja, Baía, s\/ açúcar, Citrus sinensis"
+    },
+    {
+        "codigo": "C0492N",
+        "descricao": "Papa de carne bovina moída (patinho), abóbora (jerimum) e chuchu, c\/ caldo de frango, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0333N",
+        "descricao": "Papa de carne bovina (músculo), feijão preto, batata baroa (mandioquinha, salsa) e abóbora cabotian (japonesa), c\/ caldo de frango, c\/ cebola e azeite de oliva, s\/ sal"
+    },
+    {
+        "codigo": "C0839B",
+        "descricao": "Tapioca, c\/ leite condensado e coco"
+    },
+    {
+        "codigo": "C1017A",
+        "descricao": "Bolo, cassarola, c\/ queijo, (farinha de trigo, açúcar, leite, leite de coco, manteiga, ovo, queijo parmesão e fermento químico)"
+    },
+    {
+        "codigo": "C0127G",
+        "descricao": "Mingau, farinha láctea, c\/ leite integral"
+    },
+    {
+        "codigo": "C0148K",
+        "descricao": "Canudinho, c\/ recheio de brigadeiro, c\/ cobertura de chocolate, (farinha de trigo, ovo, leite, óleo de soja, brigadeiro e chocolate ao leite)"
+    },
+    {
+        "codigo": "C0297C",
+        "descricao": "Pajurá, polpa, in natura, Couepia bracteosa"
+    },
+    {
+        "codigo": "C0825F",
+        "descricao": "Carne, frango, peito, refogada (c\/ óleo, cebola e alho), c\/ legumes (cenoura e vagem), s\/ sal, Gallus gallus"
+    },
+    {
+        "codigo": "C0024A",
+        "descricao": "Aveia, flocos, finos, Avena sativa,Float"
+    },
+    {
+        "codigo": "C0306A",
+        "descricao": "Sanduíche, pão forma integral, c\/ presunto, c\/ manteiga"
+    },
+    {
+        "codigo": "C0540B",
+        "descricao": "Salada, pimentão verde, amarelo e vermelho crus, c\/ azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0113B",
+        "descricao": "Alho, refogado (c\/ óleo de soja), s\/ sal, Allium sativum"
+    },
+    {
+        "codigo": "C0047D",
+        "descricao": "Óleo, milho, frito, Zea mays"
+    },
+    {
+        "codigo": "C0037K",
+        "descricao": "Chantily, em pó, preparado, Chantineve"
+    },
+    {
+        "codigo": "C0508N",
+        "descricao": "Papa de mamão, banana e melão, s\/ açúcar"
+    },
+    {
+        "codigo": "C0009J",
+        "descricao": "Ovo, galinha, gema, desidratada, pasteurizada"
+    },
+    {
+        "codigo": "C0096E",
+        "descricao": "Peixe, água doce, Pintado, cozido, s\/ óleo, s\/ sal, Pseudoplatystoma corruscans"
+    },
+    {
+        "codigo": "C0075R",
+        "descricao": "Torta, salgada, mistura p\/, Oetker"
+    },
+    {
+        "codigo": "C0711F",
+        "descricao": "Carne, frango, caipira, inteiro, crua (média de amostras c\/ e s\/ pele), Gallus gallus"
+    },
+    {
+        "codigo": "C0641A",
+        "descricao": "Rondele, ricota, s\/ molho, caseiro, c\/ sal, (massa com farinha de trigo, c\/ ricota, c\/ sal)"
+    },
+    {
+        "codigo": "C0789B",
+        "descricao": "Farofa, ovos, s\/ sal, (farinha de mandioca (aipim, macaxeira), ovo, azeitona, salsa, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0055F",
+        "descricao": "Carne, boi, alcatra, crua (média de amostras frescas, resfriada, congelada), Bos taurus"
+    },
+    {
+        "codigo": "C0403A",
+        "descricao": "Trigo, grão, cru, Triticum spp."
+    },
+    {
+        "codigo": "C0045N",
+        "descricao": "Bebida, chá, lata\/garrafa, limão, light, Lipton"
+    },
+    {
+        "codigo": "C0076N",
+        "descricao": "Lasanha, pronta, industrializada, light"
+    },
+    {
+        "codigo": "C0010U",
+        "descricao": "Coquetel de frutas secas, s\/ casca, s\/ sal, (uva passa, avelã, castanha do Brasil, amendoim torrado), Oetker"
+    },
+    {
+        "codigo": "C0094G",
+        "descricao": "Mousse de peixe, (pescada cozida, gelatina s\/ sabor, maionese, mostarda, creme de leite, salsa, c\/ caldo de vegetais, c\/ pimenta-do-reino, c\/ sal)"
+    },
+    {
+        "codigo": "C0022A",
+        "descricao": "Aveia, farinha, crua, Avena sativa,Mac Bits"
+    },
+    {
+        "codigo": "C0461E",
+        "descricao": "Peixe, água salgada, sardinha, filé, frito (c\/ óleo de soja), s\/ sal, Sardinella brasiliensis"
+    },
+    {
+        "codigo": "C0259E",
+        "descricao": "Camarão, Pitu, in natura, Macrobrachium wiegman"
+    },
+    {
+        "codigo": "C0322B",
+        "descricao": "Purê, batata, inglesa, s\/ sal, (batata, leite, margarina, s\/ sal), Solanum tuberosum L."
+    },
+    {
+        "codigo": "C0043J",
+        "descricao": "Tortilha, s\/ sal, (ovos mexidos, batata frita, salsa, cebolinha, pimenta-do-reino, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0091A",
+        "descricao": "Cereais, farinha, Neston"
+    },
+    {
+        "codigo": "C0197N",
+        "descricao": "Papa de carne bovina moída (acém), macarrão e brócolis, c\/ caldo de frango, c\/ cebola e azeite de oliva, s\/ sal"
+    },
+    {
+        "codigo": "C0938B",
+        "descricao": "Charuto de repolho, c\/ peito de frango, c\/ molho de tomate, s\/ sal, (repolho branco, recheado com arroz e peito de frango refogado, c\/ molho de tomate  (tomate, c\/ óleo, cebolha e alho), s\/ sal)"
+    },
+    {
+        "codigo": "C0164C",
+        "descricao": "Suco, tangerina, c\/ açúcar"
+    },
+    {
+        "codigo": "C0282F",
+        "descricao": "Carne, boi, quarto traseiro, s\/ gordura, grelhada, s\/ óleo, c\/ sal"
+    },
+    {
+        "codigo": "C1049B",
+        "descricao": "Purê, batata inglesa, abóbora (jerimum), c\/ manteiga, leite, s\/ sal"
+    },
+    {
+        "codigo": "C0895F",
+        "descricao": "Dobradinha, c\/ feijão branco, bucho bovino, batata, cenoura, tomate, pimentão, cebolinha e salsinha, c\/ óleo, cebola e alho, s\/ sal"
+    },
+    {
+        "codigo": "C1060A",
+        "descricao": "Sanduíche, hambúrguer frango grelhado (c\/ pão hambúrguer), c\/ queijo muçarelca, alface, tomate e maionese"
+    },
+    {
+        "codigo": "C1006F",
+        "descricao": "Carne, rã, coxa e dorso, crua, Rana catesbeiana"
+    },
+    {
+        "codigo": "C0043H",
+        "descricao": "Bebida, café, c\/ leite (meio a meio), c\/ açúcar"
+    },
+    {
+        "codigo": "C0526B",
+        "descricao": "Salada, pepino, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0012K",
+        "descricao": "Cocada, branca"
+    },
+    {
+        "codigo": "C0199A",
+        "descricao": "Pizza, massa, assada, (farinha de trigo, óleo, fermento biológico, sal e açúcar)"
+    },
+    {
+        "codigo": "C0149B",
+        "descricao": "Almeirão, refogado (c\/ óleo, cebola e alho), c\/ sal"
+    },
+    {
+        "codigo": "C0098G",
+        "descricao": "Bebida, leite desnatado, c\/ chocolate em pó (10%), c\/ açúcar"
+    },
+    {
+        "codigo": "C0908F",
+        "descricao": "Carne, frango, pé, cozido, c\/ óleo de soja, cebola e alho, c\/ sal, Gallus gallus"
+    },
+    {
+        "codigo": "C0913F",
+        "descricao": "Carne, porco, pé, cozido, s\/ óleo, c\/ sal"
+    },
+    {
+        "codigo": "C0083H",
+        "descricao": "Bebida, café - infusão 6% - suave, c\/ leite desnatado (meio a meio),  s\/ açúcar"
+    },
+    {
+        "codigo": "C0287N",
+        "descricao": "Papa de peixe (pescada branca) e cará, c\/ caldo de frango, c\/ cebola e azeite de oliva, s\/ sal"
+    },
+    {
+        "codigo": "C0297F",
+        "descricao": "Carne, boi, contra-filé, grelhado\/frito, c\/ óleo e cebola, s\/ sal"
+    },
+    {
+        "codigo": "C0096H",
+        "descricao": "Bebida, café descafeinado - infusão 6% - suave, c\/ leite (meio a meio), \"média\", c\/ açúcar"
+    },
+    {
+        "codigo": "C0793F",
+        "descricao": "Carne, peru, coxa, s\/ pele, cozida, drenada, s\/ óleo, c\/ sal, Meleagris gallopavo"
+    },
+    {
+        "codigo": "C0203E",
+        "descricao": "Peixe, água salgada, salmão, filé, s\/ pele, cozido, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ sal, Salmo salar L."
+    },
+    {
+        "codigo": "C0063E",
+        "descricao": "Peixe, água salgada, merluza, filé, cru, Merlucius hubbsi"
+    },
+    {
+        "codigo": "C0029L",
+        "descricao": "Mostarda, molho"
+    },
+    {
+        "codigo": "C0515B",
+        "descricao": "Salada, cenoura cozida, cebola, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0109A",
+        "descricao": "Lasanha, massa fresca, c\/ ovos, industrializada, cozida"
+    },
+    {
+        "codigo": "C0019E",
+        "descricao": "Peixe, água doce, corvina de água doce, cru, Plagioscions squamossissimus"
+    },
+    {
+        "codigo": "C0439E",
+        "descricao": "Peixe, água salgada, salmão, filé, s\/ pele, à milanesa (farinha de rosca e ovo), frito (c\/ óleo de soja), s\/ sal, Salmo salar L."
+    },
+    {
+        "codigo": "C0787A",
+        "descricao": "Milho verde e ervilha, grão, enlatado, drenado"
+    },
+    {
+        "codigo": "C0043R",
+        "descricao": "Mousse, maracujá, mistura p\/, Oetker"
+    },
+    {
+        "codigo": "C0019F",
+        "descricao": "Carne, boi, quarto traseiro, s\/ gordura, cozida, s\/ óleo, s\/ sal, Bos taurus"
+    },
+    {
+        "codigo": "C0917A",
+        "descricao": "Pão de mel, c\/ recheio de brigadeiro, c\/ cobertura, (farinha de trigo, ovo, açúcar, canela em pó, cacau em pó, leite, amido de milho, manteiga, brigadeiro e chocolate ao leite)"
+    },
+    {
+        "codigo": "C0251F",
+        "descricao": "Frango, asa, c\/ pele, crua, Gallus gallus"
+    },
+    {
+        "codigo": "C0144T",
+        "descricao": "Bebida, substituto do leite - extrato de soja, natural, c\/ cacau em pó, c\/ açúcar"
+    },
+    {
+        "codigo": "C0885B",
+        "descricao": "Batata, doce, s\/ casca, assada, salsa, s\/ óleo, c\/ pimenta-do-reino, s\/ sal"
+    },
+    {
+        "codigo": "C0053R",
+        "descricao": "Pudim, brigadeirão, c\/ chocolate granulado, mistura p\/, Ducoco"
+    },
+    {
+        "codigo": "C0095K",
+        "descricao": "Flan, leite, caseiro, (leite, água, ovo e açúcar)"
+    },
+    {
+        "codigo": "C0236E",
+        "descricao": "Peixe, água salgada, pescada, branca, assado\/grelhado, c\/ batata e vegetais - cebola, cenoura, abobrinha, tomate, c\/ óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C1062A",
+        "descricao": "Pão, Alemão, caseiro, (farinha de trigo, leite, ovo, açúcar, sal, óleo de soja e fermento biológico)"
+    },
+    {
+        "codigo": "C0613B",
+        "descricao": "Salada, alface americana, tomate, palmito, azeitona preta, c\/ molho de salada - salsa, suco de limão, azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0048C",
+        "descricao": "Manga, Tommy Atkins, polpa, in natura, Mangifera indica L."
+    },
+    {
+        "codigo": "C0532A",
+        "descricao": "Arroz com linguiça, c\/ arroz integral, c\/ sal, (arroz integral, c\/ linguiça, tomate, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0168B",
+        "descricao": "Berinjela, c\/ casca, à milanesa (farinha de trigo, ovo e farinha de rosca), frita em imersão, c\/ sal,  L."
+    },
+    {
+        "codigo": "C0226A",
+        "descricao": "Bolo, fubá, caseiro, (farinha de trigo, ovo, leite, óleo de soja, fubá, açúcar e fermento químico)"
+    },
+    {
+        "codigo": "C0525B",
+        "descricao": "Salada, pepino, c\/ molho de salada - salsa, vinagre de maçã, azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0284E",
+        "descricao": "Ceviche de frutos do mar, c\/ salmão, cru, e frutos do mar cozidos, s\/ sal, (peixe, água salgada, salmão, cru, frutos do mar cozidos - camarão, lula, polvo e vieira, c\/ cebola, suco de limão, pepino, tomate, pimenta jalapeño, coentro, salsa, c\/ azeite de oliva, c\/ pimenta do reino, s\/ sal)"
+    },
+    {
+        "codigo": "C0293A",
+        "descricao": "Sanduíche, hambúrguer bovino grelhado (c\/ pão hambúrguer), c\/ alface, tomate e ovo frito"
+    },
+    {
+        "codigo": "C0930A",
+        "descricao": "Arroz com alho poró, c\/ arroz polido, s\/ sal, (arroz polido, alho poró, c\/ óleo de soja, s\/ sal)"
+    },
+    {
+        "codigo": "C0035C",
+        "descricao": "Uva, Rubi, in natura, Vitis vinifera L. Rubi"
+    },
+    {
+        "codigo": "C0070E",
+        "descricao": "Peixe, água salgada, sardinha, filé, crua"
+    },
+    {
+        "codigo": "C0293N",
+        "descricao": "Papa de carne bovina (músculo), feijão preto, batata, abóbora (jerimum) e cenoura, c\/ caldo de frango, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C1010F",
+        "descricao": "Carne, quelônio, Tracajá, assada, s\/ óleo, s\/ sal, Podocnemis unifilis"
+    },
+    {
+        "codigo": "C0981B",
+        "descricao": "Salada, pimentão verde, amarelo, vermelho, cebola, c\/ molho vinagrete (tomate, cebola, salsa, vinagre, azeite de oliva), c\/ sal"
+    },
+    {
+        "codigo": "C0281E",
+        "descricao": "Ceviche de frutos do mar, c\/ pescada, crua, e frutos do mar cozidos, s\/ sal, (peixe, água salgada, pescada, cru, frutos do mar cozidos - camarão, lula, polvo e vieira, c\/ cebola, suco de limão, pepino, tomate, pimenta jalapeño, coentro, salsa, c\/ azeite de oliva, c\/ pimenta do reino, s\/ sal)"
+    },
+    {
+        "codigo": "C0063N",
+        "descricao": "Doce de amendoim, diet"
+    },
+    {
+        "codigo": "C0268C",
+        "descricao": "Banana, madura, casca, crua, Musa sp."
+    },
+    {
+        "codigo": "C0143F",
+        "descricao": "Carne, ovino, ovelha, lombo, crua, Ovis aries"
+    },
+    {
+        "codigo": "C0669B",
+        "descricao": "Salada, agrião, cru, c\/ azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0237A",
+        "descricao": "Macarrão, trigo, integral, c\/ molho branco (leite, manteiga e farinha de trigo), c\/ sal"
+    },
+    {
+        "codigo": "C1023F",
+        "descricao": "Carne, frango, miúdos, coração à milanesa, s\/ sal, (carne, frango, miúdos, coração, farinha de trigo, farinha de rosca, ovo, frito (c\/ óleo de soja), s\/ sal), Gallus gallus domesticus"
+    },
+    {
+        "codigo": "C0820B",
+        "descricao": "Creme, abóbora, cabotian (japonesa), c\/ carne bovina, c\/ sal, (abóbora, cabotian (japonesa), carne bovina (músculo), salsa, c\/ caldo de carne, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0090K",
+        "descricao": "Cacau, em pó, s\/ açúcar, Theobroma cacao"
+    },
+    {
+        "codigo": "C0545B",
+        "descricao": "Salada, pimentão verde, amarelo e vermelho crus, cebola, c\/ azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0519F",
+        "descricao": "Carne, ovino, ovelha, perna, cozida, c\/ batata, cenoura, chuchu, abobrinha, ervilha em vagem, c\/ óleo, cebola e alho, c\/ alecrim, c\/ pimenta do reino, c\/ sal"
+    },
+    {
+        "codigo": "C0088C",
+        "descricao": "Tucumã, in natura, Astrocaryum vulgare"
+    },
+    {
+        "codigo": "C0358A",
+        "descricao": "Sanduíche, pão francês, c\/ peito de peru defumado e queijo prato"
+    },
+    {
+        "codigo": "C0231A",
+        "descricao": "Macarrão, trigo, integral, ao alho e óleo, c\/ sal"
+    },
+    {
+        "codigo": "C0536B",
+        "descricao": "Salada, pimentão verde, cru, c\/ molho de salada - salsa, suco de limão, azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0080E",
+        "descricao": "Peixe, água salgada, tainha, filé, cru, Mugil cephalus"
+    },
+    {
+        "codigo": "C0417B",
+        "descricao": "Salada, agrião, batata, rabanete, c\/ molho vinagrete (tomate, cebola, salsa, vinagre e azeite de oliva), c\/ sal"
+    },
+    {
+        "codigo": "C0494F",
+        "descricao": "Filé de frango à parmegiana, (filé de peito de frango, à milanesa (farinha de trigo, ovo e farinha de rosca, frita em imersão), c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), muçarela, c\/ sal)"
+    },
+    {
+        "codigo": "C0146G",
+        "descricao": "Leite, Nan Comfort 2, reconstituído, s\/ açúcar"
+    },
+    {
+        "codigo": "C0375F",
+        "descricao": "Carne, boi, filé mignon, s\/ gordura, grelhada, c\/ óleo, cebola e alho, s\/ sal"
+    },
+    {
+        "codigo": "C0209E",
+        "descricao": "Peixe, água salgada, sardinha, filé, à milanesa (ovo e farinha de rosca), frito (c\/ óleo de soja), c\/ sal, Sardinella brasiliensis"
+    },
+    {
+        "codigo": "C0141F",
+        "descricao": "Carne, ovino, cordeiro, perna, crua, Ovis aries"
+    },
+    {
+        "codigo": "C1163A",
+        "descricao": "Cevada, farinha (média de baixa e alta taxa de extração)"
+    },
+    {
+        "codigo": "C0055J",
+        "descricao": "Omelete, carne bovina, s\/ sal, (ovo de galinha, carne bovina - acém moído, salsa, cebolinha, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0004J",
+        "descricao": "Ovo, galinha, clara, cozida\/10 min, s\/ sal"
+    },
+    {
+        "codigo": "C0030R",
+        "descricao": "Gelatina, uva, em pó, Oetker"
+    },
+    {
+        "codigo": "C1036A",
+        "descricao": "Macarrão, trigo, c\/ atum fresco, salsa, c\/ azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0011C",
+        "descricao": "Banana, prata, in natura, Musa spp."
+    },
+    {
+        "codigo": "C0001N",
+        "descricao": "Chocolate, ao leite, dietético"
+    },
+    {
+        "codigo": "C0252A",
+        "descricao": "Sanduíche, cheese salad, hambúrguer bovino grelhado (c\/ pão hambúrguer), c\/ queijo prato, alface, tomate e maionese"
+    },
+    {
+        "codigo": "C0219E",
+        "descricao": "Peixe, água salgada, filé\/posta, à milanesa (ovo e farinha de rosca), frito (c\/ óleo de soja), c\/ sal (média de várias espécies)"
+    },
+    {
+        "codigo": "C0042J",
+        "descricao": "Tortilha, c\/ sal, (ovos mexidos, batata frita, salsa, cebolinha, pimenta-do-reino, c\/ óleo de soja e cebola, c\/ sal)"
+    },
+    {
+        "codigo": "C0123T",
+        "descricao": "Sopa\/creme, ervilha, c\/ molho branco, c\/ sal, (ervilha, c\/ caldo de vegetais, toucinho defumado (bacon), c\/ molho branco (leite, manteiga e farinha de trigo), c\/ óleo e cebola, c\/ sal)"
+    },
+    {
+        "codigo": "C0112A",
+        "descricao": "Lasanha, bolonhesa, congelada, Sadia"
+    },
+    {
+        "codigo": "C0932A",
+        "descricao": "Arroz com espinafre, c\/ arroz polido, c\/ sal (arroz polido, espinafre, c\/ óleo de soja, c\/ sal)"
+    },
+    {
+        "codigo": "C0092F",
+        "descricao": "Carne, cabrito, mamão, crua (média de diferentes amostras), Capra hirbus"
+    },
+    {
+        "codigo": "C0338B",
+        "descricao": "Salada, cenoura, crua, c\/ molho vinagrete (tomate, cebola, salsinha, vinagre e óleo), s\/ sal, Daucus carota L."
+    },
+    {
+        "codigo": "C0002L",
+        "descricao": "Caldo, carne\/galinha, tablete (média de diferentes tipos)"
+    },
+    {
+        "codigo": "C0942B",
+        "descricao": "Charuto de repolho, c\/ carne suína refogada, c\/ molho de tomate, s\/ sal, (repolho branco, recheado com arroz e carne suína refogado, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), s\/ sal)"
+    },
+    {
+        "codigo": "C0495B",
+        "descricao": "Salada, beterraba cozida, cebola, c\/ óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C1038F",
+        "descricao": "Carne, peru, coxa, a milanesa, c\/ sal, (carne, peru, coxa, farinha de trigo, farinha de rosca, ovo, frito (c\/ óleo de soja), c\/ sal), Meleagris gallopavo"
+    },
+    {
+        "codigo": "C0218E",
+        "descricao": "Peixe, água salgada, filé\/posta, ensopado (c\/ cebola, tomate e pimentão), c\/ óleo, c\/ sal (média de várias espécies)"
+    },
+    {
+        "codigo": "C0049D",
+        "descricao": "Azeite, oliva, assado, Olea europaea L."
+    },
+    {
+        "codigo": "C0053H",
+        "descricao": "Bebida, chá, erva-doce, infusão 5%, c\/ açúcar, Pimpinela anisum"
+    },
+    {
+        "codigo": "C0445E",
+        "descricao": "Peixe, água salgada, corvina do mar, frito (c\/ óleo de soja), s\/ sal, Micropogonias furnieri"
+    },
+    {
+        "codigo": "C0034B",
+        "descricao": "Salsa, crua, Petroselium spp."
+    },
+    {
+        "codigo": "C0989F",
+        "descricao": "Linguiça, frango\/porco, fresca, grelhada\/assada, c\/ óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0456N",
+        "descricao": "Papa de carne bovina moída (acém), cará e brócolis, c\/ caldo de carne, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0246B",
+        "descricao": "Caruru, cozido, drenado, s\/ óleo, c\/ sal, Amaranthus deflexus L."
+    },
+    {
+        "codigo": "C0091C",
+        "descricao": "Salada de frutas , (melão, mamão e pêssego em calda)"
+    },
+    {
+        "codigo": "C0042A",
+        "descricao": "Biscoito, doce, chocolate, c\/ 5 cereais, Gran´dia"
+    },
+    {
+        "codigo": "C0127E",
+        "descricao": "Peixe, água salgada, abadejo, filé, cozido, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ sal, Genypterus blacodes"
+    },
+    {
+        "codigo": "C0141B",
+        "descricao": "Batata, inglesa, s\/ casca, assada, s\/ óleo, c\/ sal, Solanum tuberosum L."
+    },
+    {
+        "codigo": "C0028T",
+        "descricao": "Feijão, branco, cozido, s\/ óleo, s\/ sal, Phaseolus vulgaris L."
+    },
+    {
+        "codigo": "C0033A",
+        "descricao": "Biscoito, doce, amanteigado, coco, Bauducco"
+    },
+    {
+        "codigo": "C0165N",
+        "descricao": "Papa de peito de frango, inhame e beterraba, c\/ caldo de frango, c\/ cebola e óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0946B",
+        "descricao": "Sopa, inhame, s\/ sal, (inhame, c\/ caldo de vegetais, salsa, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0763F",
+        "descricao": "Linguiça, frango\/porco, fresca, grelhada\/assada, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0729B",
+        "descricao": "Molho de tomate, c\/ camarão, c\/ óleo, cebola e alho, c\/ sal"
+    },
+    {
+        "codigo": "C0144B",
+        "descricao": "Couve, cozida, drenada, s\/ óleo, c\/ sal, Brassica oleracea var. Acephala"
+    },
+    {
+        "codigo": "C0549F",
+        "descricao": "Carne, frango, inteiro, ensopado, c\/ tomate, pimentão, quiabo, salsa, c\/ óleo, cebola e alho, c\/ pimenta-do-reino, c\/ sal"
+    },
+    {
+        "codigo": "C0004D",
+        "descricao": "Manteiga (média várias amostras, c\/ e s\/ sal)"
+    },
+    {
+        "codigo": "C0085N",
+        "descricao": "Torta de frutas, diet, (massa brisse light (farinha de trigo, margarina light, gema, leite desnatado, c\/ sal), creme de confeiteiro diet (leite desnatado, gema de ovo, adoçante, amido de milho), morango, manga e kiwi)"
+    },
+    {
+        "codigo": "C0044H",
+        "descricao": "Bebida, café, c\/ leite (meio a meio), s\/ açúcar"
+    },
+    {
+        "codigo": "C0928B",
+        "descricao": "Repolho, roxo, cozido, drenado, s\/ óleo, c\/ sal"
+    },
+    {
+        "codigo": "C0055D",
+        "descricao": "Óleo, linhaça, Linum usitatissimum"
+    },
+    {
+        "codigo": "C0558B",
+        "descricao": "Salada, tomate, c\/ óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0457F",
+        "descricao": "Carne, boi, peito, s\/ gordura, grelhada, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), c\/ sal"
+    },
+    {
+        "codigo": "C0217B",
+        "descricao": "Repolho, branco, cozido, drenado, c\/ óleo de soja, s\/ sal, Brassica oleracea L. var. capitata"
+    },
+    {
+        "codigo": "C0151E",
+        "descricao": "Peixe, água salgada, corvina do mar, cozido, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ sal, Micropogonias furnieri"
+    },
+    {
+        "codigo": "C0119G",
+        "descricao": "Mingau, c\/ tapioca, c\/ açúcar, (tapioca, leite integral, manteiga, canela e açúcar)"
+    },
+    {
+        "codigo": "C0313A",
+        "descricao": "Sanduíche, pão francês, c\/ mortadela, queijo prato, rúcula e tomate"
+    },
+    {
+        "codigo": "C0025J",
+        "descricao": "Omelete, c\/ ovo de galinha, c\/ queijo parmesão, s\/ sal, (ovo de galinha inteiro, queijo parmesão, c\/ óleo de soja, s\/ sal)"
+    },
+    {
+        "codigo": "C0457A",
+        "descricao": "Arroz, c\/ mandioca (aipim, macaxeira) cozida, c\/ sal, (arroz polido cozido (c\/ óleo, cebola e alho), mandioca (aipim, macaxeira cozida), c\/ sal)"
+    },
+    {
+        "codigo": "C0949F",
+        "descricao": "Ossobuco (chambari), c\/ mandioca (aipim, macaxeira), s\/ sal, (ossobuco bovino, mandioca (aipim, macaxeira), tomate, pimentão, salsinha, cebolinha, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0348A",
+        "descricao": "Sanduíche, pão forma tradicional, c\/ peito de peru defumado, queijo muçarela, c\/ margarina"
+    },
+    {
+        "codigo": "C0351F",
+        "descricao": "Carne, boi, contra-filé, s\/ gordura, grelhada, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), c\/ sal"
+    },
+    {
+        "codigo": "C0552B",
+        "descricao": "Salada, repolho, branco, cru, c\/ óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0685B",
+        "descricao": "Batata, inglesa, cozida, c\/ muçarela, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ sal, Solanum tuberosum L."
+    },
+    {
+        "codigo": "C0256T",
+        "descricao": "Lentilha, cozida, drenada, s\/ óleo, c\/ sal, Lens culinaris"
+    },
+    {
+        "codigo": "C0726A",
+        "descricao": "Arroz com pequi, c\/ arroz polido, c\/ sal, (arroz polido, pequi, salsa, c\/ óleo, cebola e alho, c\/ pimenta-do-reino, c\/ sal)"
+    },
+    {
+        "codigo": "C0528F",
+        "descricao": "Presunto cru, carne porco salgada,  cru, tipo Parma"
+    },
+    {
+        "codigo": "C0934F",
+        "descricao": "Carne, porco, lombo, grelhada\/assada, c\/ manteiga, c\/ molho de abacaxi e mel, c\/ pimenta-do-reino, c\/ sal"
+    },
+    {
+        "codigo": "C0401N",
+        "descricao": "Papa de batata, cenoura e carne bovina moída (patinho), c\/ caldo de frango, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0265A",
+        "descricao": "Sanduíche, misto quente, pão francês, c\/ presunto, queijo muçarela, c\/ manteiga"
+    },
+    {
+        "codigo": "C0209T",
+        "descricao": "Feijão, branco, cozido, c\/ azeite de oliva, s\/ sal, Phaseolus vulgaris L."
+    },
+    {
+        "codigo": "C0112K",
+        "descricao": "Strudel, maçã"
+    },
+    {
+        "codigo": "C0104C",
+        "descricao": "Banana, da terra, frita, c\/ manteiga, Musa acuminata Colla x Musa balbisiana Colla"
+    },
+    {
+        "codigo": "C1092A",
+        "descricao": "Macarrão, trigo, c\/ carne bovina músculo, gratinado, c\/ molho branco (manteiga, farinha de trigo e leite) e queijo parmesão, salsa, pimenta-do-reino, c\/ sal"
+    },
+    {
+        "codigo": "C0121T",
+        "descricao": "Lentilha, cozida, c\/ linguiça calabresa, c\/ óleo, cebola e alho, c\/ sal"
+    },
+    {
+        "codigo": "C0829A",
+        "descricao": "Bolo, abacaxi, caseiro, (farinha de trigo, ovo, leite, manteiga, açúcar, abacaxi e fermento em pó)"
+    },
+    {
+        "codigo": "C0399N",
+        "descricao": "Papa de carne bovina moída (patinho), fubá e couve, c\/ caldo de carne, c\/ cebola, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0115F",
+        "descricao": "Carne, frango, sobrecoxa, c\/ pele, assada, s\/ óleo, s\/ sal, Gallus gallus"
+    },
+    {
+        "codigo": "C0675B",
+        "descricao": "Salada, beterraba crua, c\/ óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0286A",
+        "descricao": "Sanduíche,  queijo quente, pão forma integral, c\/ queijo prato"
+    },
+    {
+        "codigo": "C0368A",
+        "descricao": "Sanduíche, peito de frango grelhado, s\/ óleo, c\/ sal (c\/ pão de hambúrguer)"
+    },
+    {
+        "codigo": "C0247A",
+        "descricao": "Sanduíche, hambúrguer bovino grelhado (c\/ pão hambúrguer), c\/ queijo prato, cebola e pepino"
+    },
+    {
+        "codigo": "C0103F",
+        "descricao": "Carne, frango\/galinha, peito, s\/ pele, filé, empanado, cru, s\/ sal (média de diferentes amostras), Gallus gallus"
+    },
+    {
+        "codigo": "C0727A",
+        "descricao": "Arroz com pequi, c\/ arroz polido, s\/ sal, (arroz polido, pequi, salsa, c\/ óleo, cebola e alho, c\/ pimenta-do-reino, s\/ sal)"
+    },
+    {
+        "codigo": "C0525N",
+        "descricao": "Papa de carne bovina moída (patinho), macarrão e brócolis, c\/ caldo de carne, c\/ cebola, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0049K",
+        "descricao": "Chocolate, ao leite, Nestlè Classic"
+    },
+    {
+        "codigo": "C1006A",
+        "descricao": "Bolo, limão, c\/ recheio e cobertura, limão, caseiro, (bolo - farinha de trigo, ovo, leite, manteiga, açúcar e fermento químico e recheio - leite condesando, suco de limão e raspas de limão)"
+    },
+    {
+        "codigo": "C0062R",
+        "descricao": "Sagu, maracujá, mistura p\/, Ducoco"
+    },
+    {
+        "codigo": "C0614N",
+        "descricao": "Papa de carne bovina moída (acém), arroz branco e brócolis, c\/ caldo de carne, c\/ cebola, c\/ azeite de oliva, s\/ sal"
+    },
+    {
+        "codigo": "C0720A",
+        "descricao": "Arroz com jambu, c\/ arroz integral, c\/ sal, (arroz integral, jambu, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0151H",
+        "descricao": "Vinho quente, (vinho tinto, água, cravo, canela, maçã, c\/ açúcar)"
+    },
+    {
+        "codigo": "C0817A",
+        "descricao": "Prato de comida brasileiro (região Norte), (90 g de arroz, polido, cozido + 140 g de feijão, preto, cozido (50% grão e 50% caldo) + 35 g de carne, boi, quarto traseiro, s\/ gordura + 32g de farinha de mandioca, crua - c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0638N",
+        "descricao": "Papa de feijão preto, batata doce, abóbora cabotian (japonesa) e cenoura, c\/ caldo de carne, c\/ cebola e azeite de oliva, s\/ sal"
+    },
+    {
+        "codigo": "C0252B",
+        "descricao": "Maxixe, c\/ casca, refogado (c\/ óleo, cebola e alho), c\/ sal, Cucumis anguria"
+    },
+    {
+        "codigo": "C0363A",
+        "descricao": "Sanduíche, cachorro quente, (c\/ pão para hot dog e salsicha de frango), c\/ catchup, mostarda, c\/ maionese"
+    },
+    {
+        "codigo": "C0833B",
+        "descricao": "Tomilho, in natura, Thymus vulgaris"
+    },
+    {
+        "codigo": "C0488E",
+        "descricao": "Peixe, água doce, Tilápia, filé s\/ pele, grelhado, c\/ óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0281F",
+        "descricao": "Carne, boi, quarto traseiro, s\/ gordura, grelhada, c\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0723A",
+        "descricao": "Arroz com frango e pequi, c\/ arroz polido, s\/ sal, (arroz polido, frango, pequi, salsa, c\/ óleo, cebola e alho, c\/ pimenta-do-reino, s\/ sal)"
+    },
+    {
+        "codigo": "C0139E",
+        "descricao": "Peixe, água salgada, cação, posta, assado\/grelhado, s\/ óleo, c\/ sal, Carcharhinus spp."
+    },
+    {
+        "codigo": "C0584F",
+        "descricao": "Caldeirada de cabrito, c\/ sal, (carne de cabrito, tomate, pimentão, alecrim, vinho branco, c\/ caldo de vegetais, c\/ óleo, cebola e alho, c\/ pimenta-do-eino e pimenta vermelha, c\/ sal)"
+    },
+    {
+        "codigo": "C0652B",
+        "descricao": "Salada, vegetais cozidos, c\/ molho de salada, c\/ sal, (brócolis, cenoura e couve-flor cozidos, c\/ molho de salada - salsa, suco de limão, azeite de oliva, c\/ sal)"
+    },
+    {
+        "codigo": "C0175K",
+        "descricao": "Bombom, chocolate ao leite e meio amargo, c\/ recheio cremoso de castanha de caju, Serenata de amor, Garoto"
+    },
+    {
+        "codigo": "C0717B",
+        "descricao": "Ratatouille, vegetais assados, c\/ sal, (berinjela, abobrinha, tomate, manjericão, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), c\/ azeite de oliva, c\/ sal)"
+    },
+    {
+        "codigo": "C0217K",
+        "descricao": "Pavê de bombom , (leite condensado, creme de leite, leite, ovo, amido de milho, bombom, chocolate em pó, c\/ açúcar)"
+    },
+    {
+        "codigo": "C0655A",
+        "descricao": "Suflê, bacalhau, c\/ molho branco, c\/ sal, (bacalhau dessalgado, ovo de galinha, farinha de rosa, salsa, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C1006B",
+        "descricao": "Creme de espinafre, s\/ sal, (espinafre, creme de leite, queijo parmesão, cebola e alho, c\/ molho branco (farinha de trigo, manteiga e leite), s\/ sal)"
+    },
+    {
+        "codigo": "C0056C",
+        "descricao": "Figo, in natura, Ficus carica L."
+    },
+    {
+        "codigo": "C0883B",
+        "descricao": "Batata, doce, s\/ casca, assada, salsa, c\/ azeite de oliva, c\/ pimenta-do-reino, s\/ sal"
+    },
+    {
+        "codigo": "C0336A",
+        "descricao": "Sanduíche, pão forma tradicional, c\/ peito de peru defumado, queijo minas, c\/ margarina"
+    },
+    {
+        "codigo": "C0277A",
+        "descricao": "Sanduíche, queijo quente, pão forma integral, c\/ queijo muçarela"
+    },
+    {
+        "codigo": "C0926B",
+        "descricao": "Flor de abóbora, cozida, drenada, s\/ óleo, c\/ sal"
+    },
+    {
+        "codigo": "C0006G",
+        "descricao": "Cream cheese (média de diferentes sabores)"
+    },
+    {
+        "codigo": "C0544N",
+        "descricao": "Papa de carne bovina (músculo), feijão preto, batata, abóbora (jerimum) e cenoura, c\/ caldo de carne, c\/ cebola e óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0501F",
+        "descricao": "Sopa, peito de frango, c\/ macarrão, c\/ vegetais, c\/ sal, (peito de frango, c\/ macarrão, c\/ cenoura, chuchu e abóbora, c\/ caldo de frango, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0096G",
+        "descricao": "Bebida, leite desnatado, c\/ chocolate em pó (10%), s\/ açúcar"
+    },
+    {
+        "codigo": "C0359E",
+        "descricao": "Molusco, lula, cozido, frito, c\/ sal, Order Teuthoidea"
+    },
+    {
+        "codigo": "C0392B",
+        "descricao": "Salada, folhas, c\/ óleo de soja, c\/ sal, (alface lisa, alface roxa, rúcula, c\/ óleo de soja, c\/ sal)"
+    },
+    {
+        "codigo": "C0958F",
+        "descricao": "Sopa, peito de frango, c\/ macarrão, c\/ vegetais, s\/ sal, (peito de frango, c\/ macarrão, c\/ batata, abóbora (jerimum), espinafre, purê de tomate, c\/ caldo de frango, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0207N",
+        "descricao": "Papa de feijão carioca, ovo e macarrão, c\/ caldo de frango, c\/ cebola e óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0366E",
+        "descricao": "Molusco, mexilhão, cozido, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), c\/ sal, Anomalocardia brasiliana"
+    },
+    {
+        "codigo": "C0247B",
+        "descricao": "Maxixe, c\/ casca, cozido, drenado, s\/ óleo, s\/ sal, Cucumis anguria"
+    },
+    {
+        "codigo": "C0069N",
+        "descricao": "Biscoito, doce, diet"
+    },
+    {
+        "codigo": "C0527B",
+        "descricao": "Salada, pepino, c\/ molho vinagrete (tomate, cebola, salsa, vinagre e azeite de oliva), s\/ sal"
+    },
+    {
+        "codigo": "C0022B",
+        "descricao": "Chuchu, s\/ casca, cru, Sechium edule"
+    },
+    {
+        "codigo": "C0046K",
+        "descricao": "Chocolate, ao leite (média de diferentes marcas)"
+    },
+    {
+        "codigo": "C0859A",
+        "descricao": "Cuscuz de milho, cozido, c\/ leite integral, c\/ açúcar"
+    },
+    {
+        "codigo": "C0025D",
+        "descricao": "Óleo, composto (85% soja, 15% oliva)"
+    },
+    {
+        "codigo": "C0236B",
+        "descricao": "Serralha, folha, refogada (c\/ óleo, cebola e alho), c\/ sal, Sonchus oleraceus L."
+    },
+    {
+        "codigo": "C0484F",
+        "descricao": "Pepperoni, carne e porco, fatiado"
+    },
+    {
+        "codigo": "C1144B",
+        "descricao": "Cogumelo, refogado (c\/ óleo, cebola e alho), s\/ sal (média de diferentes tipos)"
+    },
+    {
+        "codigo": "C0036A",
+        "descricao": "Biscoito, doce, amanteigado, leite, Bauducco"
+    },
+    {
+        "codigo": "C1169A",
+        "descricao": "Massa para crumble, assada, vegano, (farinha de trigo, aveia em flocos, granola, canela em pó, c\/ óleo de milho, c\/ açúcar mascavo)"
+    },
+    {
+        "codigo": "C0114H",
+        "descricao": "Bebida, capuccino tradicional (leite integral, café descafeinado - infusão e canela em pó), s\/ açúcar"
+    },
+    {
+        "codigo": "C0563B",
+        "descricao": "Salada, chuchu, cebola, c\/ óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0632A",
+        "descricao": "Calzone, frios, c\/ molho de tomate, caseiro, c\/ sal, (massa com farinha de trigo, c\/ muçarela e presunto, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), c\/ sal)"
+    },
+    {
+        "codigo": "C0022E",
+        "descricao": "Peixe, água doce, corimbatá, assado, s\/ óleo, s\/ sal, Prochilodus spp."
+    },
+    {
+        "codigo": "C0060R",
+        "descricao": "Sagu, mistura p\/ (médias de diferentes sabores)"
+    },
+    {
+        "codigo": "C0921A",
+        "descricao": "Churros, assado, c\/ recheio de brigadeiro, s\/ açúcar polvilhado, (farinha de trigo, manteiga, ovo, sal, açúcar, c\/ brigadeiro)"
+    },
+    {
+        "codigo": "C0143C",
+        "descricao": "Suco natural, maracujá, s\/ açúcar"
+    },
+    {
+        "codigo": "C0792A",
+        "descricao": "Arroz, creme, pó, cru, Orysa sativa L."
+    },
+    {
+        "codigo": "C0118C",
+        "descricao": "Suco natural, melancia e acerola, c\/ açúcar"
+    },
+    {
+        "codigo": "C1043F",
+        "descricao": "Carne, peru, peito, ensopado (c\/ tomate e pimentão), c\/ óleo de soja, cebola e alho, c\/ sal, Meleagris gallopavo"
+    },
+    {
+        "codigo": "C0050E",
+        "descricao": "Peixe, água salgada, corvina, assado, s\/ óleo, s\/ sal, Micropogon furnieri"
+    },
+    {
+        "codigo": "C0106C",
+        "descricao": "Banana, nanica, à milanesa (farinha de trigo, ovo e farinha de rosca), frita em imersão, s\/ açúcar, Musa acuminata Colla x Musa balbisiana Colla"
+    },
+    {
+        "codigo": "C0458F",
+        "descricao": "Carne, boi, peito, s\/ gordura, grelhada, c\/ óleo, cebola e alho, c\/ sal"
+    },
+    {
+        "codigo": "C0124E",
+        "descricao": "Peixe, água salgada, abadejo, filé, ensopado (c\/ cebola, tomate e pimentão), c\/ óleo, c\/ sal, Genypterus blacodes"
+    },
+    {
+        "codigo": "C0002J",
+        "descricao": "Ovo, codorna, gema, crua, Coturnix coturnix"
+    },
+    {
+        "codigo": "C0442E",
+        "descricao": "Peixe, água salgada, abadejo, filé, frito (c\/ óleo de soja), s\/ sal, Genypterus blacodes"
+    },
+    {
+        "codigo": "C0992B",
+        "descricao": "Salada, nabo, cenoura e beterraba crua, c\/ molho vinagrete (tomate, cebola, salsa, vinagre, azeite de oliva), s\/ sal"
+    },
+    {
+        "codigo": "C0917B",
+        "descricao": "Cebola, branca, refogada, c\/ óleo de soja, c\/ sal, Allium cepa L."
+    },
+    {
+        "codigo": "C0950B",
+        "descricao": "Escarola, refogada (c\/ óleo, cebola e alho), c\/ sal"
+    },
+    {
+        "codigo": "C1057B",
+        "descricao": "Purê, cenoura, c\/ manteiga, leite, s\/ sal"
+    },
+    {
+        "codigo": "C0020H",
+        "descricao": "Bebida, chá, infusão, eparema, planta, folha, s\/ açúcar, Costus aff. Discolor Roscoe"
+    },
+    {
+        "codigo": "C1007B",
+        "descricao": "Guacamole, c\/ sal, (avocado, tomate, cebola, alho, suco de limão, coentro, c\/ pimenta-do-reino, c\/ azeite de oliva, c\/ sal)"
+    },
+    {
+        "codigo": "C0165A",
+        "descricao": "Pastel, frito, caseiro (média de diferentes recheios)"
+    },
+    {
+        "codigo": "C0253E",
+        "descricao": "Moqueca de camarão, c\/ sal, (camarão, tomate, pimentão, coentro, leite de coco, azeite de dendê, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0080C",
+        "descricao": "Jambo, in natura, Eugenia malaccensis L."
+    },
+    {
+        "codigo": "C0230N",
+        "descricao": "Papa de fígado bovino e batata doce, c\/ caldo de frango, c\/ cebola e azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0232F",
+        "descricao": "Carne, frango, peito, s\/ pele, cozida, drenada, c\/ óleo de soja, s\/ sal, Gallus gallus"
+    },
+    {
+        "codigo": "C0223E",
+        "descricao": "Bolinho de bacalhau, frito, caseiro, (batata inglesa, bacalhau dessalgado, tomate, ovo de galinha, farinha de trigo, c\/ sal, frito (c\/ óleo de soja))"
+    },
+    {
+        "codigo": "C0133T",
+        "descricao": "Sopa, feijão, preto, c\/ vegetais, c\/ sal, (feijão preto, c\/ cenoura, chuchu e batata, c\/ caldo de carne, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0603B",
+        "descricao": "Salada, espinafre refogado, tomate, queijo minas, noz, c\/ azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0073T",
+        "descricao": "Ervilha, grão, seca, partida, cozida, drenada, s\/ óleo, s\/ sal, Pisum sativum L."
+    },
+    {
+        "codigo": "C0103T",
+        "descricao": "Vagem, cozida, drenada, s\/ óleo, c\/ sal (média de diferentes amostras), Phaseolus vulgaris L."
+    },
+    {
+        "codigo": "C0161B",
+        "descricao": "Repolho, branco, refogado (c\/ óleo, cebola e alho), c\/ sal, Brassica oleracea L. var. capitata"
+    },
+    {
+        "codigo": "C0691A",
+        "descricao": "Pizza, doce, banana, c\/ leite condensado, caseira, (massa (farinha de trigo, óleo, fermento biológico, sal e açúcar), banana com passas, c\/ leite condensado, açúcar e canela)"
+    },
+    {
+        "codigo": "C0659N",
+        "descricao": "Papa de carne bovina moída (acém), fubá e espinafre, c\/ caldo de carne, c\/ cebola e óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0038C",
+        "descricao": "Suco, laranja, s\/ açúcar, Citrus sinensis"
+    },
+    {
+        "codigo": "C0010N",
+        "descricao": "Gelatina, limão, em pó, diet, Oetker"
+    },
+    {
+        "codigo": "C0286F",
+        "descricao": "Carne, boi, quarto traseiro, s\/ gordura, grelhada, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ sal"
+    },
+    {
+        "codigo": "C1054F",
+        "descricao": "Carne, porco, vísceras, cru (média de diferentes tipos), Sus ssp."
+    },
+    {
+        "codigo": "C0673A",
+        "descricao": "Polenta, c\/ molho à bolonhesa (carne bovina - patinho moído, tomate, cebola, alho, c\/ óleo), c\/ sal"
+    },
+    {
+        "codigo": "C0514B",
+        "descricao": "Salada, cenoura cozida, cebola, c\/ molho de salada - salsa, vinagre de maçã , azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0395A",
+        "descricao": "Lasanha, bolonhesa, caseira, assada, (massa lasanha fresca, carne bovina moída acém, refogada, queijo muçarela, c\/ molho branco, c\/molho de tomate, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0072F",
+        "descricao": "Carne, boi, músculo, s\/ gordura, cru, Bos taurus"
+    },
+    {
+        "codigo": "C0364N",
+        "descricao": "Papa de arroz polido, feijão preto e carne bovina moída (acém), c\/ caldo de frango, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0125K",
+        "descricao": "Cobertura de chocolate, para bolo, (cacau em pó, leite, c\/ manteiga, c\/ açúcar)"
+    },
+    {
+        "codigo": "C0043D",
+        "descricao": "Óleo, soja, cozido, Glycine max"
+    },
+    {
+        "codigo": "C0550A",
+        "descricao": "Arroz com couve, c\/ arroz polido, s\/ sal, (arroz polido, c\/ couve, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0302C",
+        "descricao": "Maçã, Fuji, assada, c\/ açúcar e canela"
+    },
+    {
+        "codigo": "C0517A",
+        "descricao": "Arroz com peixe, c\/ arroz polido, s\/ sal, (arroz polido, c\/ peixe (água salgada, cação), tomate, pimentão amarelo e vermelho, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0394B",
+        "descricao": "Salada, folhas, c\/ molho de salada, c\/ sal, (alface lisa, alface roxa, rúcula, c\/ molho de salada - salsa, vinagre de maçã, azeite de oliva, c\/ sal)"
+    },
+    {
+        "codigo": "C1056A",
+        "descricao": "Sopa, macarrão, c\/ vegetais, c\/ sal, (macarrão, c\/ batata, abobrinha, chuchu, repolho e purê de tomate, c\/ caldo de carne, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0102T",
+        "descricao": "Vagem, cozida, drenada, s\/ óleo, s\/ sal (média de diferentes amostras), Phaseolus vulgaris L."
+    },
+    {
+        "codigo": "C0215A",
+        "descricao": "Macarrão, trigo, c\/ ovos, c\/ manteiga, s\/ sal"
+    },
+    {
+        "codigo": "C0694A",
+        "descricao": "Cuscuz, camarão, c\/ sal, (farinha de milho, camarão, ervilha e palmito em conserva, salsa, cebolinha, azeitona, tomate, ovo cozido, molho de tomate (tomate, c\/ óleo, cebola e alho), c\/ sal)"
+    },
+    {
+        "codigo": "C0329A",
+        "descricao": "Sanduíche, pão forma tradicional, c\/ peito de peru defumado, queijo minas, c\/ manteiga"
+    },
+    {
+        "codigo": "C0485N",
+        "descricao": "Papa de carne bovina moída (patinho), cenoura e batata baroa (mandioquinha, batata salsa), c\/ caldo de frango, c\/ cebola e óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0277F",
+        "descricao": "Carne, boi, quarto traseiro, c\/ gordura, grelhada, c\/ manteiga, s\/ sal"
+    },
+    {
+        "codigo": "C1012B",
+        "descricao": "Purê, cará, s\/ sal, (cará, leite, c\/ manteiga, s\/ sal)"
+    },
+    {
+        "codigo": "C0498A",
+        "descricao": "Sanduíche, pão francês, c\/ filé mignon grelhado e muçarela, c\/ sal"
+    },
+    {
+        "codigo": "C0081H",
+        "descricao": "Bebida, café - infusão 8% - média, c\/ leite (meio a meio), \"média\", s\/ açúcar"
+    },
+    {
+        "codigo": "C0010M",
+        "descricao": "Sanduíche, Double Whopper, c\/ queijo, Burguer King"
+    },
+    {
+        "codigo": "C0241B",
+        "descricao": "Mostarda, folha, cozida, drenada, s\/ óleo, s\/ sal, Brassica juncea (L.)"
+    },
+    {
+        "codigo": "C0004N",
+        "descricao": "Gelatina, abacaxi, em pó, diet, Oetker"
+    },
+    {
+        "codigo": "C0532E",
+        "descricao": "Peixe, água doce, Tucunaré, a milanesa, s\/ sal, (peixe, água doce, Tucunaré, farinha de trigo, farinha de rosca, ovo, frito (c\/ óleo de soja), s\/ sal), Cichla ocellaris"
+    },
+    {
+        "codigo": "C0262N",
+        "descricao": "Papa de peito de frango e batata doce, c\/ caldo de frango, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0300A",
+        "descricao": "Sanduíche, pão francês, c\/ presunto"
+    },
+    {
+        "codigo": "C0027B",
+        "descricao": "Mandioca (aipim, macaxeira), s\/ casca, crua, Manihot esculenta Crantz"
+    },
+    {
+        "codigo": "C0987F",
+        "descricao": "Carne, bovina, charque (carne seca, carne de sol, jaba), c\/ óleo de soja, cebola e alho, c\/ sal"
+    },
+    {
+        "codigo": "C1113B",
+        "descricao": "Louro, folha, seco, Laurus nobilis"
+    },
+    {
+        "codigo": "C0614A",
+        "descricao": "Macarrão, trigo, integral, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), c\/ peito de frango, queijo parmesão, c\/ óleo, cebola e alho, c\/ sal"
+    },
+    {
+        "codigo": "C1048F",
+        "descricao": "Carne, porco, lombo, à milanesa, s\/ sal, (carne, porco, lombo, farinha de trigo, farinha de rosca, ovo, frito (c\/ óleo de soja), s\/ sal), Sus ssp."
+    },
+    {
+        "codigo": "C1015A",
+        "descricao": "Bolo, trigo, c\/ recheio, nozes, caseiro, (bolo - farinha de trigo, ovo, leite, manteiga, açúcar e fermento químico, recheio - leite condensado, creme de leite e nozes)"
+    },
+    {
+        "codigo": "C1024B",
+        "descricao": "Creme, milho verde, s\/ sal, (milho verde, creme de leite, cebola, c\/ caldo de vegetais, c\/ molho branco (farinha de trigo, manteiga e leite), s\/ sal)"
+    },
+    {
+        "codigo": "C0558F",
+        "descricao": "Fricassé de carne moída, c\/ sal, (carne moída (patinho), cogumelo paris, creme de leite, conhaque, vinho branco, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ manteiga, cebola e alho, c\/ pimenta-do-reino, c\/ sal)"
+    },
+    {
+        "codigo": "C0508F",
+        "descricao": "Arrumadinho de frango, s\/ sal, (peito de frango refogado, tomate, salsa, creme de milho, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0273N",
+        "descricao": "Papa de peixe (pescada branca), abóbora (jerimum), batata-doce e couve c\/ caldo de frango, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0880F",
+        "descricao": "Mocotó bovino, c\/ feijão branco, tomate, c\/ caldo de mocotó, c\/ óleo, cebola e alho, c\/ sal"
+    },
+    {
+        "codigo": "C0907A",
+        "descricao": "Macarrão, carbonara, s\/ sal, (macarrão, trigo integral, cozido, ovo de galinha, c\/ toucinho defumado (bacon), c\/ queijo parmesão, c\/ pimenta-do-reino, s\/ sal)"
+    },
+    {
+        "codigo": "C0258C",
+        "descricao": "Queijo vegetal, c\/ leite de coco, c\/ sal, (leite de coco, alho em pó, polvilho, páprica, c\/ sal)"
+    },
+    {
+        "codigo": "C0204T",
+        "descricao": "Almôndega de soja, assada, s\/ sal, (proteína texturarizada de soja (hidratada com caldo de legumes), farinha de rosca, farinha de trigo, ovo, cheiro verde, cebola e alho, pimenta-do-reino, s\/ sal)"
+    },
+    {
+        "codigo": "C0146F",
+        "descricao": "Carne, ovino, ovelha, perna, crua, Ovis aries"
+    },
+    {
+        "codigo": "C0401E",
+        "descricao": "Peixe, água salgada, porquinho, ensopado (c\/ cebola, tomate e pimentão), c\/ óleo, s\/ sal, Prochilodus spp."
+    },
+    {
+        "codigo": "C0704A",
+        "descricao": "Cuscuz, marroquino (semolina), c\/ camarão, s\/ sal, (semolina, camarão, tomate, cheiro verde, pimenta-do-reino, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0311B",
+        "descricao": "Mandioca (aipim, macaxeira), s\/ casca, cozida, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), c\/ sal, Manihot esculenta Crantz"
+    },
+    {
+        "codigo": "C0315A",
+        "descricao": "Sanduíche, pão francês, c\/ queijo minas, c\/ manteiga"
+    },
+    {
+        "codigo": "C0291E",
+        "descricao": "Camarão com legumes, s\/ sal, (camarão, cenoura, vagem, couve-flor, tomate, pimentão, salsa, suco de limão, c\/ óleo, cebola e alho, c\/ pimenta-do-reino, s\/ sal)"
+    },
+    {
+        "codigo": "C0209C",
+        "descricao": "Suco natural, melancia, s\/ açúcar"
+    },
+    {
+        "codigo": "C0170B",
+        "descricao": "Batata, inglesa, s\/ casca, sauté (c\/ margarina e salsa), c\/ sal, Solanum tuberosum L."
+    },
+    {
+        "codigo": "C0150N",
+        "descricao": "Papa de peito de frango, batata e cenoura, c\/ caldo de frango, c\/ cebola, s\/ óleo, c\/ sal"
+    },
+    {
+        "codigo": "C0074A",
+        "descricao": "Bolo, chocolate, recheio sabor chocolate, Lanchucco"
+    },
+    {
+        "codigo": "C0032D",
+        "descricao": "Patê (média de diferentes sabores)"
+    },
+    {
+        "codigo": "C0173A",
+        "descricao": "Torrada, pão francês, caseira"
+    },
+    {
+        "codigo": "C0208C",
+        "descricao": "Suco natural, melancia, c\/ açúcar"
+    },
+    {
+        "codigo": "C0061T",
+        "descricao": "Acarajé, s\/ sal, (feijão fradinho, camarão seco, pimenta malagueta, frito, c\/ azeite de dendê, cebola,  s\/ sal)"
+    },
+    {
+        "codigo": "C0004L",
+        "descricao": "Caldo, galinha, tablete, Maggi"
+    },
+    {
+        "codigo": "C0430B",
+        "descricao": "Salada, vegetais assados, s\/ óleo, s\/ sal, (abóbora, abobrinha, batata doce e berinjela grelhados, s\/ tempero, s\/ sal)"
+    },
+    {
+        "codigo": "C0299F",
+        "descricao": "Carne, boi, contra-filé, grelhado\/frito, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ sal"
+    },
+    {
+        "codigo": "C0415A",
+        "descricao": "Biscoito, doce, champagne, (farinha de trigo, açúcar, ovo, amido de milho (maisena), óleo de soja, sal)"
+    },
+    {
+        "codigo": "C0535E",
+        "descricao": "Pescado, água doce, Tucunaré, a milanesa, c\/ sal, (peixe, água doce, Tucunaré, farinha de trigo, farinha de rosca, ovo, frito (c\/ óleo de soja), c\/ sal), Cichla ocellaris"
+    },
+    {
+        "codigo": "C0042D",
+        "descricao": "Óleo, milho, cozido, Zea mays"
+    },
+    {
+        "codigo": "C0304N",
+        "descricao": "Papa de feijão preto, batata, abóbora (jerimum) e cenoura, c\/ caldo de frango, c\/ cebola e azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0514F",
+        "descricao": "Rabada bovina com batata e agrião, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), pimentão, c\/ óleo, cebola e alho, c\/ pimenta do reino, c\/ sal"
+    },
+    {
+        "codigo": "C0867B",
+        "descricao": "Batata, inglesa, s\/ casca, assada, alecrim, s\/ óleo, c\/ pimenta-do-reino, s\/ sal"
+    },
+    {
+        "codigo": "C0230F",
+        "descricao": "Carne, frango, peito, s\/ pele, grelhada, s\/ gordura, s\/ óleo, c\/ sal, Gallus gallus"
+    },
+    {
+        "codigo": "C0013U",
+        "descricao": "Avelã , crua, s\/ sal, Corylus avellana"
+    },
+    {
+        "codigo": "C0239F",
+        "descricao": "Carne, frango, peito, filé, à milanesa (farinha de trigo, ovo e farinha de rosca), frita em imersão (c\/ óleo de soja), c\/ sal, Gallus gallus"
+    },
+    {
+        "codigo": "C0502B",
+        "descricao": "Salada, cenoura, crua, c\/ molho de salada - salsa, suco de limão, azeite de oliva, c\/ sal"
+    },
+    {
+        "codigo": "C0229N",
+        "descricao": "Papa de carne bovina moída (acém), cará e brócolis, c\/ caldo de frango, c\/ cebola, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0084C",
+        "descricao": "Pinha, in natura, Annona squamosa L."
+    },
+    {
+        "codigo": "C0575N",
+        "descricao": "Papa de carne bovina moída (patinho), feijão carioca, batata, abóbora (jerimum) e cenoura, c\/ caldo de frango, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0277N",
+        "descricao": "Papa de peixe (pescada branca), abóbora (jerimum), batata-doce e couve c\/ caldo de frango, c\/ cebola, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0700F",
+        "descricao": "Carne, porco, lombo, empanada (farinha de trigo), frita (c\/ óleo de soja), s\/ sal, Sus ssp"
+    },
+    {
+        "codigo": "C0427N",
+        "descricao": "Creme de inhame com morango, s\/ açúcar"
+    },
+    {
+        "codigo": "C0260E",
+        "descricao": "Camarão, Pitu, frito, s\/ sal, Macrobrachium wiegman"
+    },
+    {
+        "codigo": "C0897A",
+        "descricao": "Arroz doce, c\/ leite condensado e canela, (arroz polido cozido, leite integral, leite condensado, c\/ canela)"
+    },
+    {
+        "codigo": "C0052C",
+        "descricao": "Pera, ´Park´,  c\/ casca, in natura, Pyrus communis L."
+    },
+    {
+        "codigo": "C0220K",
+        "descricao": "Palha italiana, (leite condensado, chocolate em pó, manteiga, biscoito de amido de milho (maisena))"
+    },
+    {
+        "codigo": "C0209B",
+        "descricao": "Almeirão, cozido, drenado, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0251A",
+        "descricao": "Sanduíche, hambúrguer bovino grelhado (c\/ pão hambúrguer), c\/ alface, tomate e maionese"
+    },
+    {
+        "codigo": "C0107C",
+        "descricao": "Banana, da terra, assada, s\/ adição de ingredientes, Musa acuminata Colla x Musa balbisiana Colla"
+    },
+    {
+        "codigo": "C0851F",
+        "descricao": "Carne, ovino, ovelha, perna, cozida, assada, s\/ óleo, c\/ sal"
+    },
+    {
+        "codigo": "C0600A",
+        "descricao": "Macarrão, trigo, c\/ presunto, ervilha, queijo parmesão, c\/ molho branco (farinha de trigo, manteiga e leite), c\/ sal"
+    },
+    {
+        "codigo": "C0194B",
+        "descricao": "Salada, chuchu, s\/ casca, cozido, c\/ molho vinagrete (tomate, cebola, salsinha, vinagre e óleo), c\/ sal, Sechium edule"
+    },
+    {
+        "codigo": "C1100A",
+        "descricao": "Macarrão, trigo, c\/ carne bovina músculo, salsa, pimenta-do-reino, c\/ manteiga, cebola e alho, c\/ sal"
+    },
+    {
+        "codigo": "C0704B",
+        "descricao": "Tomate, maduro, cozido, s\/ óleo, c\/ sal"
+    },
+    {
+        "codigo": "C0345F",
+        "descricao": "Carne, boi, contra-filé, s\/ gordura, grelhada, c\/ molho branco (farinha de trigo, manteiga e leite), s\/ sal"
+    },
+    {
+        "codigo": "C0966B",
+        "descricao": "Tomate, maduro, assado, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0854A",
+        "descricao": "Macarrão, trigo, c\/ linguiça calabresa, salsa, cebolinha, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), s\/ sal"
+    },
+    {
+        "codigo": "C0018U",
+        "descricao": "Amêndoa, torrada, caramelizada"
+    },
+    {
+        "codigo": "C0792B",
+        "descricao": "Farofa, couve, c\/ sal, (farinha de mandioca (aipim, macaxeira), couve, c\/ óleo, cebola e alho, c\/ sal)"
+    },
+    {
+        "codigo": "C0744F",
+        "descricao": "Carne, frango, asa, c\/ pele, frita (c\/ óleo de soja), c\/ sal, Gallus gallus"
+    },
+    {
+        "codigo": "C0370N",
+        "descricao": "Papa de arroz polido, feijão carioca e carne bovina moída (acém), c\/ caldo de frango, c\/ cebola e óleo de soja, s\/ sal"
+    },
+    {
+        "codigo": "C0493N",
+        "descricao": "Papa de carne bovina moída (patinho), abóbora (jerimum) e chuchu, c\/ caldo de frango, c\/ cebola e azeite de oliva, s\/ sal"
+    },
+    {
+        "codigo": "C0037G",
+        "descricao": "Leite, vaca, c\/chocolate, desnatado, Toddynho"
+    },
+    {
+        "codigo": "C0539B",
+        "descricao": "Salada, pimentão verde, cru, c\/ molho vinagrete (tomate, cebola, salsa, vinagre e azeite de oliva), s\/ sal"
+    },
+    {
+        "codigo": "C0212B",
+        "descricao": "Acelga, cozida, drenada, s\/ óleo, c\/ sal"
+    },
+    {
+        "codigo": "C0032G",
+        "descricao": "Leite, vaca, c\/ café, em pó"
+    },
+    {
+        "codigo": "C0218A",
+        "descricao": "Macarrão, trigo, c\/ ovos, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), c\/ sal"
+    },
+    {
+        "codigo": "C0181N",
+        "descricao": "Papa de carne bovina moída (patinho), fubá e couve, c\/ caldo de frango, c\/ cebola, s\/ óleo, s\/ sal"
+    },
+    {
+        "codigo": "C0749F",
+        "descricao": "Carne, frango, asa, c\/ pele, cozida, c\/ molho de tomate (tomate, c\/ óleo, cebola e alho), s\/ sal, Gallus gallus"
+    },
+    {
+        "codigo": "C0268E",
+        "descricao": "Casquinha de frutos do mar, c\/ sal, (camarão, lula, mexilhão, polvo, tomate, leite de coco, farinha de rosca, queijo parmesão, cebolinha, c\/ azeite de dendê, c\/ óleo, cebola e alho, c\/ pimenta do reino, c\/ sal)"
+    },
+    {
+        "codigo": "C0295C",
+        "descricao": "Sorvinha (sorva), in natura, Couma utilis (Mart.)"
+    },
+    {
+        "codigo": "C0460F",
+        "descricao": "Carne, boi, picanha, c\/ gordura, grelhada, c\/ óleo, cebola e alho, s\/ sal"
+    },
+    {
+        "codigo": "C0919B",
+        "descricao": "Salada de legumes, cozidos no vapor, (couve-flor, cenoura, brócolis, batata, vagem, c\/ sal)"
+    },
+    {
+        "codigo": "C0026N",
+        "descricao": "Pudim, chocolate, mistura p\/, diet, Oetker"
+    },
+    {
+        "codigo": "C0103C",
+        "descricao": "Banana, da terra, frita, c\/ óleo de soja, Musa acuminata Colla x Musa balbisiana Colla"
+    },
+    {
+        "codigo": "C0458B",
+        "descricao": "Salada, Americana, s\/ sal, (batata e cenoura cozidos, maçã, presunto, c\/ molho vinagrete (tomate, cebola, salsa, vinagre e azeite de oliva), s\/ sal)"
+    },
+    {
+        "codigo": "C1028F",
+        "descricao": "Carne, frango, miúdo, moela, a milanesa, c\/ sal, (carne, frango, miúdo, moela, farinha de trigo, farinha de rosca, ovo, frito (c\/ óleo de soja), c\/ sal), Gallus gallus domesticus"
+    },
+    {
+        "codigo": "C1055A",
+        "descricao": "Sopa, macarrão, c\/ vegetais, s\/ sal, (macarrão, c\/ batata, abobrinha, espinafre, cenoura e purê de tomate, c\/ caldo de carne, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0128B",
+        "descricao": "Charuto de repolho, com arroz polido e carne moída, s\/ molho, s\/ sal, (repolho branco, carne bovina moída alcatra, arroz polido, cebola, alho, s\/ molho, s\/ óleo, s\/ sal)"
+    },
+    {
+        "codigo": "C0020E",
+        "descricao": "Peixe, água doce, corimba\/curimatã, filé, cru, Prochilodus cearensis"
+    },
+    {
+        "codigo": "C0693F",
+        "descricao": "Carne, porco, costela, refogada (c\/ óleo, cebola e alho), s\/ sal, Sus ssp"
+    },
+    {
+        "codigo": "C0205C",
+        "descricao": "Mirtilo, in natura"
+    },
+    {
+        "codigo": "C0329B",
+        "descricao": "Nabo, s\/ casca, cozido, drenado, s\/ óleo, c\/ sal, Brassica rapa"
+    },
+    {
+        "codigo": "C0016U",
+        "descricao": "Gergelim, semente, crua, Sesamum indicum L."
+    },
+    {
+        "codigo": "C0370F",
+        "descricao": "Carne, boi, coxão mole (polpa, chã de dentro), s\/ gordura, cozida, c\/ óleo, cebola e alho, s\/ sal"
+    },
+    {
+        "codigo": "C0869B",
+        "descricao": "Purê, batata baroa (mandioquinha, batata salsa), s\/ sal, (batata baroa (mandioquinha, batata salsa), leite, c\/ manteiga, s\/ sal)"
+    },
+    {
+        "codigo": "C0082E",
+        "descricao": "Peixe, água salgada, surimi, fresco"
+    },
+    {
+        "codigo": "C0258B",
+        "descricao": "Sopa, repolho, branco, c\/ sal, (repolho branco, água, leite, manteiga, farinha de trigo, cebola, alho, c\/ sal), Brassica oleracea L. var. capitata"
+    },
+    {
+        "codigo": "C0393F",
+        "descricao": "Carne, boi, fraldinha, c\/ gordura, cozida, c\/ batata e cenoura, c\/ óleo, cebola e alho, c\/ sal"
+    },
+    {
+        "codigo": "C0548N",
+        "descricao": "Papa de carne bovina (músculo), feijão preto, batata, abóbora (jerimum) e cenoura, c\/ caldo de carne, c\/ cebola, s\/ óleo, c\/ sal"
+    },
+    {
+        "codigo": "C0376F",
+        "descricao": "Carne, boi, filé mignon, s\/ gordura, grelhada, c\/ molho branco (farinha de trigo, manteiga e leite), s\/ sal"
+    },
+    {
+        "codigo": "C0004E",
+        "descricao": "Crustáceo, caranguejo, cozido, s\/ óleo, s\/ sal, Ucides cordatus"
+    },
+    {
+        "codigo": "C0670F",
+        "descricao": "Carne, boi, músculo, s\/ gordura, cozida, s\/ óleo, c\/ sal, Bos taurus"
+    },
+    {
+        "codigo": "C0131B",
+        "descricao": "Quibebe, s\/ sal, (abóbora, cabotian (japonesa), carne seca (carne de sol, jaba) dessalgada, cebola, c\/ óleo, s\/ sal)"
+    },
+    {
+        "codigo": "C0977F",
+        "descricao": "Carne, quelônio, Tracajá, cozida, c\/ cebolinha, alho, colorau (urucum), pimenta do reino, s\/ óleo, c\/ sal, Podocnemis unifilis"
+    },
+    {
+        "codigo": "C0153N",
+        "descricao": "Papa de peito de frango, batata baroa (mandioquinha, batata salsa) e abobrinha, c\/ caldo de frango, c\/ cebola e óleo de soja, c\/ sal"
+    },
+    {
+        "codigo": "C0211C",
+        "descricao": "Suco natural, tamarindo, s\/ açúcar"
+    },
+    {
+        "codigo": "C0850B",
+        "descricao": "Torta de batata com carne, s\/ sal, (batata inglesa, leite, amido de milho, ovo, manteiga, carne moída, tomate, salsa e queijo parmesão, c\/ óleo, cebola e alho, s\/ sal)"
+    },
+    {
+        "codigo": "C0486A",
+        "descricao": "Torrada, trigo, tradicional, c\/ geleia"
+    },
+    {
+        "codigo": "C0656F",
+        "descricao": "Carne, boi, seca, dessalgada, frita (c\/ óleo de soja), s\/ sal, Bos taurus"
+    },
+    {
+        "codigo": "C0483A",
+        "descricao": "Torrada, trigo, integral, c\/ manteiga"
+    },
+    {
+        "codigo": "C0001D",
+        "descricao": "Azeite, dendê, Elaeis guineensis Jacq."
+    },
+    {
+        "codigo": "C0030A",
+        "descricao": "Biscoito, doce, amanteigado, banana c\/ canela, Bauducco"
+    },
+    {
+        "codigo": "C0059N",
+        "descricao": "Sorvete, industrializado, diet (média de diferentes sabores)"
+    },
+    {
+        "codigo": "C0234C",
+        "descricao": "Suco natural, bacuri, s\/ açúcar"
+    }
+]

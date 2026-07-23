@@ -144,6 +144,51 @@ class NutritionManagerService
     }
 
     /**
+     * Remove a marca do nome de exibição de um produto do Open Food Facts.
+     * O `product_name` da OFF costuma vir com a marca embutida no texto
+     * (ex: "Leite Integral Itambé 1L") — isso confunde o usuário quando ele só
+     * falou "leite integral" e não pediu marca nenhuma. A OFF já manda a marca
+     * separada no campo `brands`, então usamos isso pra remover do texto em vez
+     * de tentar adivinhar. Também limpa tamanho/quantidade de embalagem que
+     * sobra grudado (ex: "1L", "500g").
+     */
+    private function stripBrandFromProductName(string $productName, ?string $brands): string
+    {
+        $nomeLimpo = $productName;
+
+        if (!empty($brands)) {
+            foreach (explode(',', $brands) as $marca) {
+                $marca = trim($marca);
+                if ($marca === '') {
+                    continue;
+                }
+                $nomeLimpo = preg_replace('/\b' . preg_quote($marca, '/') . '\b/ui', '', $nomeLimpo) ?? $nomeLimpo;
+            }
+        }
+
+        // Quantidade/volume de embalagem que costuma sobrar (ex: "1L", "500g", "200ml")
+        $nomeLimpo = preg_replace('/\b\d+[.,]?\d*\s?(l|litros?|ml|kg|g|gr|gramas?|un|unidades?)\b/ui', '', $nomeLimpo) ?? $nomeLimpo;
+
+        $nomeLimpo = trim(preg_replace('/\s+/', ' ', $nomeLimpo) ?? $nomeLimpo, " -,");
+
+        // Salvaguarda: pra marcas que viraram nome popular do próprio alimento
+        // (ex: "Nescau", "Toddy" — ninguém fala "achocolatado em pó"), remover a
+        // marca some com a maior parte do nome e o que sobra fica sem sentido.
+        // Se a remoção comeu mais da metade do texto, ou o que sobrou começa com
+        // número/símbolo (sinal de que cortou o começo do nome), melhor manter o
+        // nome original — com marca, mas pelo menos reconhecível — do que
+        // devolver algo quebrado.
+        $ficouMuitoCurto = $nomeLimpo === '' || mb_strlen($nomeLimpo) < mb_strlen($productName) * 0.5;
+        $comecaQuebrado = $nomeLimpo !== '' && preg_match('/^[\d\W]/u', $nomeLimpo) === 1;
+
+        if ($ficouMuitoCurto || $comecaQuebrado) {
+            return $productName;
+        }
+
+        return $nomeLimpo;
+    }
+
+    /**
      * Escapa os curingas do LIKE (% e _) pra que um nome de alimento que
      * contenha esses caracteres literalmente não seja interpretado como
      * padrão de busca.
@@ -203,15 +248,27 @@ class NutritionManagerService
                 return null;
             }
 
-            $nomeProduto = Str::lower($hit['product_name'] ?? '');
+            // O endpoint search-a-licious nunca devolve uma chave "product_name" pura
+            // — só variantes por idioma ("product_name_pt", "product_name_en", etc.).
+            // Sem esse fallback, $nomeProduto ficava sempre vazio e a checagem de
+            // sanidade abaixo rejeitava toda busca, mesmo com o produto certo.
+            $nomeProdutoOriginal = $hit['product_name_pt']
+                ?? $hit['product_name']
+                ?? $hit['product_name_en']
+                ?? $hit['generic_name_pt']
+                ?? '';
+            // ->ascii() remove acento (ex: "água" -> "agua"), igual o sanitizeFoodName()
+            // já faz com o termo buscado — sem isso, "biscoito agua e sal" nunca batia
+            // contra "Biscoito água e sal" só por causa do acento.
+            $nomeProduto = (string) Str::of($nomeProdutoOriginal)->lower()->ascii();
             $termoBusca = Str::lower($nomeAlimento);
 
             // Mesmo com relevância melhor, mantemos a checagem de sanidade:
             // se o nome do produto não tem nenhuma relação com o termo buscado, descarta.
-            if (!Str::contains($nomeProduto, $termoBusca) && !Str::contains($termoBusca, $nomeProduto)) {
+            if ($nomeProduto === '' || (!Str::contains($nomeProduto, $termoBusca) && !Str::contains($termoBusca, $nomeProduto))) {
                 Log::warning("Degrau 2: produto retornado não corresponde ao termo buscado, ignorando", [
                     'termo_buscado' => $nomeAlimento,
-                    'produto_encontrado' => $hit['product_name'] ?? null,
+                    'produto_encontrado' => $nomeProdutoOriginal ?: null,
                 ]);
 
                 return null;
@@ -256,15 +313,18 @@ class NutritionManagerService
             $caloria  = $nutriments['energy-kcal_100g'] ?? $nutriments['energy_kcal_100g'] ?? null;
             $caloria_backup = round(((float)($proteina ?? 0) * 4) + ((float)($carbo ?? 0) * 4) + ((float)$gordura * 9), 0);
 
-            // Se não achou caloria direta ou ela for menor que a soma dos macros, usa o cálculo de backup
-            if ($caloria === null || $caloria < ($proteina + $carbo + $gordura)) {
+            // Se não achou caloria direta, ou ela divergir demais (>15%) do que os
+            // macros implicam — produtos mal cadastrados no Open Food Facts às vezes
+            // têm valores trocados/incompletos — usa o cálculo de backup.
+            $divergencia = $caloria_backup > 0 ? abs(((float)($caloria ?? 0)) - $caloria_backup) / $caloria_backup : 0;
+            if ($caloria === null || $divergencia > 0.15) {
                 $caloria = $caloria_backup;
             }
 
             // Validação de segurança obrigatória
             if ($proteina !== null && $carbo !== null) {
                 return [
-                    'name'            => $this->sanitizeFoodName($product['product_name'] ?? $nomeAlimento),
+                    'name'            => $this->sanitizeFoodName($this->stripBrandFromProductName($product['product_name'] ?? $nomeAlimento, $product['brands'] ?? null)),
                     'protein_g'       => round((float)$proteina, 2),
                     'carbohydrate_g'  => round((float)$carbo, 2),
                     'fat_g'           => round((float)$gordura, 2),
@@ -376,8 +436,13 @@ class NutritionManagerService
                     // Cálculo matemático exato de backup por segurança
                     $caloria_backup = round(($proteina * 4) + ($carbo * 4) + ($gordura * 9), 0);
 
-                    // Sistema imunológico: se a LLM mandar caloria zerada ou menor que a soma dos macros, aplica o backup
-                    if ($caloria <= 0 || $caloria < ($proteina + $carbo + $gordura)) {
+                    // Sistema imunológico: se a LLM mandar caloria zerada, ou se a caloria
+                    // reportada divergir demais do que os próprios macros implicam (mais de
+                    // 15%), aplica o backup — a LLM às vezes gera protein/carb/fat e calories
+                    // de forma inconsistente entre si, mesmo com cada valor parecendo plausível
+                    // isoladamente.
+                    $divergencia = $caloria_backup > 0 ? abs($caloria - $caloria_backup) / $caloria_backup : 0;
+                    if ($caloria <= 0 || $divergencia > 0.15) {
                         $caloria = $caloria_backup;
                     }
 
