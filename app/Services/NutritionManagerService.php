@@ -28,7 +28,7 @@ class NutritionManagerService
             $tipoAlimento = $item['tipo'] ?? null;
 
             // Chama a escada de busca para encontrar o alimento isolado
-            $food = $this->searchFood($nomeAlimento, $tipoAlimento, $unidadeInput);
+            $food = $this->searchFood($nomeAlimento, $tipoAlimento, $unidadeInput , $items);
 
             if ($food) {
                 // Regra de três com base nos dados encontrados
@@ -85,7 +85,7 @@ class NutritionManagerService
     /**
      * A ESCADA DE BUSCA ISOLADA (Retorna um Array com os dados do alimento)
      */
-    private function searchFood(string $nomeAlimento, ?string $tipoAlimento, string $unidadeInput)
+    private function searchFood(string $nomeAlimento, ?string $tipoAlimento, string $unidadeInput, $item)
     {
         // Sanitiza uma única vez aqui: todo o resto da escada (busca local,
         // nome salvo no cache do Degrau 2/3) usa essa mesma versão normalizada,
@@ -121,7 +121,7 @@ class NutritionManagerService
 
         // ── DEGRAU 3: ESTIMATIVA POR LLM (Groq) ──
         Log::info("Degrau 3: API falhou. Solicitando estimativa da LLM -> {$nomeAlimento}");
-        $llmFood = $this->estimateWithLLM($nomeAlimento, $unidadeInput);
+        $llmFood = $this->estimateWithLLM($nomeAlimento, $unidadeInput, $item);
         if ($llmFood) {
             $newFood = Food::updateOrCreate(['name' => $llmFood['name']], $llmFood);
 
@@ -391,7 +391,7 @@ class NutritionManagerService
     //         . 'DOSE: whey protein ou suplemento em pó 30g; creatina 5g.';
     // }
 
-    private function estimateWithLLM(string $nomeAlimento, string $unidadeInput)
+    private function estimateWithLLM(string $nomeAlimento, string $unidadeInput, $item)
     {
         try {
             $apiKey = config('services.groq.api_key');
@@ -401,6 +401,18 @@ class NutritionManagerService
                 return null;
             }
 
+            $system = 'Você é um especialista em nutrição.
+                        Sempre responda apenas com JSON válido.
+                        Nunca utilize markdown.
+                        Considere os valores nutricionais para 100 g do alimento.
+                        Retorne obrigatoriamente:
+                        - name
+                        - protein_g
+                        - carbohydrate_g
+                        - fat_g
+                        - calories_kcal
+                        - peso_unidade_g';
+
             // Forçando a URL absoluta direta para evitar o erro de scheme/host
             $response = Http::withToken($apiKey)
                 ->timeout(10)
@@ -409,11 +421,11 @@ class NutritionManagerService
                     'messages' => [
                         [
                             'role' => 'system',
-                            'content' => 'Você é um assistente especialista em nutrição. Responda APENAS com um objeto JSON válido, contendo a estimativa para 100g do alimento informado. Não use markdown blockcode (```json) na resposta. Chaves obrigatórias no JSON: name, protein_g, carbohydrate_g, fat_g, calories_kcal, peso_unidade_g. O campo peso_unidade_g é o peso estimado em gramas de EXATAMENTE 1 unidade de medida informada pelo usuário. Estime pelo tamanho físico típico de UMA porção daquela unidade — nunca chute o peso do alimento inteiro/embalagem quando a unidade pedida for uma fração menor (fatia/colher/dose). Se a unidade informada for "grama" ou "ml", o campo peso_unidade_g não será usado no cálculo — pode estimar o peso de uma porção média de refeição (ex: 150g). Exemplo, para a unidade "fatia" de biscoito danix: {"name": "biscoito danix", "protein_g": 6.5, "carbohydrate_g": 68.0, "fat_g": 18.0, "calories_kcal": 460, "peso_unidade_g": 40}'
+                            'content' => $system
                         ],
                         [
                             'role' => 'user',
-                            'content' => "Estime os macronutrientes para 100g de: {$nomeAlimento}. A unidade de medida informada pelo usuário foi: \"{$unidadeInput}\"."
+                            'content' => $item
                         ]
                     ],
                     'response_format' => ['type' => 'json_object'], // Garante que a LLM cuspa JSON puro
