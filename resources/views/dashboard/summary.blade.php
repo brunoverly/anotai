@@ -341,7 +341,7 @@
         @else
          <h2 class="section-title">
             <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            Resumo {{ $resumo['periodo_formatado'] }}
+            Resumo {{ $summary['period_formatado'] }}
         </h2>
         @endif
     </header>
@@ -355,69 +355,69 @@
     @endif
     <div class="macros-grid">
         <!-- Calorias -->
-        <div class="macro-card card-kcal @if((int) $resumo['%_calories'] > 100) over-goal @endif">
+        <div class="macro-card card-kcal @if((int) $summary['%_calories'] > 100) over-goal @endif">
             <div class="macro-values">
-                <span class="macro-current">{{ $resumo['total_calories_kcal'] }}</span>
-                @if($resumo['user_calories_goal_kcal'] > 0)
-                    <span class="macro-target">/ {{ $resumo['user_calories_goal_kcal'] }}kcal</span>
+                <span class="macro-current">{{ $summary['total_calories_kcal'] }}</span>
+                @if($summary['user_calories_goal_kcal'] > 0)
+                    <span class="macro-target">/ {{ $summary['user_calories_goal_kcal'] }}kcal</span>
                 @endif
             </div>
             <span class="macro-name">Calorias</span>
             <div class="progress-container">
-                <div class="progress-track"><div class="progress-fill" style="width: {{ $resumo['%_calories'] ?: '100%' }}"></div></div>
-                @if($resumo['%_calories'])
-                    <span class="progress-pct">{{ $resumo['%_calories'] }}</span>
+                <div class="progress-track"><div class="progress-fill" style="width: {{ $summary['%_calories'] ?: '100%' }}"></div></div>
+                @if($summary['%_calories'])
+                    <span class="progress-pct">{{ $summary['%_calories'] }}</span>
                 @endif
             </div>
         </div>
 
         <!-- Proteína -->
-        <div class="macro-card card-protein @if((int) $resumo['%_protein'] > 100) over-goal @endif">
+        <div class="macro-card card-protein @if((int) $summary['%_protein'] > 100) over-goal @endif">
             <div class="macro-values">
-                <span class="macro-current">{{ $resumo['total_protein_g'] }}</span>
-                @if ($resumo['user_protein_goal_g'] > 0)
-                    <span class="macro-target">/ {{ $resumo['user_protein_goal_g'] }}g</span>
+                <span class="macro-current">{{ $summary['total_protein_g'] }}</span>
+                @if ($summary['user_protein_goal_g'] > 0)
+                    <span class="macro-target">/ {{ $summary['user_protein_goal_g'] }}g</span>
                 @endif
             </div>
             <span class="macro-name">Proteína</span>
             <div class="progress-container">
-                <div class="progress-track"><div class="progress-fill" style="width: {{ $resumo['%_protein'] ?: '100%' }}"></div></div>
-                @if($resumo['%_protein'])
-                    <span class="progress-pct">{{ $resumo['%_protein'] }}</span>
+                <div class="progress-track"><div class="progress-fill" style="width: {{ $summary['%_protein'] ?: '100%' }}"></div></div>
+                @if($summary['%_protein'])
+                    <span class="progress-pct">{{ $summary['%_protein'] }}</span>
                 @endif
             </div>
         </div>
 
         <!-- Gordura -->
-        <div class="macro-card card-fat @if((int) $resumo['%_fat'] > 100) over-goal @endif">
+        <div class="macro-card card-fat @if((int) $summary['%_fat'] > 100) over-goal @endif">
             <div class="macro-values">
-                <span class="macro-current">{{ $resumo['total_fat_g'] }}</span>
-                @if ($resumo['user_fat_goal_g'] > 0)
-                    <span class="macro-target">/ {{ $resumo['user_fat_goal_g'] }}g</span>
+                <span class="macro-current">{{ $summary['total_fat_g'] }}</span>
+                @if ($summary['user_fat_goal_g'] > 0)
+                    <span class="macro-target">/ {{ $summary['user_fat_goal_g'] }}g</span>
                 @endif
             </div>
             <span class="macro-name">Gordura</span>
             <div class="progress-container">
-                <div class="progress-track"><div class="progress-fill" style="width: {{ $resumo['%_fat'] ?: '100%' }}"></div></div>
-                @if($resumo['%_fat'])
-                    <span class="progress-pct">{{ $resumo['%_fat'] }}</span>
+                <div class="progress-track"><div class="progress-fill" style="width: {{ $summary['%_fat'] ?: '100%' }}"></div></div>
+                @if($summary['%_fat'])
+                    <span class="progress-pct">{{ $summary['%_fat'] }}</span>
                 @endif
             </div>
         </div>
 
         <!-- Carboidrato -->
-        <div class="macro-card card-carbs @if((int) $resumo['%_carbohydrate'] > 100) over-goal @endif">
+        <div class="macro-card card-carbs @if((int) $summary['%_carbohydrate'] > 100) over-goal @endif">
             <div class="macro-values">
-                <span class="macro-current">{{ $resumo['total_carbohydrate_g'] }}</span>
-                @if ($resumo['user_carbohydrate_goal_g'] > 0)
-                    <span class="macro-target">/ {{ $resumo['user_carbohydrate_goal_g'] }}g</span>
+                <span class="macro-current">{{ $summary['total_carbohydrate_g'] }}</span>
+                @if ($summary['user_carbohydrate_goal_g'] > 0)
+                    <span class="macro-target">/ {{ $summary['user_carbohydrate_goal_g'] }}g</span>
                 @endif
             </div>
             <span class="macro-name">Carboidrato</span>
             <div class="progress-container">
-                <div class="progress-track"><div class="progress-fill" style="width: {{ $resumo['%_carbohydrate'] ?: '100%' }}"></div></div>
-                @if($resumo['%_carbohydrate'])
-                    <span class="progress-pct">{{ $resumo['%_carbohydrate'] }}</span>
+                <div class="progress-track"><div class="progress-fill" style="width: {{ $summary['%_carbohydrate'] ?: '100%' }}"></div></div>
+                @if($summary['%_carbohydrate'])
+                    <span class="progress-pct">{{ $summary['%_carbohydrate'] }}</span>
                 @endif
             </div>
         </div>

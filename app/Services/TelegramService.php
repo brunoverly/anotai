@@ -46,7 +46,6 @@ class TelegramService
 
     public function getFilePath(string $fileId)
     {
-        // Log::info('https://api.telegram.org/bot' . config('services.telegram.bot_token') . '/getFile', ['file_id' => $fileId]);
         return Http::get(
             'https://api.telegram.org/bot' . config('services.telegram.bot_token') . '/getFile',
             [
@@ -56,32 +55,25 @@ class TelegramService
     }
 
     public function downloadFile($filePath)
-{
-    // O formato correto para download de arquivos do Telegram é:
-    // https://api.telegram.org/file/bot<TOKEN>/<FILE_PATH>
+    {
+        $token = config('services.telegram.bot_token');
 
-    // Garanta que o seu token NÃO está duplicando a palavra 'bot'
-    $token = config('services.telegram.bot_token'); // Ex: "8878774032:AAGPNX..."
+        $url = "https://api.telegram.org/file/bot" . $token . "/" . $filePath;
 
-    // Se o seu token no .env NÃO começar com 'bot', concatenamos aqui de forma limpa:
-    $url = "https://api.telegram.org/file/bot" . $token . "/" . $filePath;
+        $response = Http::timeout(30)->get($url);
 
-    Log::info('Tentando baixar arquivo do Telegram', ['url' => $url]);
+        if ($response->successful()) {
+            return $response->body();
+        }
 
-    $response = Http::timeout(30)->get($url);
-
-    if ($response->successful()) {
-        return $response->body();
+        Log::error('Falha ao baixar arquivo do Telegram', ['status' => $response->status()]);
+        return null;
     }
-
-    Log::error('Falha ao baixar arquivo do Telegram', ['status' => $response->status()]);
-    return null;
-}
 
     public function sendMessage(string $chatId, string $text)
     {
-        return Http::withHeaders([
-                'Connection' => 'close' // 👈 Evita o cURL error 35 / Connection reset
+        $response = Http::withHeaders([
+                'Connection' => 'close'
             ])
             ->post(
                 'https://api.telegram.org/bot' . config('services.telegram.bot_token') . '/sendMessage',
@@ -90,19 +82,24 @@ class TelegramService
                     'text' => $text,
                     'parse_mode' => 'Markdown',
                 ]
-            )->json();
+            );
+
+        if (!$response->successful()) {
+            Log::warning('Telegram recusou o envio da mensagem', ['chat_id' => $chatId, 'status' => $response->status(), 'body' => $response->body()]);
+        }
+
+        return $response->json();
     }
 
     public function editMessage(string $chatId, ?int $messageId, string $text)
     {
-        // Sem message_id (ex: falha ao enviar a mensagem de "processando" original),
-        // não tem o que editar — cai pra mandar uma mensagem nova em vez de quebrar.
+
         if (!$messageId) {
             return $this->sendMessage($chatId, $text);
         }
 
-        return Http::withHeaders([
-                'Connection' => 'close' // 👈 Evita o cURL error 35 / Connection reset
+        $response = Http::withHeaders([
+                'Connection' => 'close'
             ])
             ->post(
                 'https://api.telegram.org/bot' . config('services.telegram.bot_token') . '/editMessageText',
@@ -112,7 +109,13 @@ class TelegramService
                     'text' => $text,
                     'parse_mode' => 'Markdown',
                 ]
-            )->json();
+            );
+
+        if (!$response->successful()) {
+            Log::warning('Telegram recusou a edição da mensagem', ['chat_id' => $chatId, 'message_id' => $messageId, 'status' => $response->status(), 'body' => $response->body()]);
+        }
+
+        return $response->json();
     }
 
 }

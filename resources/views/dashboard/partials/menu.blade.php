@@ -1,6 +1,6 @@
 @php
     $menuItems = [
-        'resumo' => ['label' => 'Resumo do dia', 'url' => '/dashboard/' . $chatId, 'icon' => '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>'],
+        'summary' => ['label' => 'Resumo do dia', 'url' => '/dashboard/' . $chatId, 'icon' => '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>'],
         'week'   => ['label' => 'Últimos 7 dias', 'url' => '/dashboard/' . $chatId . '/week', 'icon' => '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>'],
         'meals'  => ['label' => 'Refeições', 'url' => '/dashboard/' . $chatId . '/meals', 'icon' => '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>'],
         'macros' => ['label' => 'Metas', 'url' => '/dashboard/' . $chatId . '/macros', 'icon' => '<circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path>'],

@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\MealReportService;
+use App\Services\MealService;
 use Illuminate\Http\Request;
 use App\Models\Meal;
 use App\Models\User;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
     public function index(
         int $chatId,
-        MealReportService $mealReportService
+        MealService $mealReportService
     )
     {
         $user = User::where('telegram_chat_id', $chatId)->first();
@@ -21,22 +22,22 @@ class DashboardController extends Controller
         }
 
         $userName = $user->name;
-        $resumo = $mealReportService->resumoDia($chatId, $user);
+        $summary = $mealReportService->summaryDay($chatId, $user);
 
-        if (!isset($resumo['user_calories_goal_kcal'])) {
-            $resumo['user_calories_goal_kcal'] = 0;
-            $resumo['user_carbohydrate_goal_g'] = 0;
-            $resumo['user_protein_goal_g'] = 0;
-            $resumo['user_fat_goal_g'] = 0;
-            $resumo['%_calories'] = "";
-            $resumo['%_carbohydrate'] = "";
-            $resumo['%_protein'] = "";
-            $resumo['%_fat'] = "";
+        if (!isset($summary['user_calories_goal_kcal'])) {
+            $summary['user_calories_goal_kcal'] = 0;
+            $summary['user_carbohydrate_goal_g'] = 0;
+            $summary['user_protein_goal_g'] = 0;
+            $summary['user_fat_goal_g'] = 0;
+            $summary['%_calories'] = "";
+            $summary['%_carbohydrate'] = "";
+            $summary['%_protein'] = "";
+            $summary['%_fat'] = "";
         } else {
-            $resumo['%_calories'] = round(($resumo['total_calories_kcal'] / $resumo['user_calories_goal_kcal']) * 100) . '%';
-            $resumo['%_carbohydrate'] = round(($resumo['total_carbohydrate_g'] / $resumo['user_carbohydrate_goal_g']) * 100) . '%';
-            $resumo['%_protein'] = round(($resumo['total_protein_g'] / $resumo['user_protein_goal_g']) * 100) . '%';
-            $resumo['%_fat'] = round(($resumo['total_fat_g'] / $resumo['user_fat_goal_g']) * 100) . '%';
+            $summary['%_calories'] = round(($summary['total_calories_kcal'] / $summary['user_calories_goal_kcal']) * 100) . '%';
+            $summary['%_carbohydrate'] = round(($summary['total_carbohydrate_g'] / $summary['user_carbohydrate_goal_g']) * 100) . '%';
+            $summary['%_protein'] = round(($summary['total_protein_g'] / $summary['user_protein_goal_g']) * 100) . '%';
+            $summary['%_fat'] = round(($summary['total_fat_g'] / $summary['user_fat_goal_g']) * 100) . '%';
         }
 
         $dayMeals = Meal::where('user_id', $user->id)
@@ -47,19 +48,19 @@ class DashboardController extends Controller
 
         $last7DaysMeals = $mealReportService->last7days($chatId, $user);
 
-        return view('dashboard.resumo', [
+        return view('dashboard.summary', [
             'chatId' => $chatId,
             'userName' => $userName,
-            'resumo' => $resumo,
+            'summary' => $summary,
             'last7DaysMeals' => $last7DaysMeals,
             'dayMeals' => $dayMeals,
-            'current' => 'resumo',
+            'current' => 'summary',
         ]);
     }
 
     public function week(
         int $chatId,
-        MealReportService $mealReportService
+        MealService $mealReportService
     )
     {
         $user = User::where('telegram_chat_id', $chatId)->first();
@@ -70,7 +71,7 @@ class DashboardController extends Controller
         $userName = $user->name;
         $last7DaysMeals = array_reverse($mealReportService->last7days($chatId, $user), true);
 
-        $diasSemanaCompleto = [
+        $weekDaysFullName = [
             0 => 'Domingo',
             1 => 'Segunda-feira',
             2 => 'Terça-feira',
@@ -80,18 +81,18 @@ class DashboardController extends Controller
             6 => 'Sábado',
         ];
 
-        foreach ($last7DaysMeals as $diaAbrev => $dados) {
-            $data = Carbon::parse($dados['data']);
+        foreach ($last7DaysMeals as $weekDays => $data) {
+            $data = Carbon::parse($data['data']);
 
             if ($data->isToday()) {
                 $label = 'Hoje';
             } elseif ($data->isYesterday()) {
                 $label = 'Ontem';
             } else {
-                $label = $diasSemanaCompleto[$data->dayOfWeek];
+                $label = $weekDaysFullName[$data->dayOfWeek];
             }
 
-            $last7DaysMeals[$diaAbrev]['label'] = $label;
+            $last7DaysMeals[$weekDays]['label'] = $label;
         }
 
         return view('dashboard.week', [
@@ -136,10 +137,13 @@ class DashboardController extends Controller
             ->first();
 
         if (!$meal) {
+            Log::warning('Tentativa de excluir refeição inexistente pelo dashboard', ['chat_id' => $chatId, 'meal_id' => $mealId]);
             return response()->json(['error' => 'Meal not found'], 404);
         }
 
         $meal->delete();
+
+        Log::info('Refeição excluída pelo dashboard', ['chat_id' => $chatId, 'meal_id' => $mealId]);
 
         return response()->json(['success' => true]);
 
@@ -174,6 +178,8 @@ class DashboardController extends Controller
 
         $user->update($validatedData);
 
+        Log::info('Metas de macros atualizadas pelo dashboard', ['chat_id' => $chatId, 'macros' => $validatedData]);
+
         return redirect()->route('dashboard.macros', $chatId)->with('success', 'Metas atualizadas com sucesso!');
 
     }
@@ -181,7 +187,7 @@ class DashboardController extends Controller
     public function day(
         int $chatId,
         String $day,
-        MealReportService $mealReportService
+        MealService $mealReportService
     )
     {
         $day = Carbon::parse($day);
@@ -191,38 +197,38 @@ class DashboardController extends Controller
         }
 
         $userName = $user->name;
-        $resumo = $mealReportService->resumoData($chatId, $day, $user);
+        $summary = $mealReportService->summaryData($chatId, $day, $user);
 
-        if (!isset($resumo['user_calories_goal_kcal'])) {
-            $resumo['user_calories_goal_kcal'] = 0;
-            $resumo['user_carbohydrate_goal_g'] = 0;
-            $resumo['user_protein_goal_g'] = 0;
-            $resumo['user_fat_goal_g'] = 0;
-            $resumo['%_calories'] = "";
-            $resumo['%_carbohydrate'] = "";
-            $resumo['%_protein'] = "";
-            $resumo['%_fat'] = "";
+        if (!isset($summary['user_calories_goal_kcal'])) {
+            $summary['user_calories_goal_kcal'] = 0;
+            $summary['user_carbohydrate_goal_g'] = 0;
+            $summary['user_protein_goal_g'] = 0;
+            $summary['user_fat_goal_g'] = 0;
+            $summary['%_calories'] = "";
+            $summary['%_carbohydrate'] = "";
+            $summary['%_protein'] = "";
+            $summary['%_fat'] = "";
         } else {
-            $resumo['%_calories'] = round(($resumo['total_calories_kcal'] / $resumo['user_calories_goal_kcal']) * 100) . '%';
-            $resumo['%_carbohydrate'] = round(($resumo['total_carbohydrate_g'] / $resumo['user_carbohydrate_goal_g']) * 100) . '%';
-            $resumo['%_protein'] = round(($resumo['total_protein_g'] / $resumo['user_protein_goal_g']) * 100) . '%';
-            $resumo['%_fat'] = round(($resumo['total_fat_g'] / $resumo['user_fat_goal_g']) * 100) . '%';
+            $summary['%_calories'] = round(($summary['total_calories_kcal'] / $summary['user_calories_goal_kcal']) * 100) . '%';
+            $summary['%_carbohydrate'] = round(($summary['total_carbohydrate_g'] / $summary['user_carbohydrate_goal_g']) * 100) . '%';
+            $summary['%_protein'] = round(($summary['total_protein_g'] / $summary['user_protein_goal_g']) * 100) . '%';
+            $summary['%_fat'] = round(($summary['total_fat_g'] / $summary['user_fat_goal_g']) * 100) . '%';
         }
 
-        $dayStart = $day->copy()->startOfDay();
-        $dayEnd = $day->copy()->endOfDay();
+        $start = $day->copy()->startOfDay();
+        $end = $day->copy()->endOfDay();
 
         $dayMeals = Meal::where('user_id', $user->id)
-            ->whereBetween('consumed_at', [$dayStart, $dayEnd])
+            ->whereBetween('consumed_at', [$start, $end])
             ->where('deleted_at', '=', null)
             ->orderBy('consumed_at', 'desc')
             ->get(['consumed_at', 'total_protein_g', 'total_carbohydrate_g', 'total_fat_g', 'total_calories_kcal']);
 
 
-        return view('dashboard.resumo', [
+        return view('dashboard.summary', [
             'chatId' => $chatId,
             'userName' => $userName,
-            'resumo' => $resumo,
+            'summary' => $summary,
             'dayMeals' => $dayMeals,
         ]);
     }
@@ -277,6 +283,8 @@ class DashboardController extends Controller
 
         $meal->update($validatedData);
 
+        Log::info('Refeição editada manualmente pelo dashboard', ['chat_id' => $chatId, 'meal_id' => $mealId]);
+
         return redirect()->route('dashboard.showMeal', ['chatId' => $chatId, 'mealId' => $mealId])->with('success', 'Refeição atualizada com sucesso!');
 
     }
@@ -285,6 +293,7 @@ class DashboardController extends Controller
     {
         $user = User::where('telegram_chat_id', $chatId)->first();
         if (!$user) {
+            Log::warning('Tentativa de login no dashboard com chatId inválido', ['chat_id' => $chatId]);
             return response()->json(['error' => 'User not found'], 404);
         }
 
