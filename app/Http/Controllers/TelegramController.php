@@ -24,8 +24,10 @@ class TelegramController extends Controller
         GroqService $groqService)
     {
         $expectedSecret = config('services.telegram.webhook_secret');
-        if (!empty($expectedSecret) && $request->header('X-Telegram-Bot-Api-Secret-Token') !== $expectedSecret) {
-            Log::warning('Webhook do Telegram recebido com secret token inválido ou ausente');
+        $providedSecret = (string) $request->header('X-Telegram-Bot-Api-Secret-Token', '');
+
+        if (empty($expectedSecret) || !hash_equals($expectedSecret, $providedSecret)) {
+            Log::warning('Webhook do Telegram recusado: secret token ausente, inválido, ou não configurado no servidor');
             return response()->json(['status' => 'forbidden'], 403);
         }
 
@@ -60,6 +62,10 @@ class TelegramController extends Controller
                 $fileId = $request->input('message.voice.file_id');
                 $userName = $request->input('message.from.username');
 
+                $safeFileName = preg_replace('/[^A-Za-z0-9_]/', '', (string) $userName) ?: 'anonimo';
+                $safeFileId = preg_replace('/[^A-Za-z0-9_-]/', '', (string) $fileId);
+                $audioPath = 'audios/' . $safeFileName . '_' . $safeFileId . '.ogg';
+
                 $fileInfo = $telegramService->getFilePath($fileId);
 
                 if (isset($fileInfo['ok']) && $fileInfo['ok']) {
@@ -67,11 +73,9 @@ class TelegramController extends Controller
 
                     $fileContent = $telegramService->downloadFile($filePath);
 
-                    Storage::put('audios/' . $userName . '_' . $fileId . '.ogg', $fileContent);
+                    Storage::put($audioPath, $fileContent);
 
-
-
-                    $transcribedText = $groqService->audioToJson('audios/' . $userName . '_' . $fileId . '.ogg');
+                    $transcribedText = $groqService->audioToJson($audioPath);
 
                     if ($transcribedText) {
                         Log::info('Transcrição concluída', ['transcribed_text' => $transcribedText]);
@@ -140,7 +144,7 @@ class TelegramController extends Controller
                         }
                     }
 
-                    Storage::delete('audios/' . $userName . '_' . $fileId . '.ogg');
+                    Storage::delete($audioPath);
 
                 } else {
                     $telegramService->editMessage(
