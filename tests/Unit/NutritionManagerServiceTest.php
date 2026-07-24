@@ -20,7 +20,6 @@ class NutritionManagerServiceTest extends TestCase
             'carbohydrate_g' => 28.2,
             'fat_g' => 0.2,
             'calories_kcal' => 130,
-            'serving_name' => 'grama',
             'serving_size_g' => 1,
         ]);
 
@@ -47,7 +46,6 @@ class NutritionManagerServiceTest extends TestCase
             'carbohydrate_g' => 40,
             'fat_g' => 1,
             'calories_kcal' => 190,
-            'serving_name' => 'fatia',
             'serving_size_g' => 31,
         ]);
 

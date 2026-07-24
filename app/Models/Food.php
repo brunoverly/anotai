@@ -17,7 +17,6 @@ class Food extends Model
         'carbohydrate_g',
         'fat_g',
         'calories_kcal',
-        'serving_name',
         'serving_size_g',
         'source',
     ];

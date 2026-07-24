@@ -1,12 +1,8 @@
 <?php
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
-
 class MessageService
 {
-    // Nomes de exibição abreviados pra unidade de medida — a chave bate com
-    // o que o NutritionManagerService grava no campo 'unidade' de cada item.
     private const ABBREVIATED_UNITS = [
         'grama' => 'g',
         'ml' => 'ml',
@@ -98,9 +94,9 @@ class MessageService
     public function getSummaryWithMacrosMessage(array $summary, string $titleWithPeriod): string
     {
         if ($summary['quantidade_refeicoes'] === 0) {
-            return "```\n{$titleWithPeriod} {$summary['period_formatado']}\n```\nNenhuma refeição registrada ainda nesse período.";
+            return "*{$titleWithPeriod}* ({$summary['period_formatado']})\n──────────────────\nNenhuma refeição registrada ainda nesse período.";
         }
-        $message = "```\n{$titleWithPeriod} {$summary['period_formatado']}\n```\n\n";
+        $message = "*{$titleWithPeriod}* ({$summary['period_formatado']})\n──────────────────\n\n";
 
         $status = [];
 

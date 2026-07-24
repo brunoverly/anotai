@@ -90,7 +90,6 @@ class OpenFoodService
                     'carbohydrate_g'  => round((float)$carb, 2),
                     'fat_g'           => round((float)$fat, 2),
                     'calories_kcal'   => round((float)($calories ?? 0), 0),
-                    'serving_name'    => $inputUnity,
                     'serving_size_g'  => $servingSizeG,
                     'source'          => 'openfoodfacts'
                 ];

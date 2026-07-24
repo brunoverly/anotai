@@ -45,11 +45,16 @@ class TelegramController extends Controller
         if ($request->has('message.voice')) {
             Log::info('Mensagem de voz recebida', ['chat_id' => $request->input('message.chat.id')]);
 
-            $sentMessage = $telegramService->sendMessage(
-                        $request->input('message.chat.id'),
-                        $messageService->getAudioReceivedMessage());
+            try {
+                $sentMessage = $telegramService->sendMessage(
+                            $request->input('message.chat.id'),
+                            $messageService->getAudioReceivedMessage());
 
-            $chatMessageId = $sentMessage['result']['message_id'] ?? null;
+                $chatMessageId = $sentMessage['result']['message_id'] ?? null;
+            } catch (\Throwable $e) {
+                Log::warning('Falha de rede ao enviar confirmação de recebimento (áudio), seguindo sem message_id', ['exception' => $e->getMessage()]);
+                $chatMessageId = null;
+            }
 
             try{
                 $fileId = $request->input('message.voice.file_id');
@@ -159,12 +164,17 @@ class TelegramController extends Controller
         if ($request->has('message.text')) {
             Log::info('Mensagem de texto recebida', ['chat_id' => $request->input('message.chat.id'), 'text' => $request->input('message.text')]);
 
-            $sentMessage = $telegramService->sendMessage(
-                    $request->input('message.chat.id'),
-                    $messageService->getTextReceivedMessage()
-            );
+            try {
+                $sentMessage = $telegramService->sendMessage(
+                        $request->input('message.chat.id'),
+                        $messageService->getTextReceivedMessage()
+                );
 
-            $chatMessageId = $sentMessage['result']['message_id'] ?? null;
+                $chatMessageId = $sentMessage['result']['message_id'] ?? null;
+            } catch (\Throwable $e) {
+                Log::warning('Falha de rede ao enviar confirmação de recebimento (texto), seguindo sem message_id', ['exception' => $e->getMessage()]);
+                $chatMessageId = null;
+            }
 
             $text = $request->input('message.text');
             $macros = $this->checkUserMacroRegex($text);

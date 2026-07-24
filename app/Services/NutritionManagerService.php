@@ -112,12 +112,6 @@ class NutritionManagerService
         return null;
     }
 
-    /**
-     * static porque GroqService e OpenFoodService também precisam sanitizar
-     * nome sem depender de uma instância de NutritionManagerService — isso
-     * criaria injeção circular (NutritionManagerService precisa dos dois,
-     * e os dois precisariam de volta de NutritionManagerService).
-     */
     public static function sanitizeFoodName(string $nome): string
     {
         return (string) Str::of($nome)->lower()->ascii()->squish();
