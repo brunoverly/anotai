@@ -146,10 +146,26 @@
             font-size: 0.85rem;
         }
 
+        .day-cell {
+            position: relative;
+        }
+
         .day-cell.is-today {
             font-weight: 700;
+        }
+
+        .day-cell.is-today::after {
+            content: '';
+            position: absolute;
+            bottom: 1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
             border-radius: 50%;
-            box-shadow: inset 0 0 0 1.5px var(--total-color);
+            background: var(--total-color);
+            box-shadow: 0 0 0 2px var(--bg-color);
+            z-index: 1;
         }
 
         .activity-icon {
@@ -159,6 +175,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 14px;
         }
 
         .activity-icon svg {
@@ -199,6 +216,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 11px;
         }
 
         .legend-icon svg {
@@ -235,6 +253,10 @@
             width: 22px;
             height: 22px;
             flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
         }
 
         .stat-box.cardio .stat-icon { color: var(--cardio-color); }
@@ -321,9 +343,7 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11"></path><path d="M17.5 6.5v11"></path><path d="M6.5 12h11"></path><rect x="3" y="9" width="3" height="6" rx="1"></rect><rect x="18" y="9" width="3" height="6" rx="1"></rect></svg>
                         </div>
                     @elseif($tipoAtividade === 'cardio')
-                        <div class="activity-icon activity-cardio">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                        </div>
+                        <div class="activity-icon activity-cardio">🏃</div>
                     @else
                         {{ $dia }}
                     @endif
@@ -335,9 +355,7 @@
     <!-- Legenda -->
     <div class="legend">
         <div class="legend-item">
-            <div class="legend-icon activity-cardio">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-            </div>
+            <div class="legend-icon activity-cardio">🏃</div>
             Cardio
         </div>
         <div class="legend-item">
@@ -354,7 +372,7 @@
 
         <div class="stats-grid">
             <div class="stat-box cardio">
-                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span class="stat-icon">🏃</span>
                 <div class="stat-info">
                     <span class="stat-number">{{ $diasCardio }}</span>
                     <span class="stat-label">Dias de cardio</span>

@@ -115,14 +115,24 @@
         .streak-fire {
             font-size: 1.6rem;
             display: inline-block;
-            animation: streakFire 1.1s ease-in-out infinite;
+            transform-origin: 50% 100%;
+            filter: drop-shadow(0 0 6px rgba(255, 140, 40, 0.45));
+            animation: streakFire 1.9s ease-in-out infinite;
         }
 
         @keyframes streakFire {
-            0%, 100% { transform: scale(1) rotate(-3deg); }
-            25% { transform: scale(1.1) rotate(3deg); }
-            50% { transform: scale(0.94) rotate(-2deg); }
-            75% { transform: scale(1.06) rotate(2deg); }
+            0%   { transform: scaleY(1)    scaleX(1)    skewX(0deg); }
+            20%  { transform: scaleY(1.07) scaleX(0.95) skewX(-3deg); }
+            40%  { transform: scaleY(0.95) scaleX(1.05) skewX(3deg); }
+            60%  { transform: scaleY(1.04) scaleX(0.97) skewX(-2deg); }
+            80%  { transform: scaleY(0.97) scaleX(1.03) skewX(2deg); }
+            100% { transform: scaleY(1)    scaleX(1)    skewX(0deg); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .streak-fire {
+                animation: none;
+            }
         }
 
         .streak-text {
