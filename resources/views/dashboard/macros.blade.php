@@ -292,7 +292,6 @@
             @endif
             {{ isset($meal) ? 'Editar Refeição' : 'Metas Pessoais' }}
         </h1>
-        <div style="width: 24px;"></div>
     </header>
 
     <div class="scroll-area">
