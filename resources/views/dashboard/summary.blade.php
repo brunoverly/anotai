@@ -100,6 +100,37 @@
             gap: 8px;
         }
 
+        /* Streak de dias na meta */
+        .streak-banner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #fff4e6, #ffe8d1);
+            box-shadow: 0 4px 10px -2px var(--card-shadow);
+        }
+
+        .streak-fire {
+            font-size: 1.6rem;
+            display: inline-block;
+            animation: streakFire 1.1s ease-in-out infinite;
+        }
+
+        @keyframes streakFire {
+            0%, 100% { transform: scale(1) rotate(-3deg); }
+            25% { transform: scale(1.1) rotate(3deg); }
+            50% { transform: scale(0.94) rotate(-2deg); }
+            75% { transform: scale(1.06) rotate(2deg); }
+        }
+
+        .streak-text {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #b45309;
+        }
+
         /* Grid de Resumo */
         .macros-grid {
             display: grid;
@@ -354,6 +385,12 @@
             <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             Resumo de hoje
         </h2>
+    @endif
+    @if(($streak ?? 0) > 0)
+        <div class="streak-banner">
+            <span class="streak-fire">🔥</span>
+            <span class="streak-text">{{ $streak }} {{ $streak === 1 ? 'dia consecutivo na meta' : 'dias consecutivos na meta' }}</span>
+        </div>
     @endif
     <div class="macros-grid">
         <!-- Calorias -->

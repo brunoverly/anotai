@@ -52,12 +52,15 @@ class DashboardController extends Controller
             return Carbon::parse($data['data'])->isYesterday() ? 'Ontem' : $weekDay;
         })->values()->all();
 
+        $streak = $mealReportService->currentStreak($chatId, $user);
+
         return view('dashboard.summary', [
             'chatId' => $chatId,
             'userName' => $userName,
             'summary' => $summary,
             'last7DaysMeals' => $last7DaysMeals,
             'chartLabels' => $chartLabels,
+            'streak' => $streak,
             'dayMeals' => $dayMeals,
             'current' => 'summary',
         ]);
