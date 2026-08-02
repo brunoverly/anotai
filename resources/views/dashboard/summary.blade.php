@@ -15,7 +15,8 @@
             --bg-color: #ffffff;
             --text-main: #1a1a1a;
             --text-muted: #6b7280;
-            --card-border: #f3f4f6;
+            --card-border: #e5e7eb;
+            --card-shadow: rgba(0, 0, 0, 0.08);
 
             /* Cores dos Macros */
             --color-kcal: #34c759;
@@ -110,7 +111,7 @@
             border: 1px solid var(--card-border);
             border-radius: 12px;
             padding: 1rem;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 10px -2px var(--card-shadow);
         }
 
         .macro-values {
@@ -210,7 +211,7 @@
             border-radius: 12px;
             margin-bottom: 5px;
             padding: 1rem;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 10px -2px var(--card-shadow);
         }
 
         .chart-slide .chart-wrapper {
@@ -256,6 +257,7 @@
             border: 1px solid var(--card-border);
             border-radius: 12px;
             padding: 0 1rem;
+            box-shadow: 0 4px 10px -2px var(--card-shadow);
         }
 
         .meal-item {
@@ -517,6 +519,22 @@
 
         const labels = @json(array_keys($last7DaysMeals));
 
+        // Converte uma cor hex em rgba, pra montar o degradê do preenchimento
+        function hexParaRgba(hex, alpha) {
+            const valor = hex.replace('#', '');
+            const r = parseInt(valor.substring(0, 2), 16);
+            const g = parseInt(valor.substring(2, 4), 16);
+            const b = parseInt(valor.substring(4, 6), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        function criarGradiente(ctx, cor) {
+            const gradiente = ctx.createLinearGradient(0, 0, 0, 220);
+            gradiente.addColorStop(0, hexParaRgba(cor, 0.35));
+            gradiente.addColorStop(1, hexParaRgba(cor, 0));
+            return gradiente;
+        }
+
         function criarGraficoMacro(canvasId, cor, dados) {
             const ctx = document.getElementById(canvasId).getContext('2d');
             return new Chart(ctx, {
@@ -526,7 +544,8 @@
                     datasets: [{
                         data: dados,
                         borderColor: cor,
-                        backgroundColor: cor,
+                        backgroundColor: criarGradiente(ctx, cor),
+                        fill: true,
                         borderWidth: 2,
                         pointRadius: 3,
                         pointBackgroundColor: cor,

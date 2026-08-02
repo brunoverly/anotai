@@ -15,8 +15,8 @@
             --bg-color: #ffffff;
             --text-main: #111827;
             --text-muted: #6b7280;
-            --card-border: #f3f4f6;
-            --card-shadow: rgba(0, 0, 0, 0.03);
+            --card-border: #e5e7eb;
+            --card-shadow: rgba(0, 0, 0, 0.08);
 
             /* Cores dos Ícones de Refeição */
             --green-icon: #2c854b;
@@ -118,7 +118,7 @@
             border: 1px solid var(--card-border);
             border-radius: 12px;
             background-color: #ffffff;
-            box-shadow: 0 4px 6px -1px var(--card-shadow);
+            box-shadow: 0 4px 10px -2px var(--card-shadow);
             display: flex;
             flex-direction: column;
         }
