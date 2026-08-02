@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\MealService;
 use Illuminate\Http\Request;
+use App\Models\GymCheckIn;
 use App\Models\Meal;
 use App\Models\User;
 use Illuminate\Support\Carbon;
@@ -129,6 +130,52 @@ class DashboardController extends Controller
             'chatId' => $chatId,
             'userName' => $userName,
             'dayMeals' => $dayMeals,
+        ]);
+    }
+
+    public function exercises(int $chatId, Request $request)
+    {
+        $user = User::where('telegram_chat_id', $chatId)->first();
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $mesReferencia = Carbon::createFromDate(
+            (int) $request->query('ano', now()->year),
+            (int) $request->query('mes', now()->month),
+            1
+        );
+
+        $checkInsDoMes = GymCheckIn::whereBetween('check_in_date', [
+            $mesReferencia->copy()->startOfMonth()->toDateString(),
+            $mesReferencia->copy()->endOfMonth()->toDateString(),
+        ])->get()->groupBy(fn ($checkIn) => $checkIn->check_in_date->day);
+
+        // Musculação tem prioridade sobre cardio quando os dois ocorrem no mesmo dia
+        $atividadesPorDia = [];
+        $diasCardio = 0;
+        $diasMusculacao = 0;
+
+        foreach ($checkInsDoMes as $dia => $registrosDoDia) {
+            $tipos = $registrosDoDia->pluck('tipo')->all();
+            $tipoEscolhido = in_array('bodybuilding', $tipos, true) ? 'musculacao' : 'cardio';
+            $atividadesPorDia[$dia] = $tipoEscolhido;
+
+            if ($tipoEscolhido === 'musculacao') {
+                $diasMusculacao++;
+            } else {
+                $diasCardio++;
+            }
+        }
+
+        return view('dashboard.exercices', [
+            'chatId' => $chatId,
+            'userName' => $user->name,
+            'mesReferencia' => $mesReferencia,
+            'atividadesPorDia' => $atividadesPorDia,
+            'diasCardio' => $diasCardio,
+            'diasMusculacao' => $diasMusculacao,
+            'current' => 'exercises',
         ]);
     }
 

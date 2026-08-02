@@ -9,6 +9,7 @@ Route::middleware('dashboard.access')->group(function () {
     Route::get('/dashboard/{chatId}', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/dashboard/{chatId}/week', [DashboardController::class, 'week'])->name('dashboard.week');
     Route::get('/dashboard/{chatId}/meals', [DashboardController::class, 'meals'])->name('dashboard.meals');
+    Route::get('/dashboard/{chatId}/exercises', [DashboardController::class, 'exercises'])->name('dashboard.exercises');
     Route::delete('/dashboard/{chatId}/meals/{mealId}', [DashboardController::class, 'mealsDestroy'])->name('dashboard.meals.destroy');
     Route::get('/dashboard/{chatId}/macros', [DashboardController::class, 'showMacros'])->name('dashboard.macros');
     Route::post('/dashboard/{chatId}/macros', [DashboardController::class, 'updateMacros'])->name('dashboard.macros.update');
