@@ -46,4 +46,10 @@ return [
     'gymtrack' => [
         'token' => env('GYMTRACK_TOKEN'),
     ],
+    'tavily' => [
+        'api_key' => env('TAVILY_API_KEY'),
+        'base_url' => env('TAVILY_BASE_URL', 'https://api.tavily.com'),
+        'max_results' => env('TAVILY_MAX_RESULTS', 4),
+        'days' => env('TAVILY_DAYS', 7),
+    ],
 ];

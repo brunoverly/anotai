@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class GroqService
 {
+    public function __construct(
+        private TavilyService $tavilyService
+    ) {
+    }
+
     public function textToJson(string $text)
     {
         $apiKey = config('services.groq.api_key');
@@ -105,18 +110,26 @@ class GroqService
                 return null;
             }
 
+            $resultadosBusca = $this->tavilyService->search("tabela nutricional {$food} valores por 100g proteína carboidrato gordura calorias");
+
+            $contextoBusca = empty($resultadosBusca)
+                ? 'Nenhum resultado de busca disponível — estime com base no seu conhecimento.'
+                : collect($resultadosBusca)
+                    ->map(fn ($r, $i) => ($i + 1) . ". {$r['titulo']}\n{$r['conteudo']}")
+                    ->implode("\n\n");
+
             $response = Http::withToken($apiKey)
-                ->timeout(10)
+                ->timeout(15)
                 ->post('https://api.groq.com/openai/v1/chat/completions', [
-                    'model' => 'llama-3.3-70b-versatile',
+                    'model' => 'openai/gpt-oss-120b',
                     'messages' => [
                         [
                             'role' => 'system',
-                            'content' => 'Você é um assistente especialista em nutrição e bioquímica de alimentos. Sua principal regra é a precisão matemática rigorosa: as calories_kcal devem ser exatamente a soma de (protein_g x 4) + (carbohydrate_g x 4) + (fat_g x 9). Responda APENAS com um objeto JSON válido, contendo a estimativa para 100g do alimento informado. Não use markdown blockcode ou qualquer outro texto na resposta. Chaves obrigatórias no JSON: name, protein_g, carbohydrate_g, fat_g, calories_kcal, peso_unidade_g. O campo peso_unidade_g é o peso estimado em gramas de EXATAMENTE 1 unidade média padrão de consumo do item. ' . $servingSizeReference . ' Se o alimento pedido não estiver na lista de referência, estime pelo tamanho físico típico de UMA porção comercial padrão daquela unidade (ex: salgados de lanchonete devem ter peso unitário realista, nunca de festa, a menos que especificado). Se a unidade informada for "grama" ou "ml", o campo peso_unidade_g não será usado no cálculo — pode estimar o peso de uma porção média de refeição (ex: 150g). Exemplos corretos com proporções e calorias matematicamente alinhadas para 100g: {"name": "pao de queijo tradicional", "protein_g": 6.0, "carbohydrate_g": 32.0, "fat_g": 16.0, "calories_kcal": 300, "peso_unidade_g": 30} e {"name": "abacate", "protein_g": 2.0, "carbohydrate_g": 8.5, "fat_g": 14.7, "calories_kcal": 160, "peso_unidade_g": 200}'
+                            'content' => 'Você é um assistente especialista em nutrição e bioquímica de alimentos. Você recebe, junto com o pedido, resultados de uma busca na web sobre o alimento — priorize esses dados reais em vez de "chutar" de memória; só recorra à estimativa por conhecimento geral se a busca não trouxer nada útil ou for claramente sobre outro alimento. Sua principal regra é a precisão matemática rigorosa: as calories_kcal devem ser exatamente a soma de (protein_g x 4) + (carbohydrate_g x 4) + (fat_g x 9). Responda APENAS com um objeto JSON válido, contendo a estimativa para 100g do alimento informado. Não use markdown blockcode ou qualquer outro texto na resposta. Chaves obrigatórias no JSON: name, protein_g, carbohydrate_g, fat_g, calories_kcal, peso_unidade_g. O campo peso_unidade_g é o peso estimado em gramas de EXATAMENTE 1 unidade média padrão de consumo do item. ' . $servingSizeReference . ' Se o alimento pedido não estiver na lista de referência nem nos resultados de busca, estime pelo tamanho físico típico de UMA porção comercial padrão daquela unidade (ex: salgados de lanchonete devem ter peso unitário realista, nunca de festa, a menos que especificado). Se a unidade informada for "grama" ou "ml", o campo peso_unidade_g não será usado no cálculo — pode estimar o peso de uma porção média de refeição (ex: 150g). Exemplos corretos com proporções e calorias matematicamente alinhadas para 100g: {"name": "pao de queijo tradicional", "protein_g": 6.0, "carbohydrate_g": 32.0, "fat_g": 16.0, "calories_kcal": 300, "peso_unidade_g": 30} e {"name": "abacate", "protein_g": 2.0, "carbohydrate_g": 8.5, "fat_g": 14.7, "calories_kcal": 160, "peso_unidade_g": 200}'
                         ],
                         [
                             'role' => 'user',
-                            'content' => "Estime os macronutrientes para 100g de: {$food}. A unidade de medida informada pelo usuário foi: \"{$inputUnity}\"."
+                            'content' => "Estime os macronutrientes para 100g de: {$food}. A unidade de medida informada pelo usuário foi: \"{$inputUnity}\".\n\nResultados de busca na web:\n{$contextoBusca}"
                         ]
                     ],
                     'response_format' => ['type' => 'json_object'],

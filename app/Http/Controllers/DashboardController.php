@@ -48,11 +48,16 @@ class DashboardController extends Controller
 
         $last7DaysMeals = $mealReportService->last7days($chatId, $user);
 
+        $chartLabels = collect($last7DaysMeals)->map(function ($data, $weekDay) {
+            return Carbon::parse($data['data'])->isYesterday() ? 'Ontem' : $weekDay;
+        })->values()->all();
+
         return view('dashboard.summary', [
             'chatId' => $chatId,
             'userName' => $userName,
             'summary' => $summary,
             'last7DaysMeals' => $last7DaysMeals,
+            'chartLabels' => $chartLabels,
             'dayMeals' => $dayMeals,
             'current' => 'summary',
         ]);

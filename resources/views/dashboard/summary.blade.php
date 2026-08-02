@@ -517,7 +517,7 @@
         Chart.defaults.font.family = "'Inter', sans-serif";
         Chart.defaults.color = '#6b7280';
 
-        const labels = @json(array_keys($last7DaysMeals));
+        const labels = @json($chartLabels);
 
         // Converte uma cor hex em rgba, pra montar o degradê do preenchimento
         function hexParaRgba(hex, alpha) {
