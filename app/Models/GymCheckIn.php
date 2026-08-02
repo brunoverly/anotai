@@ -14,6 +14,7 @@ class GymCheckIn extends Model
     protected $fillable = [
         'check_in_date',
         'checked_in_at',
+        'tipo',
     ];
 
     protected $casts = [

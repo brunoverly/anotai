@@ -19,16 +19,21 @@ class IphoneController extends Controller
             return response()->json(['status' => 'forbidden'], 403);
         }
 
+        $validated = $request->validate([
+            'tipo' => 'required|string|in:bodybuilding,cardio',
+        ]);
+
         $now = now();
 
         $checkIn = GymCheckIn::firstOrCreate(
-            ['check_in_date' => $now->toDateString()],
+            ['check_in_date' => $now->toDateString(), 'tipo' => $validated['tipo']],
             ['checked_in_at' => $now],
         );
 
         Log::info('Check-in da academia registrado', [
             'check_in_date' => $checkIn->check_in_date->toDateString(),
             'checked_in_at' => $checkIn->checked_in_at,
+            'tipo' => $checkIn->tipo,
             'novo_registro' => $checkIn->wasRecentlyCreated,
         ]);
 
