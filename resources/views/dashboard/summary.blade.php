@@ -106,7 +106,10 @@
             display: flex;
             align-items: center;
             gap: 4px;
-            padding: 0.6rem 1rem;
+            padding-top: 12px;
+            padding-right: 1rem;
+            padding-bottom: 0.6rem;
+            padding-left: 5px;
             margin-bottom: 1rem;
             border-radius: 12px;
             background: linear-gradient(135deg, #fffaf4, #fff1e4);
@@ -386,7 +389,7 @@
             Resumo de hoje
         </h2>
     @endif
-    @if(($streak ?? 0) > 0)
+    @if(($streak ?? 0) >= 3)
         <div class="streak-banner">
             <dotlottie-wc class="streak-fire" src="/assets/lottie/fire.lottie" autoplay loop></dotlottie-wc>
             <span class="streak-text">{{ $streak }} {{ $streak === 1 ? 'dia consecutivo na meta' : 'dias consecutivos na meta' }}</span>
