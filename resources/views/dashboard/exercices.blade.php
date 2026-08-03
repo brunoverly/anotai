@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
         :root {
@@ -175,12 +176,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-        }
-
-        .activity-icon svg {
-            width: 16px;
-            height: 16px;
+            font-size: 16px;
         }
 
         .activity-cardio {
@@ -216,12 +212,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
-        }
-
-        .legend-icon svg {
-            width: 13px;
-            height: 13px;
+            font-size: 13px;
         }
 
         /* Resumo do mês */
@@ -339,11 +330,9 @@
                 @endphp
                 <div class="day-cell {{ $ehHoje ? 'is-today' : '' }}">
                     @if($tipoAtividade === 'musculacao')
-                        <div class="activity-icon activity-musc">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11"></path><path d="M17.5 6.5v11"></path><path d="M6.5 12h11"></path><rect x="3" y="9" width="3" height="6" rx="1"></rect><rect x="18" y="9" width="3" height="6" rx="1"></rect></svg>
-                        </div>
+                        <div class="activity-icon activity-musc"><i class="ph-fill ph-barbell"></i></div>
                     @elseif($tipoAtividade === 'cardio')
-                        <div class="activity-icon activity-cardio">🏃</div>
+                        <div class="activity-icon activity-cardio"><i class="ph-fill ph-person-simple-run"></i></div>
                     @else
                         {{ $dia }}
                     @endif
@@ -355,13 +344,11 @@
     <!-- Legenda -->
     <div class="legend">
         <div class="legend-item">
-            <div class="legend-icon activity-cardio">🏃</div>
+            <div class="legend-icon activity-cardio"><i class="ph-fill ph-person-simple-run"></i></div>
             Cardio
         </div>
         <div class="legend-item">
-            <div class="legend-icon activity-musc">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11"></path><path d="M17.5 6.5v11"></path><path d="M6.5 12h11"></path><rect x="3" y="9" width="3" height="6" rx="1"></rect><rect x="18" y="9" width="3" height="6" rx="1"></rect></svg>
-            </div>
+            <div class="legend-icon activity-musc"><i class="ph-fill ph-barbell"></i></div>
             Musculação
         </div>
     </div>
@@ -372,7 +359,7 @@
 
         <div class="stats-grid">
             <div class="stat-box cardio">
-                <span class="stat-icon">🏃</span>
+                <i class="ph-fill ph-person-simple-run stat-icon"></i>
                 <div class="stat-info">
                     <span class="stat-number">{{ $diasCardio }}</span>
                     <span class="stat-label">Dias de cardio</span>
@@ -380,7 +367,7 @@
             </div>
 
             <div class="stat-box musc">
-                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11"></path><path d="M17.5 6.5v11"></path><path d="M6.5 12h11"></path><rect x="3" y="9" width="3" height="6" rx="1"></rect><rect x="18" y="9" width="3" height="6" rx="1"></rect></svg>
+                <i class="ph-fill ph-barbell stat-icon"></i>
                 <div class="stat-info">
                     <span class="stat-number">{{ $diasMusculacao }}</span>
                     <span class="stat-label">Dias de musculação</span>
