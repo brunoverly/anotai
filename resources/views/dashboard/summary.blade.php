@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-wc@0.6.3/dist/dotlottie-wc.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -104,34 +105,23 @@
         .streak-banner {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 0.75rem 1rem;
+            gap: 4px;
+            padding: 0.6rem 1rem;
             margin-bottom: 1rem;
             border-radius: 12px;
-            background: linear-gradient(135deg, #fff4e6, #ffe8d1);
+            background: linear-gradient(135deg, #fffaf4, #fff1e4);
             box-shadow: 0 4px 10px -2px var(--card-shadow);
         }
 
         .streak-fire {
-            font-size: 1.6rem;
-            display: inline-block;
-            transform-origin: 50% 100%;
-            filter: drop-shadow(0 0 6px rgba(255, 140, 40, 0.45));
-            animation: streakFire 1.9s ease-in-out infinite;
-        }
-
-        @keyframes streakFire {
-            0%   { transform: scaleY(1)    scaleX(1)    skewX(0deg); }
-            20%  { transform: scaleY(1.07) scaleX(0.95) skewX(-3deg); }
-            40%  { transform: scaleY(0.95) scaleX(1.05) skewX(3deg); }
-            60%  { transform: scaleY(1.04) scaleX(0.97) skewX(-2deg); }
-            80%  { transform: scaleY(0.97) scaleX(1.03) skewX(2deg); }
-            100% { transform: scaleY(1)    scaleX(1)    skewX(0deg); }
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
         }
 
         @media (prefers-reduced-motion: reduce) {
             .streak-fire {
-                animation: none;
+                display: none;
             }
         }
 
@@ -398,7 +388,7 @@
     @endif
     @if(($streak ?? 0) > 0)
         <div class="streak-banner">
-            <span class="streak-fire">🔥</span>
+            <dotlottie-wc class="streak-fire" src="/assets/lottie/fire.lottie" autoplay loop></dotlottie-wc>
             <span class="streak-text">{{ $streak }} {{ $streak === 1 ? 'dia consecutivo na meta' : 'dias consecutivos na meta' }}</span>
         </div>
     @endif

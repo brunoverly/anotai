@@ -175,6 +175,7 @@ class DashboardController extends Controller
             'atividadesPorDia' => $atividadesPorDia,
             'diasCardio' => $diasCardio,
             'diasMusculacao' => $diasMusculacao,
+            'streakAtividades' => GymCheckIn::currentStreak(),
             'current' => 'exercises',
         ]);
     }
