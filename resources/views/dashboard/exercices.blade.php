@@ -361,16 +361,16 @@
             <div class="stat-box cardio">
                 <i class="ph-fill ph-person-simple-run stat-icon"></i>
                 <div class="stat-info">
-                    <span class="stat-number">{{ $diasCardio }}</span>
-                    <span class="stat-label">Dias de cardio</span>
+                    <span class="stat-number">{{ $diasCardio }} @if ($diasCardio === 1) dia @else dias @endif</span>
+                    <span class="stat-label">Cardio</span>
                 </div>
             </div>
 
             <div class="stat-box musc">
                 <i class="ph-fill ph-barbell stat-icon"></i>
                 <div class="stat-info">
-                    <span class="stat-number">{{ $diasMusculacao }}</span>
-                    <span class="stat-label">Dias de musculação</span>
+                    <span class="stat-number">{{ $diasMusculacao }} @if ($diasMusculacao === 1) dia @else dias @endif</span>
+                    <span class="stat-label">Academia</span>
                 </div>
             </div>
         </div>
