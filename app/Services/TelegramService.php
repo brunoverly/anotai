@@ -34,6 +34,7 @@ class TelegramService
             ['command' => 'dia', 'description' => 'Resumo do dia'],
             ['command' => 'semana', 'description' => 'Resumo da semana'],
             ['command' => 'excluir', 'description' => 'Exclui a última refeição do dia'],
+            ['command' => 'busca', 'description' => 'Busca um alimento no banco pelo nome'],
             ['command' => 'macros', 'description' => 'Define suas metas de macros (calorias, carboidratos, proteínas)'],
             ['command' => 'app', 'description' => 'Link para o app web (dashboard)'],
         ]];

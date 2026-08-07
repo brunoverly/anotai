@@ -19,7 +19,7 @@ class MessageService
             "📌 *Como me usar:*\n" .
             "1️⃣ Envie uma mensagem de voz descrevendo o que você comeu (ex: \"comi 150g de arroz, 200g de frango e 1 colher de azeite\").\n" .
             "2️⃣ Ou digite uma mensagem de texto descrevendo sua refeição.\n" .
-            "3️⃣ Use os comandos /dia, /semana, /macros ou /app para ver seus registros e metas.\n\n" .
+            "3️⃣ Use os comandos /dia, /semana, /macros, /busca ou /app para ver seus registros e metas.\n\n" .
             "💡 Dica: Quanto mais detalhado você for na descrição da refeição, melhor será a análise nutricional.";
     }
 
@@ -147,6 +147,22 @@ class MessageService
         return  "⚠️ *Nenhuma Refeição Encontrada!*\n" .
                     "──────────────────\n" .
                     "Não foi encontrada uma refeição registrada hoje para excluir.";
+    }
+
+    public function getFoodSearchMessage(string $termo, \Illuminate\Support\Collection $alimentos): string
+    {
+        if ($alimentos->isEmpty()) {
+            return "🔎 *Busca de Alimento*\n" .
+                "──────────────────\n" .
+                "Nenhum alimento com \"{$termo}\" ainda não está cadastrado no banco.";
+        }
+
+        $lista = $alimentos->map(fn ($nome) => "• " . ucwords($nome))->implode("\n");
+
+        return "🔎 *Busca de Alimento*\n" .
+            "──────────────────\n" .
+            "Encontrei " . $alimentos->count() . " resultado(s) para \"{$termo}\":\n\n" .
+            $lista;
     }
 
     public function getSetMacrosGoalMessage(){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Food;
 use App\Models\User;
 use App\Services\MessageService;
 use App\Services\GroqService;
@@ -269,6 +270,34 @@ class TelegramController extends Controller
                         $chatMessageId,
                         $messageService->getSetMacrosGoalMessage()
                     );
+                } elseif ($command === '/busca') {
+                    $partesComando = explode(' ', trim($text), 2);
+                    $termoBusca = trim($partesComando[1] ?? '');
+
+                    if (empty($termoBusca)) {
+                        $telegramService->editMessage(
+                            $request->input('message.chat.id'),
+                            $chatMessageId,
+                            "🔎 *Busca de Alimento*\n" .
+                            "──────────────────\n" .
+                            "Envie o comando seguido do nome do alimento, ex: `/busca frango`."
+                        );
+                    } else {
+                        $termoSanitizado = NutritionManagerService::sanitizeFoodName($termoBusca);
+
+                        $alimentosEncontrados = Food::where('name', 'like', '%' . $termoSanitizado . '%')
+                            ->orderBy('name')
+                            ->limit(20)
+                            ->pluck('name');
+
+                        Log::info('Busca manual de alimento', ['termo' => $termoBusca, 'encontrados' => $alimentosEncontrados->count()]);
+
+                        $telegramService->editMessage(
+                            $request->input('message.chat.id'),
+                            $chatMessageId,
+                            $messageService->getFoodSearchMessage($termoBusca, $alimentosEncontrados)
+                        );
+                    }
                 } elseif ($command === '/app') {
                     $dashboardUrl = URL::temporarySignedRoute('dashboard.login', now()->addMinutes(10), ['chatId' => $chatId]);
                     $telegramService->editMessage(

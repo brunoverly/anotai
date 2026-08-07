@@ -156,4 +156,61 @@ class TelegramWebhookTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_comando_busca_retorna_alimentos_encontrados(): void
+    {
+        Food::factory()->create(['name' => 'frango grelhado']);
+        Food::factory()->create(['name' => 'frango a passarinho']);
+        Food::factory()->create(['name' => 'arroz branco']);
+
+        $response = $this->postWebhook($this->payload([
+            'message_id' => 1,
+            'chat' => ['id' => 650010743],
+            'from' => ['username' => 'teste'],
+            'text' => '/busca frango',
+        ]));
+
+        $response->assertStatus(200);
+
+        Http::assertSent(function ($request) {
+            return str_contains($request->url(), 'editMessageText')
+                && str_contains($request['text'], 'Frango Grelhado')
+                && str_contains($request['text'], 'Frango A Passarinho')
+                && !str_contains($request['text'], 'Arroz Branco');
+        });
+    }
+
+    public function test_comando_busca_sem_resultado_avisa_que_nao_esta_cadastrado(): void
+    {
+        $response = $this->postWebhook($this->payload([
+            'message_id' => 1,
+            'chat' => ['id' => 650010743],
+            'from' => ['username' => 'teste'],
+            'text' => '/busca alimento inexistente xyz',
+        ]));
+
+        $response->assertStatus(200);
+
+        Http::assertSent(function ($request) {
+            return str_contains($request->url(), 'editMessageText')
+                && str_contains($request['text'], 'não está cadastrado');
+        });
+    }
+
+    public function test_comando_busca_sem_termo_pede_o_nome_do_alimento(): void
+    {
+        $response = $this->postWebhook($this->payload([
+            'message_id' => 1,
+            'chat' => ['id' => 650010743],
+            'from' => ['username' => 'teste'],
+            'text' => '/busca',
+        ]));
+
+        $response->assertStatus(200);
+
+        Http::assertSent(function ($request) {
+            return str_contains($request->url(), 'editMessageText')
+                && str_contains($request['text'], 'nome do alimento');
+        });
+    }
 }
